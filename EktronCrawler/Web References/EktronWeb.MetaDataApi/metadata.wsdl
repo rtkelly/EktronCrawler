@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="AddMetaDataType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="metaDataItem" type="tns:ContentMetaData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ContentMetaData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfContentMetaData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DataType" type="tns:ContentMetadataDataType" />
+              <s:element minOccurs="0" maxOccurs="1" name="DefaultValue" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:ContentMetadataType" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsEditable" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="Separator" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CaseSensitive" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="RemoveDuplicate" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSearchAllowed" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsDisplayable" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="SelectableText" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="AllowMultiple" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSelectableOnly" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="MetaDisplayEE" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="MetaDataObjectType" type="tns:MetaDataType" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfContentMetaData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfContentMetaData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfContentMetaData" abstract="true" />
+      <s:simpleType name="ContentMetadataDataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Text" />
+          <s:enumeration value="Number" />
+          <s:enumeration value="Byte" />
+          <s:enumeration value="Double" />
+          <s:enumeration value="Float" />
+          <s:enumeration value="Integer" />
+          <s:enumeration value="Long" />
+          <s:enumeration value="Short" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="Boolean" />
+          <s:enumeration value="SingleSelect" />
+          <s:enumeration value="MultiSelect" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="ContentMetadataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="HtmlTag" />
+          <s:enumeration value="MetaTag" />
+          <s:enumeration value="CollectionSelector" />
+          <s:enumeration value="ListSummarySelector" />
+          <s:enumeration value="ContentSelector" />
+          <s:enumeration value="ImageSelector" />
+          <s:enumeration value="LinkSelector" />
+          <s:enumeration value="FileSelector" />
+          <s:enumeration value="MenuSelector" />
+          <s:enumeration value="UserSelector" />
+          <s:enumeration value="SearchableProperty" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="MetaDataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Normal" />
+          <s:enumeration value="ProductAttribute" />
+          <s:enumeration value="Tags" />
+          <s:enumeration value="Categories" />
+          <s:enumeration value="Trackback" />
+          <s:enumeration value="Ping" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="AddMetaDataTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="metaDataItem" type="tns:ContentMetaData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader" />
+      <s:complexType name="AuthenticationHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="RequestInfoParameters" type="tns:RequestInfoParameters" />
+      <s:complexType name="RequestInfoParameters">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ContentLanguage" type="s:int" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="DeleteMetadataType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MetadataId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteMetadataTypeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetContentMetadataList">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentMetadataListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContentMetadataListResult" type="tns:ArrayOfCustomAttribute" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfCustomAttribute">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomAttribute" nillable="true" type="tns:CustomAttribute" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomAttribute">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfCustomAttribute">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="PropertyValueId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Value" />
+              <s:element minOccurs="1" maxOccurs="1" name="ValueType" type="tns:CustomAttributeValueTypes" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsRequired" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TagType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsList" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="DoesAtrributeExist" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfCustomAttribute" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfCustomAttribute">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfCustomAttribute" abstract="true" />
+      <s:simpleType name="CustomAttributeValueTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="String" />
+          <s:enumeration value="Boolean" />
+          <s:enumeration value="Numeric" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="Notification" />
+          <s:enumeration value="Category" />
+          <s:enumeration value="CategoryProperties" />
+          <s:enumeration value="SelectList" />
+          <s:enumeration value="MultiSelectList" />
+          <s:enumeration value="ThreadedDiscussion" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetContentMetadataList_x0020_with_x0020_preview">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="preview" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentMetadataList_x0020_with_x0020_previewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContentMetadataList_x0020_with_x0020_previewResult" type="tns:ArrayOfCustomAttribute" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMetaDataTypes">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfContentMetaData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ContentMetaData" nillable="true" type="tns:ContentMetaData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetMetaDataTypesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMetaDataTypesResult" type="tns:ArrayOfContentMetaData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMetadataType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMetadataTypeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMetadataTypeResult" type="tns:ContentMetaData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CustomAttributeList" nillable="true" type="tns:ArrayOfCustomAttribute" />
+      <s:element name="ArrayOfContentMetaData" nillable="true" type="tns:ArrayOfContentMetaData" />
+      <s:element name="ContentMetaData" nillable="true" type="tns:ContentMetaData" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddMetaDataTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:AddMetaDataType" />
+  </wsdl:message>
+  <wsdl:message name="AddMetaDataTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:AddMetaDataTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddMetaDataTypeAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddMetaDataTypeRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteMetadataType" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteMetadataTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContentMetadataList" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContentMetadataListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataListAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataListRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList_x0020_with_x0020_previewSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContentMetadataList_x0020_with_x0020_preview" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList_x0020_with_x0020_previewSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContentMetadataList_x0020_with_x0020_previewResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList with previewAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList with previewRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMetaDataTypes" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMetaDataTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMetadataType" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMetadataTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeHttpGetIn">
+    <wsdl:part name="MetadataId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeHttpGetOut" />
+  <wsdl:message name="GetContentMetadataListHttpGetIn">
+    <wsdl:part name="ContentId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataListHttpGetOut">
+    <wsdl:part name="Body" element="tns:CustomAttributeList" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList_x0020_with_x0020_previewHttpGetIn">
+    <wsdl:part name="ContentId" type="s:string" />
+    <wsdl:part name="preview" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList_x0020_with_x0020_previewHttpGetOut">
+    <wsdl:part name="Body" element="tns:CustomAttributeList" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesHttpGetIn">
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfContentMetaData" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeHttpGetIn">
+    <wsdl:part name="Id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentMetaData" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeHttpPostIn">
+    <wsdl:part name="MetadataId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteMetadataTypeHttpPostOut" />
+  <wsdl:message name="GetContentMetadataListHttpPostIn">
+    <wsdl:part name="ContentId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataListHttpPostOut">
+    <wsdl:part name="Body" element="tns:CustomAttributeList" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList_x0020_with_x0020_previewHttpPostIn">
+    <wsdl:part name="ContentId" type="s:string" />
+    <wsdl:part name="preview" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentMetadataList_x0020_with_x0020_previewHttpPostOut">
+    <wsdl:part name="Body" element="tns:CustomAttributeList" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesHttpPostIn">
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMetaDataTypesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfContentMetaData" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeHttpPostIn">
+    <wsdl:part name="Id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetMetadataTypeHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentMetaData" />
+  </wsdl:message>
+  <wsdl:portType name="MetadataSoap">
+    <wsdl:operation name="AddMetaDataType">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Adds a new metadata type definition</wsdl:documentation>
+      <wsdl:input message="tns:AddMetaDataTypeSoapIn" />
+      <wsdl:output message="tns:AddMetaDataTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMetadataType">
+      <wsdl:input message="tns:DeleteMetadataTypeSoapIn" />
+      <wsdl:output message="tns:DeleteMetadataTypeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <wsdl:input message="tns:GetContentMetadataListSoapIn" />
+      <wsdl:output message="tns:GetContentMetadataListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <wsdl:input name="GetContentMetadataList_x0020_with_x0020_preview" message="tns:GetContentMetadataList_x0020_with_x0020_previewSoapIn" />
+      <wsdl:output name="GetContentMetadataList_x0020_with_x0020_preview" message="tns:GetContentMetadataList_x0020_with_x0020_previewSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaDataTypes">
+      <wsdl:input message="tns:GetMetaDataTypesSoapIn" />
+      <wsdl:output message="tns:GetMetaDataTypesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataType">
+      <wsdl:input message="tns:GetMetadataTypeSoapIn" />
+      <wsdl:output message="tns:GetMetadataTypeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="MetadataHttpGet">
+    <wsdl:operation name="DeleteMetadataType">
+      <wsdl:input message="tns:DeleteMetadataTypeHttpGetIn" />
+      <wsdl:output message="tns:DeleteMetadataTypeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <wsdl:input message="tns:GetContentMetadataListHttpGetIn" />
+      <wsdl:output message="tns:GetContentMetadataListHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <wsdl:input name="GetContentMetadataList_x0020_with_x0020_preview" message="tns:GetContentMetadataList_x0020_with_x0020_previewHttpGetIn" />
+      <wsdl:output name="GetContentMetadataList_x0020_with_x0020_preview" message="tns:GetContentMetadataList_x0020_with_x0020_previewHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaDataTypes">
+      <wsdl:input message="tns:GetMetaDataTypesHttpGetIn" />
+      <wsdl:output message="tns:GetMetaDataTypesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataType">
+      <wsdl:input message="tns:GetMetadataTypeHttpGetIn" />
+      <wsdl:output message="tns:GetMetadataTypeHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="MetadataHttpPost">
+    <wsdl:operation name="DeleteMetadataType">
+      <wsdl:input message="tns:DeleteMetadataTypeHttpPostIn" />
+      <wsdl:output message="tns:DeleteMetadataTypeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <wsdl:input message="tns:GetContentMetadataListHttpPostIn" />
+      <wsdl:output message="tns:GetContentMetadataListHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <wsdl:input name="GetContentMetadataList_x0020_with_x0020_preview" message="tns:GetContentMetadataList_x0020_with_x0020_previewHttpPostIn" />
+      <wsdl:output name="GetContentMetadataList_x0020_with_x0020_preview" message="tns:GetContentMetadataList_x0020_with_x0020_previewHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaDataTypes">
+      <wsdl:input message="tns:GetMetaDataTypesHttpPostIn" />
+      <wsdl:output message="tns:GetMetaDataTypesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataType">
+      <wsdl:input message="tns:GetMetadataTypeHttpPostIn" />
+      <wsdl:output message="tns:GetMetadataTypeHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MetadataSoap" type="tns:MetadataSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddMetaDataType">
+      <soap:operation soapAction="http://tempuri.org/AddMetaDataType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddMetaDataTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddMetaDataTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMetadataType">
+      <soap:operation soapAction="http://tempuri.org/DeleteMetadataType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteMetadataTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:DeleteMetadataTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <soap:operation soapAction="http://tempuri.org/GetContentMetadataList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetContentMetadataListAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetContentMetadataListRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <soap:operation soapAction="http://tempuri.org/GetContentMetadataList with preview" style="document" />
+      <wsdl:input name="GetContentMetadataList_x0020_with_x0020_preview">
+        <soap:body use="literal" />
+        <soap:header message="tns:GetContentMetadataList with previewAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetContentMetadataList with previewRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetContentMetadataList_x0020_with_x0020_preview">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaDataTypes">
+      <soap:operation soapAction="http://tempuri.org/GetMetaDataTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetMetaDataTypesAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetMetaDataTypesRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataType">
+      <soap:operation soapAction="http://tempuri.org/GetMetadataType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetMetadataTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetMetadataTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MetadataSoap12" type="tns:MetadataSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddMetaDataType">
+      <soap12:operation soapAction="http://tempuri.org/AddMetaDataType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddMetaDataTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddMetaDataTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteMetadataType">
+      <soap12:operation soapAction="http://tempuri.org/DeleteMetadataType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteMetadataTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:DeleteMetadataTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <soap12:operation soapAction="http://tempuri.org/GetContentMetadataList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetContentMetadataListAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetContentMetadataListRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <soap12:operation soapAction="http://tempuri.org/GetContentMetadataList with preview" style="document" />
+      <wsdl:input name="GetContentMetadataList_x0020_with_x0020_preview">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetContentMetadataList with previewAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetContentMetadataList with previewRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetContentMetadataList_x0020_with_x0020_preview">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaDataTypes">
+      <soap12:operation soapAction="http://tempuri.org/GetMetaDataTypes" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetMetaDataTypesAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetMetaDataTypesRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataType">
+      <soap12:operation soapAction="http://tempuri.org/GetMetadataType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetMetadataTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetMetadataTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MetadataHttpGet" type="tns:MetadataHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="DeleteMetadataType">
+      <http:operation location="/DeleteMetadataType" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <http:operation location="/GetContentMetadataList" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <http:operation location="/GetContentMetadataList with preview" />
+      <wsdl:input name="GetContentMetadataList_x0020_with_x0020_preview">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="GetContentMetadataList_x0020_with_x0020_preview">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaDataTypes">
+      <http:operation location="/GetMetaDataTypes" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataType">
+      <http:operation location="/GetMetadataType" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MetadataHttpPost" type="tns:MetadataHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="DeleteMetadataType">
+      <http:operation location="/DeleteMetadataType" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <http:operation location="/GetContentMetadataList" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentMetadataList">
+      <http:operation location="/GetContentMetadataList with preview" />
+      <wsdl:input name="GetContentMetadataList_x0020_with_x0020_preview">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="GetContentMetadataList_x0020_with_x0020_preview">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetaDataTypes">
+      <http:operation location="/GetMetaDataTypes" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMetadataType">
+      <http:operation location="/GetMetadataType" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Metadata">
+    <wsdl:port name="MetadataSoap" binding="tns:MetadataSoap">
+      <soap:address location="http://local.ektron/workarea/webservices/WebServiceAPI/metadata.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MetadataSoap12" binding="tns:MetadataSoap12">
+      <soap12:address location="http://local.ektron/workarea/webservices/WebServiceAPI/metadata.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MetadataHttpGet" binding="tns:MetadataHttpGet">
+      <http:address location="http://local.ektron/workarea/webservices/WebServiceAPI/metadata.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MetadataHttpPost" binding="tns:MetadataHttpPost">
+      <http:address location="http://local.ektron/workarea/webservices/WebServiceAPI/metadata.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

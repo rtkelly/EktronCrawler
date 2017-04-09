@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EktronCrawler.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EktronCrawler_EktronWeb_ContentApi_Content" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://local.ektron/workarea/webservices/Content.asmx</Value>
+    </Setting>
+    <Setting Name="EktronCrawler_EktronWeb_FolderApi_Folder" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://local.ektron/workarea/webservices/folder.asmx</Value>
+    </Setting>
+    <Setting Name="EktronCrawler_EktronWeb_MetaDataApi_Metadata" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://local.ektron/workarea/webservices/WebServiceAPI/metadata.asmx</Value>
+    </Setting>
+    <Setting Name="EktronCrawler_EktronWeb_TaxonomyApi_Taxonomy" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://local.ektron/workarea/webservices/WebServiceAPI/Taxonomy/taxonomy.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

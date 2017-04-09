@@ -1,0 +1,2985 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="CheckOutContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckOutContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CheckOutContentResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader" />
+      <s:complexType name="AuthenticationHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="RequestInfoParameters" type="tns:RequestInfoParameters" />
+      <s:complexType name="RequestInfoParameters">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ContentLanguage" type="s:int" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="SaveContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="contentEditData" type="tns:ContentEditData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ContentEditData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ContentData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="NoOfSaves" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MaxContentSize" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="MaxSummarySize" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentStatus" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="LockedContentLink" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="FileChanged" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ContentData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ContentBaseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="EditorFirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="EditorLastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Comment" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DateModified" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="DisplayLastEditDate" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DateCreated" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="DisplayDateCreated" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsPermissionsInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="PermissionInheritedFrom" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="GoLiveDate" nillable="true" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="DisplayGoLive" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ApprovalMethod" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsPublished" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSearchable" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="XmlInheritedFrom" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="MetaData" type="tns:ArrayOfContentMetaData" />
+              <s:element minOccurs="0" maxOccurs="1" name="DisplayEndDate" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExpireDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="EndDateActionType" type="tns:CMSEndDateAction" />
+              <s:element minOccurs="0" maxOccurs="1" name="XmlConfiguration" type="tns:XmlConfigData" />
+              <s:element minOccurs="0" maxOccurs="1" name="StyleSheet" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="LanguageDescription" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Approver" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Path" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ContentPath" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="ContType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Updates" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="FolderName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="MediaText" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="HistoryId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="HyperLink" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TemplateConfiguration" type="tns:TemplateData" />
+              <s:element minOccurs="1" maxOccurs="1" name="FlagDefId" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ContentBaseData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsLocalizedDataOfContentBaseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Teaser" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Html" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Quicklink" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Image" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsPrivate" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubType" type="tns:CMSContentSubtype" />
+              <s:element minOccurs="1" maxOccurs="1" name="ExternalTypeId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="AssetData" type="tns:AssetData" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsLocalizedDataOfContentBaseData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfContentBaseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="LanguageId" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfContentBaseData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfContentBaseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfContentBaseData" abstract="true" />
+      <s:simpleType name="CMSContentSubtype">
+        <s:restriction base="s:string">
+          <s:enumeration value="AllTypes" />
+          <s:enumeration value="Content" />
+          <s:enumeration value="PageBuilderData" />
+          <s:enumeration value="WebEvent" />
+          <s:enumeration value="PageBuilderMasterData" />
+          <s:enumeration value="CTAData" />
+          <s:enumeration value="LandingPageData" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="AssetData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MimeType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MimeName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileExtension" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImageUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Icon" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PluginType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PublishPdfActive" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfContentMetaData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ContentMetaData" nillable="true" type="tns:ContentMetaData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ContentMetaData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfContentMetaData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DataType" type="tns:ContentMetadataDataType" />
+              <s:element minOccurs="0" maxOccurs="1" name="DefaultValue" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:ContentMetadataType" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsEditable" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="Separator" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CaseSensitive" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="RemoveDuplicate" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSearchAllowed" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsDisplayable" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="SelectableText" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="AllowMultiple" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSelectableOnly" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="MetaDisplayEE" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="MetaDataObjectType" type="tns:MetaDataType" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfContentMetaData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfContentMetaData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfContentMetaData" abstract="true" />
+      <s:simpleType name="ContentMetadataDataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Text" />
+          <s:enumeration value="Number" />
+          <s:enumeration value="Byte" />
+          <s:enumeration value="Double" />
+          <s:enumeration value="Float" />
+          <s:enumeration value="Integer" />
+          <s:enumeration value="Long" />
+          <s:enumeration value="Short" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="Boolean" />
+          <s:enumeration value="SingleSelect" />
+          <s:enumeration value="MultiSelect" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="ContentMetadataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="HtmlTag" />
+          <s:enumeration value="MetaTag" />
+          <s:enumeration value="CollectionSelector" />
+          <s:enumeration value="ListSummarySelector" />
+          <s:enumeration value="ContentSelector" />
+          <s:enumeration value="ImageSelector" />
+          <s:enumeration value="LinkSelector" />
+          <s:enumeration value="FileSelector" />
+          <s:enumeration value="MenuSelector" />
+          <s:enumeration value="UserSelector" />
+          <s:enumeration value="SearchableProperty" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="MetaDataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Normal" />
+          <s:enumeration value="ProductAttribute" />
+          <s:enumeration value="Tags" />
+          <s:enumeration value="Categories" />
+          <s:enumeration value="Trackback" />
+          <s:enumeration value="Ping" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="CMSEndDateAction">
+        <s:restriction base="s:string">
+          <s:enumeration value="Undefined" />
+          <s:enumeration value="Archive_Expire" />
+          <s:enumeration value="Archive_Display" />
+          <s:enumeration value="Refresh_Report" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="XmlConfigData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SaveXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt5" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlSchema" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlNameSpace" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlAdvConfig" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateCreated" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayDateCreated" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastEditDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayLastEditDate" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditorFirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditorLastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhysicalPath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LogicalPath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DefaultXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PackageXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PackageDisplayXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DesignStyleSheet" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsDefault" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="FieldList" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TemplateData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfTemplateData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="TemplateName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:TemplateType" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubType" type="tns:TemplateSubType" />
+              <s:element minOccurs="0" maxOccurs="1" name="Thumbnail" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MasterLayoutID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsToolbarEnabled" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfTemplateData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfTemplateData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfTemplateData" abstract="true" />
+      <s:simpleType name="TemplateType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Default" />
+          <s:enumeration value="User" />
+          <s:enumeration value="Group" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="TemplateSubType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Default" />
+          <s:enumeration value="Workspace" />
+          <s:enumeration value="Photos" />
+          <s:enumeration value="Blog" />
+          <s:enumeration value="Wireframes" />
+          <s:enumeration value="Profile" />
+          <s:enumeration value="Calendar" />
+          <s:enumeration value="Forum" />
+          <s:enumeration value="MasterLayout" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="SaveContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SaveContentResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CopyContentToFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ContentID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="Language" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Publish" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CopyContentToFolderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CopyContentToFolderResult" type="tns:ContentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ContentTitle" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentComment" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SearchText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SummaryHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentLanguage" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="GoLive" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" />
+            <s:element minOccurs="0" maxOccurs="1" name="MetaInfoXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddContentResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContentWithUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentTitle" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentComment" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SearchText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SummaryHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentLanguage" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="GoLive" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" />
+            <s:element minOccurs="0" maxOccurs="1" name="MetaInfoXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContentWithUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddContentWithUserResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ContentTitle" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentComment" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SearchText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SummaryHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentLanguage" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="GoLive" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" />
+            <s:element minOccurs="0" maxOccurs="1" name="MetaInfoXml" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="CleanHtml" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtmlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtmlResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContent_x0020_With_x0020_ContentID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ContentTitle" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentComment" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SearchText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SummaryHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentLanguage" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="GoLive" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" />
+            <s:element minOccurs="0" maxOccurs="1" name="MetaInfoXml" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContent_x0020_With_x0020_ContentIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddContent_x0020_With_x0020_ContentIDResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ContentTitle" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentComment" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SearchText" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SummaryHtml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentLanguage" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="GoLive" />
+            <s:element minOccurs="0" maxOccurs="1" name="EndDate" />
+            <s:element minOccurs="0" maxOccurs="1" name="MetaInfoXml" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="XmlId" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="TemplateID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateIDResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentForEditing">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentForEditingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContentForEditingResult" type="tns:ContentEditData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteContentItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteContentItemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteContentItemResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAddViewLanguage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="LanguageData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Activated" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImagePath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CharSet" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="BrowserCode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Direction" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FlagFile" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlLang" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteEnabled" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="LocalName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LegacyData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfLanguageData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="LanguageData" nillable="true" type="tns:LanguageData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAddViewLanguageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAddViewLanguageResult" type="tns:ArrayOfLanguageData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllComments">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="KeyID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="CommentID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="RefID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="RefType" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="CommentData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="CommentKeyId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="CommentId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="RefId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="CommentText" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateModified" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateCreated" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfCommentData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CommentData" nillable="true" type="tns:CommentData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllCommentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllCommentsResult" type="tns:ArrayOfCommentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllTemplates">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTemplateData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TemplateData" nillable="true" type="tns:TemplateData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllTemplatesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllTemplatesResult" type="tns:ArrayOfTemplateData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateContentMetaData">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="MetaDataTypeID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="MetaDataText" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateContentMetaDataResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateContentMetaDataResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllUnassignedItemApprovals">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="ItemType" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ApprovalData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="GroupId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GroupName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayUserName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayUserGroupName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserDomain" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UserGroupDomain" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsCurrentApprover" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="LegacyData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfApprovalData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ApprovalData" nillable="true" type="tns:ApprovalData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllUnassignedItemApprovalsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllUnassignedItemApprovalsResult" type="tns:ArrayOfApprovalData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChildContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Recursive" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfContentData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ContentData" nillable="true" type="tns:ContentData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetChildContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetChildContentResult" type="tns:ArrayOfContentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChildContentWithPaging">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Recursive" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:PagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PagingInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="RecordsPerPage" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentPage" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalPages" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalRecords" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetChildContentWithPagingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetChildContentWithPagingResult" type="tns:ArrayOfContentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="ResultType" type="tns:ContentResultType" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="ContentResultType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Published" />
+          <s:enumeration value="Staged" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContentResult" type="tns:ContentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentByHistory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="HistoryID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentByHistoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContentByHistoryResult" type="tns:ContentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentState">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentStateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContentStateResult" type="tns:ContentStateData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ContentStateData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:ContentData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentTitle" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentDisplayEndDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentEndDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentEditorFirstName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentEditorLastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="PreviousStatus" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrentFolderId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentGoLive" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentDisplayGoLive" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentLastEditDate" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentDisplayLastEditDate" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrentMetaComplete" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CurrentUserId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="CurrentComment" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsFolderPrivate" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetContentStatus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetContentStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetContentStatusResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDomain">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDomainResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDomainResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveContentToFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ContentID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ContentLanguage" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MoveContentToFolderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="MoveContentToFolderResult" type="tns:ContentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PublishContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="ContentLanguage" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="DontCreateTask" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="TaskTitle" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PublishContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PublishContentResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RenameContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RenameContentResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RenameContentResult" type="tns:ContentData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitForDelete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitForDeleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SubmitForDeleteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UndoCheckout">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UndoCheckoutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UndoCheckoutResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NotifySubscriptionForSynchronizedContent">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="startVersion" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NotifySubscriptionForSynchronizedContentResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="NotifySubscriptionForSynchronizedContentByType">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="startVersion" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="syncType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NotifySubscriptionForSynchronizedContentByTypeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="ContentData" nillable="true" type="tns:ContentData" />
+      <s:element name="ContentEditData" nillable="true" type="tns:ContentEditData" />
+      <s:element name="ArrayOfLanguageData" nillable="true" type="tns:ArrayOfLanguageData" />
+      <s:element name="ArrayOfCommentData" nillable="true" type="tns:ArrayOfCommentData" />
+      <s:element name="ArrayOfTemplateData" nillable="true" type="tns:ArrayOfTemplateData" />
+      <s:element name="ArrayOfApprovalData" nillable="true" type="tns:ArrayOfApprovalData" />
+      <s:element name="ArrayOfContentData" nillable="true" type="tns:ArrayOfContentData" />
+      <s:element name="ContentStateData" nillable="true" type="tns:ContentStateData" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CheckOutContentSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckOutContent" />
+  </wsdl:message>
+  <wsdl:message name="CheckOutContentSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckOutContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="CheckOutContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="CheckOutContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="SaveContentSoapIn">
+    <wsdl:part name="parameters" element="tns:SaveContent" />
+  </wsdl:message>
+  <wsdl:message name="SaveContentSoapOut">
+    <wsdl:part name="parameters" element="tns:SaveContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaveContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="SaveContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:CopyContentToFolder" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:CopyContentToFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddContentSoapIn">
+    <wsdl:part name="parameters" element="tns:AddContent" />
+  </wsdl:message>
+  <wsdl:message name="AddContentSoapOut">
+    <wsdl:part name="parameters" element="tns:AddContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddContentWithUserSoapIn">
+    <wsdl:part name="parameters" element="tns:AddContentWithUser" />
+  </wsdl:message>
+  <wsdl:message name="AddContentWithUserSoapOut">
+    <wsdl:part name="parameters" element="tns:AddContentWithUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddContentWithUserAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddContentWithUserRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtmlSoapIn">
+    <wsdl:part name="parameters" element="tns:AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml" />
+  </wsdl:message>
+  <wsdl:message name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtmlSoapOut">
+    <wsdl:part name="parameters" element="tns:AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtmlResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddContent With overload Parameter CleanHtmlAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddContent With overload Parameter CleanHtmlRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddContent_x0020_With_x0020_ContentIDSoapIn">
+    <wsdl:part name="parameters" element="tns:AddContent_x0020_With_x0020_ContentID" />
+  </wsdl:message>
+  <wsdl:message name="AddContent_x0020_With_x0020_ContentIDSoapOut">
+    <wsdl:part name="parameters" element="tns:AddContent_x0020_With_x0020_ContentIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddContent With ContentIDAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddContent With ContentIDRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateIDSoapIn">
+    <wsdl:part name="parameters" element="tns:AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID" />
+  </wsdl:message>
+  <wsdl:message name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateIDSoapOut">
+    <wsdl:part name="parameters" element="tns:AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddContent with XmlID and TemplateIDAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddContent with XmlID and TemplateIDRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContentForEditing" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContentForEditingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteContentItem" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteContentItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAddViewLanguage" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAddViewLanguageResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllComments" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllCommentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllTemplates" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllTemplatesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateContentMetaData" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateContentMetaDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllUnassignedItemApprovals" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllUnassignedItemApprovalsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetChildContent" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetChildContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentWithPagingSoapIn">
+    <wsdl:part name="parameters" element="tns:GetChildContentWithPaging" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentWithPagingSoapOut">
+    <wsdl:part name="parameters" element="tns:GetChildContentWithPagingResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentWithPagingAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentWithPagingRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetContentSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContent" />
+  </wsdl:message>
+  <wsdl:message name="GetContentSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistorySoapIn">
+    <wsdl:part name="parameters" element="tns:GetContentByHistory" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistorySoapOut">
+    <wsdl:part name="parameters" element="tns:GetContentByHistoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistoryAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistoryRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContentState" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContentStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetContentStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetContentStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDomain" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDomainResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:MoveContentToFolder" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:MoveContentToFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentSoapIn">
+    <wsdl:part name="parameters" element="tns:PublishContent" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentSoapOut">
+    <wsdl:part name="parameters" element="tns:PublishContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentSoapIn">
+    <wsdl:part name="parameters" element="tns:RenameContent" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentSoapOut">
+    <wsdl:part name="parameters" element="tns:RenameContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitForDelete" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitForDeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutSoapIn">
+    <wsdl:part name="parameters" element="tns:UndoCheckout" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutSoapOut">
+    <wsdl:part name="parameters" element="tns:UndoCheckoutResponse" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentSoapIn">
+    <wsdl:part name="parameters" element="tns:NotifySubscriptionForSynchronizedContent" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentSoapOut">
+    <wsdl:part name="parameters" element="tns:NotifySubscriptionForSynchronizedContentResponse" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeSoapIn">
+    <wsdl:part name="parameters" element="tns:NotifySubscriptionForSynchronizedContentByType" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeSoapOut">
+    <wsdl:part name="parameters" element="tns:NotifySubscriptionForSynchronizedContentByTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="CheckOutContentHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckOutContentHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+    <wsdl:part name="Publish" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentEditData" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLanguageData" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsHttpGetIn">
+    <wsdl:part name="KeyID" type="s:string" />
+    <wsdl:part name="CommentID" type="s:string" />
+    <wsdl:part name="RefID" type="s:string" />
+    <wsdl:part name="RefType" type="s:string" />
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCommentData" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesHttpGetIn">
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfTemplateData" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="MetaDataTypeID" type="s:string" />
+    <wsdl:part name="MetaDataText" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="ItemType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfApprovalData" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Recursive" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="ResultType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistoryHttpGetIn">
+    <wsdl:part name="HistoryID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistoryHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentStateData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="ContentLanguage" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="ContentLanguage" type="s:string" />
+    <wsdl:part name="DontCreateTask" type="s:string" />
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="TaskTitle" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="Title" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentHttpGetOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentHttpGetIn">
+    <wsdl:part name="startVersion" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentHttpGetOut" />
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeHttpGetIn">
+    <wsdl:part name="startVersion" type="s:string" />
+    <wsdl:part name="syncType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeHttpGetOut" />
+  <wsdl:message name="CheckOutContentHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckOutContentHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Language" type="s:string" />
+    <wsdl:part name="Publish" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CopyContentToFolderHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentForEditingHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentEditData" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteContentItemHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAddViewLanguageHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfLanguageData" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsHttpPostIn">
+    <wsdl:part name="KeyID" type="s:string" />
+    <wsdl:part name="CommentID" type="s:string" />
+    <wsdl:part name="RefID" type="s:string" />
+    <wsdl:part name="RefType" type="s:string" />
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllCommentsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfCommentData" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesHttpPostIn">
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllTemplatesHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfTemplateData" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="MetaDataTypeID" type="s:string" />
+    <wsdl:part name="MetaDataText" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UpdateContentMetaDataHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="ItemType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAllUnassignedItemApprovalsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfApprovalData" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Recursive" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetChildContentHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="ResultType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistoryHttpPostIn">
+    <wsdl:part name="HistoryID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentByHistoryHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStateHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentStateData" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetContentStatusHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="ContentLanguage" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MoveContentToFolderHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="ContentLanguage" type="s:string" />
+    <wsdl:part name="DontCreateTask" type="s:string" />
+    <wsdl:part name="UserID" type="s:string" />
+    <wsdl:part name="TaskTitle" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PublishContentHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="Title" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RenameContentHttpPostOut">
+    <wsdl:part name="Body" element="tns:ContentData" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SubmitForDeleteHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="UndoCheckoutHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentHttpPostIn">
+    <wsdl:part name="startVersion" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentHttpPostOut" />
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeHttpPostIn">
+    <wsdl:part name="startVersion" type="s:string" />
+    <wsdl:part name="syncType" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="NotifySubscriptionForSynchronizedContentByTypeHttpPostOut" />
+  <wsdl:portType name="ContentSoap">
+    <wsdl:operation name="CheckOutContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Checks the content out to the current user</wsdl:documentation>
+      <wsdl:input message="tns:CheckOutContentSoapIn" />
+      <wsdl:output message="tns:CheckOutContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates the checked out content block.</wsdl:documentation>
+      <wsdl:input message="tns:SaveContentSoapIn" />
+      <wsdl:output message="tns:SaveContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CopyContentToFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Copy the content into required folder.</wsdl:documentation>
+      <wsdl:input message="tns:CopyContentToFolderSoapIn" />
+      <wsdl:output message="tns:CopyContentToFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Adds a piece of content.</wsdl:documentation>
+      <wsdl:input message="tns:AddContentSoapIn" />
+      <wsdl:output message="tns:AddContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Adds a piece of content.</wsdl:documentation>
+      <wsdl:input name="AddContentWithUser" message="tns:AddContentWithUserSoapIn" />
+      <wsdl:output name="AddContentWithUser" message="tns:AddContentWithUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Adds a piece of content.</wsdl:documentation>
+      <wsdl:input name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml" message="tns:AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtmlSoapIn" />
+      <wsdl:output name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml" message="tns:AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtmlSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Adds a piece of content.</wsdl:documentation>
+      <wsdl:input name="AddContent_x0020_With_x0020_ContentID" message="tns:AddContent_x0020_With_x0020_ContentIDSoapIn" />
+      <wsdl:output name="AddContent_x0020_With_x0020_ContentID" message="tns:AddContent_x0020_With_x0020_ContentIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Adds a piece of content.</wsdl:documentation>
+      <wsdl:input name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID" message="tns:AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateIDSoapIn" />
+      <wsdl:output name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID" message="tns:AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentForEditing">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loads the content details with checkout mode</wsdl:documentation>
+      <wsdl:input message="tns:GetContentForEditingSoapIn" />
+      <wsdl:output message="tns:GetContentForEditingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentItem">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete the content by the content's ID</wsdl:documentation>
+      <wsdl:input message="tns:DeleteContentItemSoapIn" />
+      <wsdl:output message="tns:DeleteContentItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddViewLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all the languages from the system for a given content ID </wsdl:documentation>
+      <wsdl:input message="tns:GetAddViewLanguageSoapIn" />
+      <wsdl:output message="tns:GetAddViewLanguageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all comments</wsdl:documentation>
+      <wsdl:input message="tns:GetAllCommentsSoapIn" />
+      <wsdl:output message="tns:GetAllCommentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTemplates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all templates</wsdl:documentation>
+      <wsdl:input message="tns:GetAllTemplatesSoapIn" />
+      <wsdl:output message="tns:GetAllTemplatesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContentMetaData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates Content Metadata</wsdl:documentation>
+      <wsdl:input message="tns:UpdateContentMetaDataSoapIn" />
+      <wsdl:output message="tns:UpdateContentMetaDataSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUnassignedItemApprovals">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns all of the unassigned user/groups for a given content ID</wsdl:documentation>
+      <wsdl:input message="tns:GetAllUnassignedItemApprovalsSoapIn" />
+      <wsdl:output message="tns:GetAllUnassignedItemApprovalsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loads all of the contents for the given folder</wsdl:documentation>
+      <wsdl:input message="tns:GetChildContentSoapIn" />
+      <wsdl:output message="tns:GetChildContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loads all of the contents for the given folder</wsdl:documentation>
+      <wsdl:input name="GetChildContentWithPaging" message="tns:GetChildContentWithPagingSoapIn" />
+      <wsdl:output name="GetChildContentWithPaging" message="tns:GetChildContentWithPagingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the content details by content id</wsdl:documentation>
+      <wsdl:input message="tns:GetContentSoapIn" />
+      <wsdl:output message="tns:GetContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentByHistory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the corresponding content by the history ID</wsdl:documentation>
+      <wsdl:input message="tns:GetContentByHistorySoapIn" />
+      <wsdl:output message="tns:GetContentByHistorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the content's details</wsdl:documentation>
+      <wsdl:input message="tns:GetContentStateSoapIn" />
+      <wsdl:output message="tns:GetContentStateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets single letter string which is the status of the piece of content</wsdl:documentation>
+      <wsdl:input message="tns:GetContentStatusSoapIn" />
+      <wsdl:output message="tns:GetContentStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets web domain for a piece of content</wsdl:documentation>
+      <wsdl:input message="tns:GetDomainSoapIn" />
+      <wsdl:output message="tns:GetDomainSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveContentToFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Moves content to a folder</wsdl:documentation>
+      <wsdl:input message="tns:MoveContentToFolderSoapIn" />
+      <wsdl:output message="tns:MoveContentToFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PublishContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Function takes in information about the content to be checked in and published. This goes through the normal approval chain. The content must be in a checked out state to the current logged in user for this to succeed</wsdl:documentation>
+      <wsdl:input message="tns:PublishContentSoapIn" />
+      <wsdl:output message="tns:PublishContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RenameContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Renames the content by ID</wsdl:documentation>
+      <wsdl:input message="tns:RenameContentSoapIn" />
+      <wsdl:output message="tns:RenameContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitForDelete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes the content by the content's Id and folder Id</wsdl:documentation>
+      <wsdl:input message="tns:SubmitForDeleteSoapIn" />
+      <wsdl:output message="tns:SubmitForDeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Reverts the checkout for a piece of content which is checked out to the current user</wsdl:documentation>
+      <wsdl:input message="tns:UndoCheckoutSoapIn" />
+      <wsdl:output message="tns:UndoCheckoutSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Notify subscription for synchronized content.</wsdl:documentation>
+      <wsdl:input message="tns:NotifySubscriptionForSynchronizedContentSoapIn" />
+      <wsdl:output message="tns:NotifySubscriptionForSynchronizedContentSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContentByType">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Notify subscription for synchronized content.</wsdl:documentation>
+      <wsdl:input message="tns:NotifySubscriptionForSynchronizedContentByTypeSoapIn" />
+      <wsdl:output message="tns:NotifySubscriptionForSynchronizedContentByTypeSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ContentHttpGet">
+    <wsdl:operation name="CheckOutContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Checks the content out to the current user</wsdl:documentation>
+      <wsdl:input message="tns:CheckOutContentHttpGetIn" />
+      <wsdl:output message="tns:CheckOutContentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CopyContentToFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Copy the content into required folder.</wsdl:documentation>
+      <wsdl:input message="tns:CopyContentToFolderHttpGetIn" />
+      <wsdl:output message="tns:CopyContentToFolderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentForEditing">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loads the content details with checkout mode</wsdl:documentation>
+      <wsdl:input message="tns:GetContentForEditingHttpGetIn" />
+      <wsdl:output message="tns:GetContentForEditingHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentItem">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete the content by the content's ID</wsdl:documentation>
+      <wsdl:input message="tns:DeleteContentItemHttpGetIn" />
+      <wsdl:output message="tns:DeleteContentItemHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddViewLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all the languages from the system for a given content ID </wsdl:documentation>
+      <wsdl:input message="tns:GetAddViewLanguageHttpGetIn" />
+      <wsdl:output message="tns:GetAddViewLanguageHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all comments</wsdl:documentation>
+      <wsdl:input message="tns:GetAllCommentsHttpGetIn" />
+      <wsdl:output message="tns:GetAllCommentsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTemplates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all templates</wsdl:documentation>
+      <wsdl:input message="tns:GetAllTemplatesHttpGetIn" />
+      <wsdl:output message="tns:GetAllTemplatesHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContentMetaData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates Content Metadata</wsdl:documentation>
+      <wsdl:input message="tns:UpdateContentMetaDataHttpGetIn" />
+      <wsdl:output message="tns:UpdateContentMetaDataHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUnassignedItemApprovals">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns all of the unassigned user/groups for a given content ID</wsdl:documentation>
+      <wsdl:input message="tns:GetAllUnassignedItemApprovalsHttpGetIn" />
+      <wsdl:output message="tns:GetAllUnassignedItemApprovalsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loads all of the contents for the given folder</wsdl:documentation>
+      <wsdl:input message="tns:GetChildContentHttpGetIn" />
+      <wsdl:output message="tns:GetChildContentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the content details by content id</wsdl:documentation>
+      <wsdl:input message="tns:GetContentHttpGetIn" />
+      <wsdl:output message="tns:GetContentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentByHistory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the corresponding content by the history ID</wsdl:documentation>
+      <wsdl:input message="tns:GetContentByHistoryHttpGetIn" />
+      <wsdl:output message="tns:GetContentByHistoryHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the content's details</wsdl:documentation>
+      <wsdl:input message="tns:GetContentStateHttpGetIn" />
+      <wsdl:output message="tns:GetContentStateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets single letter string which is the status of the piece of content</wsdl:documentation>
+      <wsdl:input message="tns:GetContentStatusHttpGetIn" />
+      <wsdl:output message="tns:GetContentStatusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets web domain for a piece of content</wsdl:documentation>
+      <wsdl:input message="tns:GetDomainHttpGetIn" />
+      <wsdl:output message="tns:GetDomainHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveContentToFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Moves content to a folder</wsdl:documentation>
+      <wsdl:input message="tns:MoveContentToFolderHttpGetIn" />
+      <wsdl:output message="tns:MoveContentToFolderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PublishContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Function takes in information about the content to be checked in and published. This goes through the normal approval chain. The content must be in a checked out state to the current logged in user for this to succeed</wsdl:documentation>
+      <wsdl:input message="tns:PublishContentHttpGetIn" />
+      <wsdl:output message="tns:PublishContentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RenameContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Renames the content by ID</wsdl:documentation>
+      <wsdl:input message="tns:RenameContentHttpGetIn" />
+      <wsdl:output message="tns:RenameContentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitForDelete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes the content by the content's Id and folder Id</wsdl:documentation>
+      <wsdl:input message="tns:SubmitForDeleteHttpGetIn" />
+      <wsdl:output message="tns:SubmitForDeleteHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Reverts the checkout for a piece of content which is checked out to the current user</wsdl:documentation>
+      <wsdl:input message="tns:UndoCheckoutHttpGetIn" />
+      <wsdl:output message="tns:UndoCheckoutHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Notify subscription for synchronized content.</wsdl:documentation>
+      <wsdl:input message="tns:NotifySubscriptionForSynchronizedContentHttpGetIn" />
+      <wsdl:output message="tns:NotifySubscriptionForSynchronizedContentHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContentByType">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Notify subscription for synchronized content.</wsdl:documentation>
+      <wsdl:input message="tns:NotifySubscriptionForSynchronizedContentByTypeHttpGetIn" />
+      <wsdl:output message="tns:NotifySubscriptionForSynchronizedContentByTypeHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ContentHttpPost">
+    <wsdl:operation name="CheckOutContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Checks the content out to the current user</wsdl:documentation>
+      <wsdl:input message="tns:CheckOutContentHttpPostIn" />
+      <wsdl:output message="tns:CheckOutContentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CopyContentToFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Copy the content into required folder.</wsdl:documentation>
+      <wsdl:input message="tns:CopyContentToFolderHttpPostIn" />
+      <wsdl:output message="tns:CopyContentToFolderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentForEditing">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loads the content details with checkout mode</wsdl:documentation>
+      <wsdl:input message="tns:GetContentForEditingHttpPostIn" />
+      <wsdl:output message="tns:GetContentForEditingHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentItem">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Delete the content by the content's ID</wsdl:documentation>
+      <wsdl:input message="tns:DeleteContentItemHttpPostIn" />
+      <wsdl:output message="tns:DeleteContentItemHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAddViewLanguage">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all the languages from the system for a given content ID </wsdl:documentation>
+      <wsdl:input message="tns:GetAddViewLanguageHttpPostIn" />
+      <wsdl:output message="tns:GetAddViewLanguageHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComments">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all comments</wsdl:documentation>
+      <wsdl:input message="tns:GetAllCommentsHttpPostIn" />
+      <wsdl:output message="tns:GetAllCommentsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTemplates">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets all templates</wsdl:documentation>
+      <wsdl:input message="tns:GetAllTemplatesHttpPostIn" />
+      <wsdl:output message="tns:GetAllTemplatesHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContentMetaData">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates Content Metadata</wsdl:documentation>
+      <wsdl:input message="tns:UpdateContentMetaDataHttpPostIn" />
+      <wsdl:output message="tns:UpdateContentMetaDataHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUnassignedItemApprovals">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns all of the unassigned user/groups for a given content ID</wsdl:documentation>
+      <wsdl:input message="tns:GetAllUnassignedItemApprovalsHttpPostIn" />
+      <wsdl:output message="tns:GetAllUnassignedItemApprovalsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Loads all of the contents for the given folder</wsdl:documentation>
+      <wsdl:input message="tns:GetChildContentHttpPostIn" />
+      <wsdl:output message="tns:GetChildContentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the content details by content id</wsdl:documentation>
+      <wsdl:input message="tns:GetContentHttpPostIn" />
+      <wsdl:output message="tns:GetContentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentByHistory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the corresponding content by the history ID</wsdl:documentation>
+      <wsdl:input message="tns:GetContentByHistoryHttpPostIn" />
+      <wsdl:output message="tns:GetContentByHistoryHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentState">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets the content's details</wsdl:documentation>
+      <wsdl:input message="tns:GetContentStateHttpPostIn" />
+      <wsdl:output message="tns:GetContentStateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContentStatus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets single letter string which is the status of the piece of content</wsdl:documentation>
+      <wsdl:input message="tns:GetContentStatusHttpPostIn" />
+      <wsdl:output message="tns:GetContentStatusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets web domain for a piece of content</wsdl:documentation>
+      <wsdl:input message="tns:GetDomainHttpPostIn" />
+      <wsdl:output message="tns:GetDomainHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveContentToFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Moves content to a folder</wsdl:documentation>
+      <wsdl:input message="tns:MoveContentToFolderHttpPostIn" />
+      <wsdl:output message="tns:MoveContentToFolderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PublishContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Function takes in information about the content to be checked in and published. This goes through the normal approval chain. The content must be in a checked out state to the current logged in user for this to succeed</wsdl:documentation>
+      <wsdl:input message="tns:PublishContentHttpPostIn" />
+      <wsdl:output message="tns:PublishContentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RenameContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Renames the content by ID</wsdl:documentation>
+      <wsdl:input message="tns:RenameContentHttpPostIn" />
+      <wsdl:output message="tns:RenameContentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitForDelete">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes the content by the content's Id and folder Id</wsdl:documentation>
+      <wsdl:input message="tns:SubmitForDeleteHttpPostIn" />
+      <wsdl:output message="tns:SubmitForDeleteHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckout">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Reverts the checkout for a piece of content which is checked out to the current user</wsdl:documentation>
+      <wsdl:input message="tns:UndoCheckoutHttpPostIn" />
+      <wsdl:output message="tns:UndoCheckoutHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContent">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Notify subscription for synchronized content.</wsdl:documentation>
+      <wsdl:input message="tns:NotifySubscriptionForSynchronizedContentHttpPostIn" />
+      <wsdl:output message="tns:NotifySubscriptionForSynchronizedContentHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContentByType">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Notify subscription for synchronized content.</wsdl:documentation>
+      <wsdl:input message="tns:NotifySubscriptionForSynchronizedContentByTypeHttpPostIn" />
+      <wsdl:output message="tns:NotifySubscriptionForSynchronizedContentByTypeHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ContentSoap" type="tns:ContentSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CheckOutContent">
+      <soap:operation soapAction="http://tempuri.org/CheckOutContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CheckOutContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:CheckOutContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveContent">
+      <soap:operation soapAction="http://tempuri.org/SaveContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SaveContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:SaveContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyContentToFolder">
+      <soap:operation soapAction="http://tempuri.org/CopyContentToFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CopyContentToFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:CopyContentToFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap:operation soapAction="http://tempuri.org/AddContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap:operation soapAction="http://tempuri.org/AddContentWithUser" style="document" />
+      <wsdl:input name="AddContentWithUser">
+        <soap:body use="literal" />
+        <soap:header message="tns:AddContentWithUserAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddContentWithUserRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContentWithUser">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap:operation soapAction="http://tempuri.org/AddContent With overload Parameter CleanHtml" style="document" />
+      <wsdl:input name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml">
+        <soap:body use="literal" />
+        <soap:header message="tns:AddContent With overload Parameter CleanHtmlAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddContent With overload Parameter CleanHtmlRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap:operation soapAction="http://tempuri.org/AddContent With ContentID" style="document" />
+      <wsdl:input name="AddContent_x0020_With_x0020_ContentID">
+        <soap:body use="literal" />
+        <soap:header message="tns:AddContent With ContentIDAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddContent With ContentIDRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContent_x0020_With_x0020_ContentID">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap:operation soapAction="http://tempuri.org/AddContent with XmlID and TemplateID" style="document" />
+      <wsdl:input name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID">
+        <soap:body use="literal" />
+        <soap:header message="tns:AddContent with XmlID and TemplateIDAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddContent with XmlID and TemplateIDRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentForEditing">
+      <soap:operation soapAction="http://tempuri.org/GetContentForEditing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetContentForEditingAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetContentForEditingRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentItem">
+      <soap:operation soapAction="http://tempuri.org/DeleteContentItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteContentItemAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:DeleteContentItemRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddViewLanguage">
+      <soap:operation soapAction="http://tempuri.org/GetAddViewLanguage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetAddViewLanguageAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetAddViewLanguageRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComments">
+      <soap:operation soapAction="http://tempuri.org/GetAllComments" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetAllCommentsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetAllCommentsRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTemplates">
+      <soap:operation soapAction="http://tempuri.org/GetAllTemplates" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetAllTemplatesAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetAllTemplatesRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContentMetaData">
+      <soap:operation soapAction="http://tempuri.org/UpdateContentMetaData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateContentMetaDataAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:UpdateContentMetaDataRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUnassignedItemApprovals">
+      <soap:operation soapAction="http://tempuri.org/GetAllUnassignedItemApprovals" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetAllUnassignedItemApprovalsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetAllUnassignedItemApprovalsRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <soap:operation soapAction="http://tempuri.org/GetChildContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetChildContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetChildContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <soap:operation soapAction="http://tempuri.org/GetChildContentWithPaging" style="document" />
+      <wsdl:input name="GetChildContentWithPaging">
+        <soap:body use="literal" />
+        <soap:header message="tns:GetChildContentWithPagingAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetChildContentWithPagingRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetChildContentWithPaging">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContent">
+      <soap:operation soapAction="http://tempuri.org/GetContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentByHistory">
+      <soap:operation soapAction="http://tempuri.org/GetContentByHistory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetContentByHistoryAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetContentByHistoryRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentState">
+      <soap:operation soapAction="http://tempuri.org/GetContentState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetContentStateAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetContentStateRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentStatus">
+      <soap:operation soapAction="http://tempuri.org/GetContentStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetContentStatusAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetContentStatusRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <soap:operation soapAction="http://tempuri.org/GetDomain" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetDomainAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetDomainRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveContentToFolder">
+      <soap:operation soapAction="http://tempuri.org/MoveContentToFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:MoveContentToFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:MoveContentToFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PublishContent">
+      <soap:operation soapAction="http://tempuri.org/PublishContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:PublishContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:PublishContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameContent">
+      <soap:operation soapAction="http://tempuri.org/RenameContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RenameContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:RenameContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitForDelete">
+      <soap:operation soapAction="http://tempuri.org/SubmitForDelete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:SubmitForDeleteAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:SubmitForDeleteRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckout">
+      <soap:operation soapAction="http://tempuri.org/UndoCheckout" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UndoCheckoutAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:UndoCheckoutRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContent">
+      <soap:operation soapAction="http://tempuri.org/NotifySubscriptionForSynchronizedContent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:NotifySubscriptionForSynchronizedContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:NotifySubscriptionForSynchronizedContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContentByType">
+      <soap:operation soapAction="http://tempuri.org/NotifySubscriptionForSynchronizedContentByType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:NotifySubscriptionForSynchronizedContentByTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:NotifySubscriptionForSynchronizedContentByTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ContentSoap12" type="tns:ContentSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CheckOutContent">
+      <soap12:operation soapAction="http://tempuri.org/CheckOutContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CheckOutContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:CheckOutContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveContent">
+      <soap12:operation soapAction="http://tempuri.org/SaveContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SaveContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:SaveContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyContentToFolder">
+      <soap12:operation soapAction="http://tempuri.org/CopyContentToFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CopyContentToFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:CopyContentToFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap12:operation soapAction="http://tempuri.org/AddContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap12:operation soapAction="http://tempuri.org/AddContentWithUser" style="document" />
+      <wsdl:input name="AddContentWithUser">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddContentWithUserAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddContentWithUserRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContentWithUser">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap12:operation soapAction="http://tempuri.org/AddContent With overload Parameter CleanHtml" style="document" />
+      <wsdl:input name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddContent With overload Parameter CleanHtmlAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddContent With overload Parameter CleanHtmlRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContent_x0020_With_x0020_overload_x0020_Parameter_x0020_CleanHtml">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap12:operation soapAction="http://tempuri.org/AddContent With ContentID" style="document" />
+      <wsdl:input name="AddContent_x0020_With_x0020_ContentID">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddContent With ContentIDAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddContent With ContentIDRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContent_x0020_With_x0020_ContentID">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddContent">
+      <soap12:operation soapAction="http://tempuri.org/AddContent with XmlID and TemplateID" style="document" />
+      <wsdl:input name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddContent with XmlID and TemplateIDAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddContent with XmlID and TemplateIDRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddContent_x0020_with_x0020_XmlID_x0020_and_x0020_TemplateID">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentForEditing">
+      <soap12:operation soapAction="http://tempuri.org/GetContentForEditing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetContentForEditingAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetContentForEditingRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentItem">
+      <soap12:operation soapAction="http://tempuri.org/DeleteContentItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteContentItemAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:DeleteContentItemRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddViewLanguage">
+      <soap12:operation soapAction="http://tempuri.org/GetAddViewLanguage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetAddViewLanguageAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetAddViewLanguageRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComments">
+      <soap12:operation soapAction="http://tempuri.org/GetAllComments" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetAllCommentsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetAllCommentsRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTemplates">
+      <soap12:operation soapAction="http://tempuri.org/GetAllTemplates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetAllTemplatesAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetAllTemplatesRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContentMetaData">
+      <soap12:operation soapAction="http://tempuri.org/UpdateContentMetaData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateContentMetaDataAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:UpdateContentMetaDataRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUnassignedItemApprovals">
+      <soap12:operation soapAction="http://tempuri.org/GetAllUnassignedItemApprovals" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetAllUnassignedItemApprovalsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetAllUnassignedItemApprovalsRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <soap12:operation soapAction="http://tempuri.org/GetChildContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetChildContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetChildContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <soap12:operation soapAction="http://tempuri.org/GetChildContentWithPaging" style="document" />
+      <wsdl:input name="GetChildContentWithPaging">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetChildContentWithPagingAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetChildContentWithPagingRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetChildContentWithPaging">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContent">
+      <soap12:operation soapAction="http://tempuri.org/GetContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentByHistory">
+      <soap12:operation soapAction="http://tempuri.org/GetContentByHistory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetContentByHistoryAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetContentByHistoryRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentState">
+      <soap12:operation soapAction="http://tempuri.org/GetContentState" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetContentStateAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetContentStateRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentStatus">
+      <soap12:operation soapAction="http://tempuri.org/GetContentStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetContentStatusAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetContentStatusRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <soap12:operation soapAction="http://tempuri.org/GetDomain" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetDomainAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetDomainRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveContentToFolder">
+      <soap12:operation soapAction="http://tempuri.org/MoveContentToFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:MoveContentToFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:MoveContentToFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PublishContent">
+      <soap12:operation soapAction="http://tempuri.org/PublishContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:PublishContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:PublishContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameContent">
+      <soap12:operation soapAction="http://tempuri.org/RenameContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:RenameContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:RenameContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitForDelete">
+      <soap12:operation soapAction="http://tempuri.org/SubmitForDelete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:SubmitForDeleteAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:SubmitForDeleteRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckout">
+      <soap12:operation soapAction="http://tempuri.org/UndoCheckout" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UndoCheckoutAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:UndoCheckoutRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContent">
+      <soap12:operation soapAction="http://tempuri.org/NotifySubscriptionForSynchronizedContent" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:NotifySubscriptionForSynchronizedContentAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:NotifySubscriptionForSynchronizedContentRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContentByType">
+      <soap12:operation soapAction="http://tempuri.org/NotifySubscriptionForSynchronizedContentByType" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:NotifySubscriptionForSynchronizedContentByTypeAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:NotifySubscriptionForSynchronizedContentByTypeRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ContentHttpGet" type="tns:ContentHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="CheckOutContent">
+      <http:operation location="/CheckOutContent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyContentToFolder">
+      <http:operation location="/CopyContentToFolder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentForEditing">
+      <http:operation location="/GetContentForEditing" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentItem">
+      <http:operation location="/DeleteContentItem" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddViewLanguage">
+      <http:operation location="/GetAddViewLanguage" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComments">
+      <http:operation location="/GetAllComments" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTemplates">
+      <http:operation location="/GetAllTemplates" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContentMetaData">
+      <http:operation location="/UpdateContentMetaData" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUnassignedItemApprovals">
+      <http:operation location="/GetAllUnassignedItemApprovals" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <http:operation location="/GetChildContent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContent">
+      <http:operation location="/GetContent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentByHistory">
+      <http:operation location="/GetContentByHistory" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentState">
+      <http:operation location="/GetContentState" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentStatus">
+      <http:operation location="/GetContentStatus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <http:operation location="/GetDomain" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveContentToFolder">
+      <http:operation location="/MoveContentToFolder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PublishContent">
+      <http:operation location="/PublishContent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameContent">
+      <http:operation location="/RenameContent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitForDelete">
+      <http:operation location="/SubmitForDelete" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckout">
+      <http:operation location="/UndoCheckout" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContent">
+      <http:operation location="/NotifySubscriptionForSynchronizedContent" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContentByType">
+      <http:operation location="/NotifySubscriptionForSynchronizedContentByType" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ContentHttpPost" type="tns:ContentHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="CheckOutContent">
+      <http:operation location="/CheckOutContent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CopyContentToFolder">
+      <http:operation location="/CopyContentToFolder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentForEditing">
+      <http:operation location="/GetContentForEditing" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteContentItem">
+      <http:operation location="/DeleteContentItem" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAddViewLanguage">
+      <http:operation location="/GetAddViewLanguage" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllComments">
+      <http:operation location="/GetAllComments" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllTemplates">
+      <http:operation location="/GetAllTemplates" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateContentMetaData">
+      <http:operation location="/UpdateContentMetaData" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllUnassignedItemApprovals">
+      <http:operation location="/GetAllUnassignedItemApprovals" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildContent">
+      <http:operation location="/GetChildContent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContent">
+      <http:operation location="/GetContent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentByHistory">
+      <http:operation location="/GetContentByHistory" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentState">
+      <http:operation location="/GetContentState" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContentStatus">
+      <http:operation location="/GetContentStatus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDomain">
+      <http:operation location="/GetDomain" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveContentToFolder">
+      <http:operation location="/MoveContentToFolder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PublishContent">
+      <http:operation location="/PublishContent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameContent">
+      <http:operation location="/RenameContent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitForDelete">
+      <http:operation location="/SubmitForDelete" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UndoCheckout">
+      <http:operation location="/UndoCheckout" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContent">
+      <http:operation location="/NotifySubscriptionForSynchronizedContent" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+    <wsdl:operation name="NotifySubscriptionForSynchronizedContentByType">
+      <http:operation location="/NotifySubscriptionForSynchronizedContentByType" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Content">
+    <wsdl:port name="ContentSoap" binding="tns:ContentSoap">
+      <soap:address location="http://local.ektron/workarea/webservices/Content.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ContentSoap12" binding="tns:ContentSoap12">
+      <soap12:address location="http://local.ektron/workarea/webservices/Content.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ContentHttpGet" binding="tns:ContentHttpGet">
+      <http:address location="http://local.ektron/workarea/webservices/Content.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ContentHttpPost" binding="tns:ContentHttpPost">
+      <http:address location="http://local.ektron/workarea/webservices/Content.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

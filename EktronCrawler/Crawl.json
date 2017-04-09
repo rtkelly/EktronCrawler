@@ -1,0 +1,32 @@
+{
+
+	"crawljobs": [{
+		"crawltype": "FullCrawl",
+		"crawlintervaltype": "Day",
+		"crawlinterval": "1",
+		"crawlconfigid": "defaultConfig"
+	}, {
+		"crawltype": "PartialCrawl",
+		"crawlintervaltype": "Minute",
+		"crawlinterval": "2",
+		"crawlconfigid": "defaultConfig"
+	}],
+	"crawlconfigs": [{
+		"configid": "defaultConfig",
+		"rootfolderid": "72",
+		"crawlschemaitems": [{
+			"xmlconfigid": "0"
+		}, {
+			"xmlconfigid": "7",
+			"indexfields": [
+				"/root/PracticeGuidelines/Title",
+				"/root/PracticeGuidelines/Description"
+			],
+			"secondarycontent": [
+				"/root/guidelinePdf",
+				"/root/additionalResources"
+			]
+
+		}]
+	}]
+}

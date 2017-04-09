@@ -1,0 +1,1682 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="AddFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FolderReq" type="tns:FolderRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="FolderRequest">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FolderName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FolderDescription" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ParentId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="TemplateFileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="StyleSheet" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SiteMapPathInherit" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="SiteMapPath" type="tns:ArrayOfSitemapPath" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImageDirectory" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileDirectory" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DomainStaging" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DomainProduction" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FolderType" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsDomainFolder" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="XmlInherited" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="EnableReplication" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="PublishActive" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlConfiguration" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BreakInheritButton" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="FolderCfldAssignments" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubscriptionProperties" type="tns:SubscriptionPropertiesData" />
+          <s:element minOccurs="1" maxOccurs="1" name="suppressNotification" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="ContentSubAssignments" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="MetaInherited" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="MetaInheritedFrom" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxonomyInherited" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="TaxonomyInheritedFrom" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="FlagInherited" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="FlagInheritedFrom" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="CategoryRequired" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="TaxonomyIdList" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FlagDefIdList" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ByPassMetadataUpateforFolder" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AliasInheritedFrom" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="AliasInherited" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="AliasRequired" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsContentSearchableInheritedFrom" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsContentSearchableInherited" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="IscontentSearchable" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplaySettings" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DisplaySettingsInheritedFrom" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsDisplaySettingsInherited" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSitemapPath">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SitemapPath" nillable="true" type="tns:SitemapPath" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SitemapPath">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Url" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Order" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContentId" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SubscriptionPropertiesData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="BreakInheritance" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="NotificationType" type="tns:SubscriptionPropertyNotificationTypes" />
+          <s:element minOccurs="1" maxOccurs="1" name="SuspendNextNotification" type="s:boolean" />
+          <s:element minOccurs="1" maxOccurs="1" name="SendNextNotification" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="Subject" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="URL" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EmailFrom" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileLocation" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="WebLocation" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="OptOutID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="DefaultMessageID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="SummaryID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="UseContentTitle" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UnsubscribeID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="UseContentLink" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="SubscriptionPropertyNotificationTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Always" />
+          <s:enumeration value="Initial" />
+          <s:enumeration value="Never" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="AddFolderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FolderReq" type="tns:FolderRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader" />
+      <s:complexType name="AuthenticationHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="RequestInfoParameters" type="tns:RequestInfoParameters" />
+      <s:complexType name="RequestInfoParameters">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ContentLanguage" type="s:int" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="CreateFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FolderPath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateFolderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateFolderResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteFolderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DeleteFolderResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChildFolders_Obsolete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Recursive" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrderBy" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetChildFolders_ObsoleteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetChildFolders_ObsoleteResult" type="tns:ArrayOfFolderData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfFolderData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FolderData" nillable="true" type="tns:FolderData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FolderData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfFolderData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="ParentId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="NameWithPath" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FolderIdWithPath" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsPermissionsInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsHidden" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="InheritedFrom" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="PrivateContent" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsXmlInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="XmlInheritedFrom" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="XmlConfiguration" type="tns:ArrayOfXmlConfigData" />
+              <s:element minOccurs="0" maxOccurs="1" name="StyleSheet" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TemplateFileName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsStyleSheetInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsTemplateInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateInheritedFrom" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="ApprovalMethod" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="ApprovalType" type="tns:FolderApprovalType" />
+              <s:element minOccurs="0" maxOccurs="1" name="ChildFolders" type="tns:ArrayOfFolderData" />
+              <s:element minOccurs="1" maxOccurs="1" name="MetaInheritedFrom" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsMetaInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="HasChildren" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="PublishPdfActive" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="Permissions" type="tns:PermissionData" />
+              <s:element minOccurs="0" maxOccurs="1" name="FolderMetadata" type="tns:ArrayOfContentMetaData" />
+              <s:element minOccurs="0" maxOccurs="1" name="FolderTemplates" type="tns:ArrayOfTemplateData" />
+              <s:element minOccurs="1" maxOccurs="1" name="TotalContent" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsDomainFolder" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="DomainStaging" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="DomainProduction" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="FolderType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:FolderType" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSitemapInherited" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="BreadCrumbPath" type="tns:ArrayOfSitemapPath" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsCommunityFolder" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsTaxonomyInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="AliasInheritedFrom" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsAliasInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="AliasRequired" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="FlagInheritedFrom" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsFlagInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsCategoryRequired" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="FolderTaxonomy" type="tns:ArrayOfTaxonomyBaseData" />
+              <s:element minOccurs="0" maxOccurs="1" name="FolderFlags" type="tns:ArrayOfFlagDefData" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsContentSearchableInheritedFrom" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsContentSearchableInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IscontentSearchable" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="DisplaySettings" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="DisplaySettingsInheritedFrom" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsDisplaySettingsInherited" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfFolderData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfFolderData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfFolderData" abstract="true" />
+      <s:complexType name="ArrayOfXmlConfigData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="XmlConfigData" nillable="true" type="tns:XmlConfigData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="XmlConfigData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SaveXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt3" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt4" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Xslt5" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlSchema" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlNameSpace" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="XmlAdvConfig" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateCreated" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayDateCreated" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="LastEditDate" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="DisplayLastEditDate" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="UserId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditorFirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EditorLastName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PhysicalPath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="LogicalPath" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DefaultXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PackageXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PackageDisplayXslt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DesignStyleSheet" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsDefault" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" name="FieldList" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="FolderApprovalType">
+        <s:restriction base="s:string">
+          <s:enumeration value="NotForceAll" />
+          <s:enumeration value="ForceAll" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="PermissionData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfPermissionData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="CanApprove" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanAdd" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEdit" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanDelete" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanRestore" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanAddToImageLib" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanAddToFileLib" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanOverwriteLib" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanAddToHyperlinkLib" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanAddToQuicklinkLib" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanAddFolders" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEditFolders" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanDeleteFolders" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanTraverseFolders" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanCreateTask" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanRedirectTask" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanDestructTask" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsReadOnly" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsCollections" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsAdmin" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsLoggedIn" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsInMemberShip" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsReadOnlyLib" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="LegacyData" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanHistory" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanPublish" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanAddTask" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanBreakPending" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanView" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEditSummary" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanSeeProperty" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanPreview" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanDecline" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEditSumit" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEditCollections" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanDeleteTask" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanMetadataComplete" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEditProperties" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEditApprovals" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="CanEditQLinks" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfPermissionData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfPermissionData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfPermissionData" abstract="true" />
+      <s:complexType name="ArrayOfContentMetaData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ContentMetaData" nillable="true" type="tns:ContentMetaData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ContentMetaData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfContentMetaData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DataType" type="tns:ContentMetadataDataType" />
+              <s:element minOccurs="0" maxOccurs="1" name="DefaultValue" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:ContentMetadataType" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsEditable" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="Separator" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="CaseSensitive" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="RemoveDuplicate" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSearchAllowed" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsDisplayable" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="SelectableText" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="AllowMultiple" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsSelectableOnly" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="MetaDisplayEE" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="MetaDataObjectType" type="tns:MetaDataType" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfContentMetaData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfContentMetaData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfContentMetaData" abstract="true" />
+      <s:simpleType name="ContentMetadataDataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Text" />
+          <s:enumeration value="Number" />
+          <s:enumeration value="Byte" />
+          <s:enumeration value="Double" />
+          <s:enumeration value="Float" />
+          <s:enumeration value="Integer" />
+          <s:enumeration value="Long" />
+          <s:enumeration value="Short" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="Boolean" />
+          <s:enumeration value="SingleSelect" />
+          <s:enumeration value="MultiSelect" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="ContentMetadataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="HtmlTag" />
+          <s:enumeration value="MetaTag" />
+          <s:enumeration value="CollectionSelector" />
+          <s:enumeration value="ListSummarySelector" />
+          <s:enumeration value="ContentSelector" />
+          <s:enumeration value="ImageSelector" />
+          <s:enumeration value="LinkSelector" />
+          <s:enumeration value="FileSelector" />
+          <s:enumeration value="MenuSelector" />
+          <s:enumeration value="UserSelector" />
+          <s:enumeration value="SearchableProperty" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="MetaDataType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Normal" />
+          <s:enumeration value="ProductAttribute" />
+          <s:enumeration value="Tags" />
+          <s:enumeration value="Categories" />
+          <s:enumeration value="Trackback" />
+          <s:enumeration value="Ping" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfTemplateData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TemplateData" nillable="true" type="tns:TemplateData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TemplateData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfTemplateData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="TemplateName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Type" type="tns:TemplateType" />
+              <s:element minOccurs="1" maxOccurs="1" name="SubType" type="tns:TemplateSubType" />
+              <s:element minOccurs="0" maxOccurs="1" name="Thumbnail" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="MasterLayoutID" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsToolbarEnabled" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfTemplateData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfTemplateData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfTemplateData" abstract="true" />
+      <s:simpleType name="TemplateType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Default" />
+          <s:enumeration value="User" />
+          <s:enumeration value="Group" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="TemplateSubType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Default" />
+          <s:enumeration value="Workspace" />
+          <s:enumeration value="Photos" />
+          <s:enumeration value="Blog" />
+          <s:enumeration value="Wireframes" />
+          <s:enumeration value="Profile" />
+          <s:enumeration value="Calendar" />
+          <s:enumeration value="Forum" />
+          <s:enumeration value="MasterLayout" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="FolderType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Content" />
+          <s:enumeration value="Blog" />
+          <s:enumeration value="Domain" />
+          <s:enumeration value="DiscussionBoard" />
+          <s:enumeration value="DiscussionForum" />
+          <s:enumeration value="Root" />
+          <s:enumeration value="Community" />
+          <s:enumeration value="Media" />
+          <s:enumeration value="Calendar" />
+          <s:enumeration value="Catalog" />
+          <s:enumeration value="Program" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfTaxonomyBaseData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TaxonomyBaseData" nillable="true" type="tns:TaxonomyBaseData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TaxonomyBaseData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfTaxonomyBaseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyIdPath" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyImage" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CategoryUrl" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Visible" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyType" type="tns:TaxonomyType" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyLanguage" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyLanguageName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyDescription" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyParentId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyLevel" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyPath" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyCreatedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemCount" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyHasChildren" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="TemplateName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateInheritedFrom" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfTaxonomyBaseData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfTaxonomyBaseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfTaxonomyBaseData" abstract="true" />
+      <s:simpleType name="TaxonomyType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Content" />
+          <s:enumeration value="User" />
+          <s:enumeration value="Group" />
+          <s:enumeration value="Locale" />
+          <s:enumeration value="Undefined" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfFlagDefData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FlagDefData" nillable="true" type="tns:FlagDefData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FlagDefData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfFlagDefData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Hidden" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="Items" type="tns:ArrayOfFlagItemData" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfFlagDefData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfFlagDefData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfFlagDefData" abstract="true" />
+      <s:complexType name="ArrayOfFlagItemData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="FlagItemData" nillable="true" type="tns:FlagItemData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="FlagItemData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="FlagDefinitionID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="FlagDefinitionLanguage" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalFlags" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="SortOrder" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateModified" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetChildFolders">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="Recursive" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="OrderBy" type="tns:FolderOrderBy" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="FolderOrderBy">
+        <s:restriction base="s:string">
+          <s:enumeration value="Id" />
+          <s:enumeration value="Name" />
+          <s:enumeration value="SubFolderCount" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetChildFoldersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetChildFoldersResult" type="tns:ArrayOfFolderData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolderID">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolderIDResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetFolderIDResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolderIDByName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FolderName" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="ParentId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolderIDByNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetFolderIDByNameResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPath">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPathResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetPathResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RenameFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="Title" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RenameFolderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RenameFolderResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolderResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFolderResult" type="tns:FolderData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolderByParam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="getTaxonomy" type="s:boolean" />
+            <s:element minOccurs="1" maxOccurs="1" name="getFlags" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetFolderByParamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetFolderByParamResult" type="tns:FolderData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FolderReq" type="tns:FolderRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateFolderResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="UpdateFolder_x005B_FolderData_x005D_">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FolderReq" type="tns:FolderData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateFolder_x005B_FolderData_x005D_Response">
+        <s:complexType />
+      </s:element>
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="ArrayOfFolderData" nillable="true" type="tns:ArrayOfFolderData" />
+      <s:element name="long" type="s:long" />
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="FolderData" nillable="true" type="tns:FolderData" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:AddFolder" />
+  </wsdl:message>
+  <wsdl:message name="AddFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:AddFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateFolder" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteFolder" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteSoapIn">
+    <wsdl:part name="parameters" element="tns:GetChildFolders_Obsolete" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteSoapOut">
+    <wsdl:part name="parameters" element="tns:GetChildFolders_ObsoleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetChildFolders" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetChildFoldersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFolderID" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFolderIDResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFolderIDByName" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFolderIDByNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetPathSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPath" />
+  </wsdl:message>
+  <wsdl:message name="GetPathSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPathResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPathAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetPathRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:RenameFolder" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:RenameFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFolder" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamSoapIn">
+    <wsdl:part name="parameters" element="tns:GetFolderByParam" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamSoapOut">
+    <wsdl:part name="parameters" element="tns:GetFolderByParamResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateFolder" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolder_x005B_FolderData_x005D_SoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateFolder_x005B_FolderData_x005D_" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolder_x005B_FolderData_x005D_SoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateFolder_x005B_FolderData_x005D_Response" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolder[FolderData]AuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateFolder[FolderData]RequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderHttpGetIn">
+    <wsdl:part name="FolderPath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Recursive" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfFolderData" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Recursive" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfFolderData" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDHttpGetIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDHttpGetOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameHttpGetIn">
+    <wsdl:part name="FolderName" type="s:string" />
+    <wsdl:part name="ParentId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameHttpGetOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="GetPathHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPathHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Title" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderHttpGetOut">
+    <wsdl:part name="Body" element="tns:FolderData" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamHttpGetIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="getTaxonomy" type="s:string" />
+    <wsdl:part name="getFlags" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamHttpGetOut">
+    <wsdl:part name="Body" element="tns:FolderData" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderHttpPostIn">
+    <wsdl:part name="FolderPath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="CreateFolderHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFolderHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Recursive" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFolders_ObsoleteHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfFolderData" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Recursive" type="s:string" />
+    <wsdl:part name="OrderBy" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetChildFoldersHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfFolderData" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDHttpPostIn">
+    <wsdl:part name="ContentID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDHttpPostOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameHttpPostIn">
+    <wsdl:part name="FolderName" type="s:string" />
+    <wsdl:part name="ParentId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderIDByNameHttpPostOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="GetPathHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetPathHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="Title" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RenameFolderHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderHttpPostOut">
+    <wsdl:part name="Body" element="tns:FolderData" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamHttpPostIn">
+    <wsdl:part name="FolderID" type="s:string" />
+    <wsdl:part name="getTaxonomy" type="s:string" />
+    <wsdl:part name="getFlags" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetFolderByParamHttpPostOut">
+    <wsdl:part name="Body" element="tns:FolderData" />
+  </wsdl:message>
+  <wsdl:portType name="FolderSoap">
+    <wsdl:operation name="AddFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Adds a folder</wsdl:documentation>
+      <wsdl:input message="tns:AddFolderSoapIn" />
+      <wsdl:output message="tns:AddFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a folder with the given path</wsdl:documentation>
+      <wsdl:input message="tns:CreateFolderSoapIn" />
+      <wsdl:output message="tns:CreateFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes folder specified by folder id</wsdl:documentation>
+      <wsdl:input message="tns:DeleteFolderSoapIn" />
+      <wsdl:output message="tns:DeleteFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method is obsolete. Use new GetChildFolders method with FolderOrderBy enum parameter</wsdl:documentation>
+      <wsdl:input name="GetChildFolders_Obsolete" message="tns:GetChildFolders_ObsoleteSoapIn" />
+      <wsdl:output name="GetChildFolders_Obsolete" message="tns:GetChildFolders_ObsoleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all the subfolders for a given folder ID</wsdl:documentation>
+      <wsdl:input message="tns:GetChildFoldersSoapIn" />
+      <wsdl:output message="tns:GetChildFoldersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Finds the folder ID by using the content's ID</wsdl:documentation>
+      <wsdl:input message="tns:GetFolderIDSoapIn" />
+      <wsdl:output message="tns:GetFolderIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Finds the folder ID by folder name and in a parent folder specified.</wsdl:documentation>
+      <wsdl:input name="GetFolderIDByName" message="tns:GetFolderIDByNameSoapIn" />
+      <wsdl:output name="GetFolderIDByName" message="tns:GetFolderIDByNameSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPath">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets path to folder by folder ID</wsdl:documentation>
+      <wsdl:input message="tns:GetPathSoapIn" />
+      <wsdl:output message="tns:GetPathSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RenameFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Renames the folder by ID.</wsdl:documentation>
+      <wsdl:input message="tns:RenameFolderSoapIn" />
+      <wsdl:output message="tns:RenameFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the folder's details</wsdl:documentation>
+      <wsdl:input message="tns:GetFolderSoapIn" />
+      <wsdl:output message="tns:GetFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the folder's details</wsdl:documentation>
+      <wsdl:input name="GetFolderByParam" message="tns:GetFolderByParamSoapIn" />
+      <wsdl:output name="GetFolderByParam" message="tns:GetFolderByParamSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates a folder</wsdl:documentation>
+      <wsdl:input message="tns:UpdateFolderSoapIn" />
+      <wsdl:output message="tns:UpdateFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Updates a folder</wsdl:documentation>
+      <wsdl:input name="UpdateFolder_x005B_FolderData_x005D_" message="tns:UpdateFolder_x005B_FolderData_x005D_SoapIn" />
+      <wsdl:output name="UpdateFolder_x005B_FolderData_x005D_" message="tns:UpdateFolder_x005B_FolderData_x005D_SoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="FolderHttpGet">
+    <wsdl:operation name="CreateFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a folder with the given path</wsdl:documentation>
+      <wsdl:input message="tns:CreateFolderHttpGetIn" />
+      <wsdl:output message="tns:CreateFolderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes folder specified by folder id</wsdl:documentation>
+      <wsdl:input message="tns:DeleteFolderHttpGetIn" />
+      <wsdl:output message="tns:DeleteFolderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method is obsolete. Use new GetChildFolders method with FolderOrderBy enum parameter</wsdl:documentation>
+      <wsdl:input name="GetChildFolders_Obsolete" message="tns:GetChildFolders_ObsoleteHttpGetIn" />
+      <wsdl:output name="GetChildFolders_Obsolete" message="tns:GetChildFolders_ObsoleteHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all the subfolders for a given folder ID</wsdl:documentation>
+      <wsdl:input message="tns:GetChildFoldersHttpGetIn" />
+      <wsdl:output message="tns:GetChildFoldersHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Finds the folder ID by using the content's ID</wsdl:documentation>
+      <wsdl:input message="tns:GetFolderIDHttpGetIn" />
+      <wsdl:output message="tns:GetFolderIDHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Finds the folder ID by folder name and in a parent folder specified.</wsdl:documentation>
+      <wsdl:input name="GetFolderIDByName" message="tns:GetFolderIDByNameHttpGetIn" />
+      <wsdl:output name="GetFolderIDByName" message="tns:GetFolderIDByNameHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPath">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets path to folder by folder ID</wsdl:documentation>
+      <wsdl:input message="tns:GetPathHttpGetIn" />
+      <wsdl:output message="tns:GetPathHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RenameFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Renames the folder by ID.</wsdl:documentation>
+      <wsdl:input message="tns:RenameFolderHttpGetIn" />
+      <wsdl:output message="tns:RenameFolderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the folder's details</wsdl:documentation>
+      <wsdl:input message="tns:GetFolderHttpGetIn" />
+      <wsdl:output message="tns:GetFolderHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the folder's details</wsdl:documentation>
+      <wsdl:input name="GetFolderByParam" message="tns:GetFolderByParamHttpGetIn" />
+      <wsdl:output name="GetFolderByParam" message="tns:GetFolderByParamHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="FolderHttpPost">
+    <wsdl:operation name="CreateFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Creates a folder with the given path</wsdl:documentation>
+      <wsdl:input message="tns:CreateFolderHttpPostIn" />
+      <wsdl:output message="tns:CreateFolderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Deletes folder specified by folder id</wsdl:documentation>
+      <wsdl:input message="tns:DeleteFolderHttpPostIn" />
+      <wsdl:output message="tns:DeleteFolderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">This method is obsolete. Use new GetChildFolders method with FolderOrderBy enum parameter</wsdl:documentation>
+      <wsdl:input name="GetChildFolders_Obsolete" message="tns:GetChildFolders_ObsoleteHttpPostIn" />
+      <wsdl:output name="GetChildFolders_Obsolete" message="tns:GetChildFolders_ObsoleteHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Get all the subfolders for a given folder ID</wsdl:documentation>
+      <wsdl:input message="tns:GetChildFoldersHttpPostIn" />
+      <wsdl:output message="tns:GetChildFoldersHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Finds the folder ID by using the content's ID</wsdl:documentation>
+      <wsdl:input message="tns:GetFolderIDHttpPostIn" />
+      <wsdl:output message="tns:GetFolderIDHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Finds the folder ID by folder name and in a parent folder specified.</wsdl:documentation>
+      <wsdl:input name="GetFolderIDByName" message="tns:GetFolderIDByNameHttpPostIn" />
+      <wsdl:output name="GetFolderIDByName" message="tns:GetFolderIDByNameHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPath">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gets path to folder by folder ID</wsdl:documentation>
+      <wsdl:input message="tns:GetPathHttpPostIn" />
+      <wsdl:output message="tns:GetPathHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RenameFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Renames the folder by ID.</wsdl:documentation>
+      <wsdl:input message="tns:RenameFolderHttpPostIn" />
+      <wsdl:output message="tns:RenameFolderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the folder's details</wsdl:documentation>
+      <wsdl:input message="tns:GetFolderHttpPostIn" />
+      <wsdl:output message="tns:GetFolderHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Retrieves the folder's details</wsdl:documentation>
+      <wsdl:input name="GetFolderByParam" message="tns:GetFolderByParamHttpPostIn" />
+      <wsdl:output name="GetFolderByParam" message="tns:GetFolderByParamHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FolderSoap" type="tns:FolderSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddFolder">
+      <soap:operation soapAction="http://tempuri.org/AddFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateFolder">
+      <soap:operation soapAction="http://tempuri.org/CreateFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CreateFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:CreateFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFolder">
+      <soap:operation soapAction="http://tempuri.org/DeleteFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:DeleteFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <soap:operation soapAction="http://tempuri.org/GetChildFolders_Obsolete" style="document" />
+      <wsdl:input name="GetChildFolders_Obsolete">
+        <soap:body use="literal" />
+        <soap:header message="tns:GetChildFolders_ObsoleteAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetChildFolders_ObsoleteRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetChildFolders_Obsolete">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <soap:operation soapAction="http://tempuri.org/GetChildFolders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetChildFoldersAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetChildFoldersRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <soap:operation soapAction="http://tempuri.org/GetFolderID" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetFolderIDAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetFolderIDRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <soap:operation soapAction="http://tempuri.org/GetFolderIDByName" style="document" />
+      <wsdl:input name="GetFolderIDByName">
+        <soap:body use="literal" />
+        <soap:header message="tns:GetFolderIDByNameAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetFolderIDByNameRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetFolderIDByName">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPath">
+      <soap:operation soapAction="http://tempuri.org/GetPath" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetPathAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetPathRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameFolder">
+      <soap:operation soapAction="http://tempuri.org/RenameFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RenameFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:RenameFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <soap:operation soapAction="http://tempuri.org/GetFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <soap:operation soapAction="http://tempuri.org/GetFolderByParam" style="document" />
+      <wsdl:input name="GetFolderByParam">
+        <soap:body use="literal" />
+        <soap:header message="tns:GetFolderByParamAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetFolderByParamRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetFolderByParam">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFolder">
+      <soap:operation soapAction="http://tempuri.org/UpdateFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:UpdateFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFolder">
+      <soap:operation soapAction="http://tempuri.org/UpdateFolder[FolderData]" style="document" />
+      <wsdl:input name="UpdateFolder_x005B_FolderData_x005D_">
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateFolder[FolderData]AuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:UpdateFolder[FolderData]RequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="UpdateFolder_x005B_FolderData_x005D_">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FolderSoap12" type="tns:FolderSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddFolder">
+      <soap12:operation soapAction="http://tempuri.org/AddFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateFolder">
+      <soap12:operation soapAction="http://tempuri.org/CreateFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CreateFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:CreateFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFolder">
+      <soap12:operation soapAction="http://tempuri.org/DeleteFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:DeleteFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <soap12:operation soapAction="http://tempuri.org/GetChildFolders_Obsolete" style="document" />
+      <wsdl:input name="GetChildFolders_Obsolete">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetChildFolders_ObsoleteAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetChildFolders_ObsoleteRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetChildFolders_Obsolete">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <soap12:operation soapAction="http://tempuri.org/GetChildFolders" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetChildFoldersAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetChildFoldersRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <soap12:operation soapAction="http://tempuri.org/GetFolderID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetFolderIDAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetFolderIDRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <soap12:operation soapAction="http://tempuri.org/GetFolderIDByName" style="document" />
+      <wsdl:input name="GetFolderIDByName">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetFolderIDByNameAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetFolderIDByNameRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetFolderIDByName">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPath">
+      <soap12:operation soapAction="http://tempuri.org/GetPath" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetPathAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetPathRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameFolder">
+      <soap12:operation soapAction="http://tempuri.org/RenameFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:RenameFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:RenameFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <soap12:operation soapAction="http://tempuri.org/GetFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <soap12:operation soapAction="http://tempuri.org/GetFolderByParam" style="document" />
+      <wsdl:input name="GetFolderByParam">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetFolderByParamAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetFolderByParamRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetFolderByParam">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFolder">
+      <soap12:operation soapAction="http://tempuri.org/UpdateFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:UpdateFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateFolder">
+      <soap12:operation soapAction="http://tempuri.org/UpdateFolder[FolderData]" style="document" />
+      <wsdl:input name="UpdateFolder_x005B_FolderData_x005D_">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateFolder[FolderData]AuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:UpdateFolder[FolderData]RequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="UpdateFolder_x005B_FolderData_x005D_">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FolderHttpGet" type="tns:FolderHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="CreateFolder">
+      <http:operation location="/CreateFolder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFolder">
+      <http:operation location="/DeleteFolder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <http:operation location="/GetChildFolders_Obsolete" />
+      <wsdl:input name="GetChildFolders_Obsolete">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="GetChildFolders_Obsolete">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <http:operation location="/GetChildFolders" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <http:operation location="/GetFolderID" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <http:operation location="/GetFolderIDByName" />
+      <wsdl:input name="GetFolderIDByName">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="GetFolderIDByName">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPath">
+      <http:operation location="/GetPath" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameFolder">
+      <http:operation location="/RenameFolder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <http:operation location="/GetFolder" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <http:operation location="/GetFolderByParam" />
+      <wsdl:input name="GetFolderByParam">
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output name="GetFolderByParam">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FolderHttpPost" type="tns:FolderHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="CreateFolder">
+      <http:operation location="/CreateFolder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFolder">
+      <http:operation location="/DeleteFolder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <http:operation location="/GetChildFolders_Obsolete" />
+      <wsdl:input name="GetChildFolders_Obsolete">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="GetChildFolders_Obsolete">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetChildFolders">
+      <http:operation location="/GetChildFolders" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <http:operation location="/GetFolderID" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolderID">
+      <http:operation location="/GetFolderIDByName" />
+      <wsdl:input name="GetFolderIDByName">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="GetFolderIDByName">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPath">
+      <http:operation location="/GetPath" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameFolder">
+      <http:operation location="/RenameFolder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <http:operation location="/GetFolder" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFolder">
+      <http:operation location="/GetFolderByParam" />
+      <wsdl:input name="GetFolderByParam">
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output name="GetFolderByParam">
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Folder">
+    <wsdl:port name="FolderSoap" binding="tns:FolderSoap">
+      <soap:address location="http://local.ektron/workarea/webservices/folder.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FolderSoap12" binding="tns:FolderSoap12">
+      <soap12:address location="http://local.ektron/workarea/webservices/folder.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FolderHttpGet" binding="tns:FolderHttpGet">
+      <http:address location="http://local.ektron/workarea/webservices/folder.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FolderHttpPost" binding="tns:FolderHttpPost">
+      <http:address location="http://local.ektron/workarea/webservices/folder.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1089 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="LoadTaxonomy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TaxonomyRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:TaxonomyBaseRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyPath" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SearchText" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="GetAnalyticsData" type="s:boolean" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyIdList" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemType" type="tns:TaxonomyItemType" />
+              <s:element minOccurs="1" maxOccurs="1" name="IncludeItems" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IncludeDisabledNode" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Depth" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="Preview" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ReadCount" type="s:boolean" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TaxonomyBaseRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:SortRequest">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyLanguage" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyType" type="tns:TaxonomyType" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="SortRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:PageRequestData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SortOrder" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SortDirection" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="PageRequestData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PageSize" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="DMSLastPageIndex" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="CurrentPage" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="RecordsAffected" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SearchResults" type="tns:ArrayOfSearchCacheData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfSearchCacheData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="SearchCacheData" nillable="true" type="tns:SearchCacheData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="SearchCacheData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="ID" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Rank" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Size" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="TaxonomyType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Content" />
+          <s:enumeration value="User" />
+          <s:enumeration value="Group" />
+          <s:enumeration value="Locale" />
+          <s:enumeration value="Undefined" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="TaxonomyItemType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Content" />
+          <s:enumeration value="User" />
+          <s:enumeration value="Group" />
+          <s:enumeration value="Blogs" />
+          <s:enumeration value="Forum" />
+          <s:enumeration value="UriFavorite" />
+          <s:enumeration value="Task" />
+          <s:enumeration value="ActiveContent" />
+          <s:enumeration value="ArchivedContent" />
+          <s:enumeration value="Locale" />
+          <s:enumeration value="FolderChildren" />
+          <s:enumeration value="FolderDescendants" />
+          <s:enumeration value="FolderTree" />
+          <s:enumeration value="MenuTree" />
+          <s:enumeration value="TaxonomyTree" />
+          <s:enumeration value="Library" />
+          <s:enumeration value="ContentHistory" />
+          <s:enumeration value="OfficeDoc" />
+          <s:enumeration value="ManagedFiles" />
+          <s:enumeration value="Assets" />
+          <s:enumeration value="Images" />
+          <s:enumeration value="MultiMedia" />
+          <s:enumeration value="Archive_OfficeDoc" />
+          <s:enumeration value="Archive_ManagedFiles" />
+          <s:enumeration value="Archive_Assets" />
+          <s:enumeration value="Archive_Images" />
+          <s:enumeration value="Archive_MultiMedia" />
+          <s:enumeration value="CatalogEntry" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="LoadTaxonomyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="LoadTaxonomyResult" type="tns:TaxonomyData" />
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TaxonomyData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:TaxonomyBaseData">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyConfigurations" type="tns:ArrayOfTaxonomyConfiguration" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItems" type="tns:ArrayOfTaxonomyItemData" />
+              <s:element minOccurs="0" maxOccurs="1" name="Taxonomy" type="tns:ArrayOfTaxonomyData" />
+              <s:element minOccurs="1" maxOccurs="1" name="FolderId" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TaxonomyBaseData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfTaxonomyBaseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyIdPath" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyImage" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CategoryUrl" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Visible" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyType" type="tns:TaxonomyType" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyLanguage" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyLanguageName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyDescription" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyParentId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyLevel" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyPath" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyCreatedDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemCount" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyHasChildren" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="TemplateName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateInherited" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="TemplateInheritedFrom" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfTaxonomyBaseData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfTaxonomyBaseData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfTaxonomyBaseData" abstract="true" />
+      <s:complexType name="ArrayOfTaxonomyConfiguration">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TaxonomyConfiguration" type="tns:TaxonomyConfiguration" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="TaxonomyConfiguration">
+        <s:restriction base="s:string">
+          <s:enumeration value="Content" />
+          <s:enumeration value="User" />
+          <s:enumeration value="Group" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfTaxonomyItemData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TaxonomyItemData" nillable="true" type="tns:TaxonomyItemData" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TaxonomyItemData">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CmsDataOfTaxonomyItemData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyId" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyTitle" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AssetData" type="tns:AssetData" />
+              <s:element minOccurs="0" maxOccurs="1" name="ContentType" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemStatus" type="tns:ItemStatus" />
+              <s:element minOccurs="1" maxOccurs="1" name="ContentSubType" type="tns:CMSContentSubtype" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemAnalyticsInfo" type="tns:AnalyticsData" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyLanguageId" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemLanguage" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemType" type="tns:TaxonomyItemType" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemAddedUser" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemTitle" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemTeaser" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemQuickLink" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemAssetInfo" type="tns:AssetData" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemEditorLastName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemEditorFirstName" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemDateModified" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="DateCreated" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemThumbnail" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemImage" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemHtml" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemObjectType" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemFilePath" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemFolderId" type="s:long" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemGoLiveDate" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="TaxonomyItemEndDate" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemDisplayDateCreated" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="TaxonomyItemDisplayDateModified" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="CmsDataOfTaxonomyItemData" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseDataOfTaxonomyItemData">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:long" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseDataOfTaxonomyItemData" abstract="true" />
+      <s:complexType name="AssetData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Version" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MimeType" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MimeName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FileExtension" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ImageUrl" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Icon" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Status" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Language" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Type" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="PluginType" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="PublishPdfActive" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ItemStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="All" />
+          <s:enumeration value="PendingStart" />
+          <s:enumeration value="PendingExpiration" />
+          <s:enumeration value="Approved" />
+          <s:enumeration value="Expired" />
+          <s:enumeration value="Submitted" />
+          <s:enumeration value="CheckedOut" />
+          <s:enumeration value="CheckedIn" />
+          <s:enumeration value="PendingDelete" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="CMSContentSubtype">
+        <s:restriction base="s:string">
+          <s:enumeration value="AllTypes" />
+          <s:enumeration value="Content" />
+          <s:enumeration value="PageBuilderData" />
+          <s:enumeration value="WebEvent" />
+          <s:enumeration value="PageBuilderMasterData" />
+          <s:enumeration value="CTAData" />
+          <s:enumeration value="LandingPageData" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="AnalyticsData">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ContentViewCount" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContentRatingAverage" type="s:decimal" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContentRatingCount" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTaxonomyData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TaxonomyData" nillable="true" type="tns:TaxonomyData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AuthenticationHeader" type="tns:AuthenticationHeader" />
+      <s:complexType name="AuthenticationHeader">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Username" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Password" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Domain" type="s:string" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="RequestInfoParameters" type="tns:RequestInfoParameters" />
+      <s:complexType name="RequestInfoParameters">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ContentLanguage" type="s:int" />
+        </s:sequence>
+        <s:anyAttribute />
+      </s:complexType>
+      <s:element name="CreateTaxonomy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateTaxonomyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CreateTaxonomyResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateTaxonomy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateTaxonomyResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteTaxonomy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteTaxonomyResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReadTaxonomy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadTaxonomyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadTaxonomyResult" type="tns:TaxonomyData" />
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTaxonomyItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddTaxonomyItemResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="RemoveTaxonomyItem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveTaxonomyItemResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="AddTaxonomySyncFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomySyncRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TaxonomySyncRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:TaxonomyBaseRequest">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="SyncIdList" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="SyncRecursiveIdList" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AddTaxonomySyncFolderResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="RemoveTaxonomyFolder">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomySyncRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RemoveTaxonomyFolderResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReadAllAssignedCategory">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ContentId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadAllAssignedCategoryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadAllAssignedCategoryResult" type="tns:ArrayOfTaxonomyBaseData" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTaxonomyBaseData">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TaxonomyBaseData" nillable="true" type="tns:TaxonomyBaseData" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddTaxonomyItem_x0020_ContentRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyContentRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="TaxonomyContentRequest">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="ContentId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="TaxonomyList" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="FolderID" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="LanguageId" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="AddTaxonomyItem_x0020_ContentRequestResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReOrderTaxonomyItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyReq" type="tns:TaxonomyRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReOrderTaxonomyItemsResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTaxonomyIdByPath">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TaxonomyPath" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetTaxonomyIdByPathResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetTaxonomyIdByPathResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ArrayOfTaxonomyBaseData" nillable="true" type="tns:ArrayOfTaxonomyBaseData" />
+      <s:element name="long" type="s:long" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="LoadTaxonomySoapIn">
+    <wsdl:part name="parameters" element="tns:LoadTaxonomy" />
+  </wsdl:message>
+  <wsdl:message name="LoadTaxonomySoapOut">
+    <wsdl:part name="parameters" element="tns:LoadTaxonomyResponse" />
+  </wsdl:message>
+  <wsdl:message name="LoadTaxonomyAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="LoadTaxonomyRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="CreateTaxonomySoapIn">
+    <wsdl:part name="parameters" element="tns:CreateTaxonomy" />
+  </wsdl:message>
+  <wsdl:message name="CreateTaxonomySoapOut">
+    <wsdl:part name="parameters" element="tns:CreateTaxonomyResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateTaxonomyAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="CreateTaxonomyRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTaxonomySoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateTaxonomy" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTaxonomySoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateTaxonomyResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTaxonomyAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="UpdateTaxonomyRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTaxonomySoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteTaxonomy" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTaxonomySoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteTaxonomyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTaxonomyAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="DeleteTaxonomyRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="ReadTaxonomySoapIn">
+    <wsdl:part name="parameters" element="tns:ReadTaxonomy" />
+  </wsdl:message>
+  <wsdl:message name="ReadTaxonomySoapOut">
+    <wsdl:part name="parameters" element="tns:ReadTaxonomyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadTaxonomyAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReadTaxonomyRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItemSoapIn">
+    <wsdl:part name="parameters" element="tns:AddTaxonomyItem" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItemSoapOut">
+    <wsdl:part name="parameters" element="tns:AddTaxonomyItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItemAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItemRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyItemSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveTaxonomyItem" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyItemSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveTaxonomyItemResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyItemAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyItemRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomySyncFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:AddTaxonomySyncFolder" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomySyncFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:AddTaxonomySyncFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomySyncFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomySyncFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyFolderSoapIn">
+    <wsdl:part name="parameters" element="tns:RemoveTaxonomyFolder" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyFolderSoapOut">
+    <wsdl:part name="parameters" element="tns:RemoveTaxonomyFolderResponse" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyFolderAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="RemoveTaxonomyFolderRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategorySoapIn">
+    <wsdl:part name="parameters" element="tns:ReadAllAssignedCategory" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategorySoapOut">
+    <wsdl:part name="parameters" element="tns:ReadAllAssignedCategoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategoryAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategoryRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItem_x0020_ContentRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:AddTaxonomyItem_x0020_ContentRequest" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItem_x0020_ContentRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:AddTaxonomyItem_x0020_ContentRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItem ContentRequestAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="AddTaxonomyItem ContentRequestRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="ReOrderTaxonomyItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReOrderTaxonomyItems" />
+  </wsdl:message>
+  <wsdl:message name="ReOrderTaxonomyItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReOrderTaxonomyItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReOrderTaxonomyItemsAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="ReOrderTaxonomyItemsRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTaxonomyIdByPath" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTaxonomyIdByPathResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathAuthenticationHeader">
+    <wsdl:part name="AuthenticationHeader" element="tns:AuthenticationHeader" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathRequestInfoParameters">
+    <wsdl:part name="RequestInfoParameters" element="tns:RequestInfoParameters" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategoryHttpGetIn">
+    <wsdl:part name="ContentId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategoryHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfTaxonomyBaseData" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathHttpGetIn">
+    <wsdl:part name="TaxonomyPath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathHttpGetOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategoryHttpPostIn">
+    <wsdl:part name="ContentId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllAssignedCategoryHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfTaxonomyBaseData" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathHttpPostIn">
+    <wsdl:part name="TaxonomyPath" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTaxonomyIdByPathHttpPostOut">
+    <wsdl:part name="Body" element="tns:long" />
+  </wsdl:message>
+  <wsdl:portType name="TaxonomySoap">
+    <wsdl:operation name="LoadTaxonomy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">returns taxonomy id by given path</wsdl:documentation>
+      <wsdl:input message="tns:LoadTaxonomySoapIn" />
+      <wsdl:output message="tns:LoadTaxonomySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateTaxonomy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">creates new taxonomy</wsdl:documentation>
+      <wsdl:input message="tns:CreateTaxonomySoapIn" />
+      <wsdl:output message="tns:CreateTaxonomySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTaxonomy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">updates the existing taxonomy</wsdl:documentation>
+      <wsdl:input message="tns:UpdateTaxonomySoapIn" />
+      <wsdl:output message="tns:UpdateTaxonomySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTaxonomy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">deletes the existing taxonomy</wsdl:documentation>
+      <wsdl:input message="tns:DeleteTaxonomySoapIn" />
+      <wsdl:output message="tns:DeleteTaxonomySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadTaxonomy">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">read the taxonomy data</wsdl:documentation>
+      <wsdl:input message="tns:ReadTaxonomySoapIn" />
+      <wsdl:output message="tns:ReadTaxonomySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomyItem">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">inserts item into taxonomy</wsdl:documentation>
+      <wsdl:input message="tns:AddTaxonomyItemSoapIn" />
+      <wsdl:output message="tns:AddTaxonomyItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTaxonomyItem">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">removes item from the taxonomy</wsdl:documentation>
+      <wsdl:input message="tns:RemoveTaxonomyItemSoapIn" />
+      <wsdl:output message="tns:RemoveTaxonomyItemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomySyncFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">adds folder entry</wsdl:documentation>
+      <wsdl:input message="tns:AddTaxonomySyncFolderSoapIn" />
+      <wsdl:output message="tns:AddTaxonomySyncFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTaxonomyFolder">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">removes the sync up folder from taxonomy</wsdl:documentation>
+      <wsdl:input message="tns:RemoveTaxonomyFolderSoapIn" />
+      <wsdl:output message="tns:RemoveTaxonomyFolderSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadAllAssignedCategory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">returns all the assigned category for the content id</wsdl:documentation>
+      <wsdl:input message="tns:ReadAllAssignedCategorySoapIn" />
+      <wsdl:output message="tns:ReadAllAssignedCategorySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomyItem">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">inserts item into taxonomy</wsdl:documentation>
+      <wsdl:input name="AddTaxonomyItem_x0020_ContentRequest" message="tns:AddTaxonomyItem_x0020_ContentRequestSoapIn" />
+      <wsdl:output name="AddTaxonomyItem_x0020_ContentRequest" message="tns:AddTaxonomyItem_x0020_ContentRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReOrderTaxonomyItems">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">reorder display of taxonomy items</wsdl:documentation>
+      <wsdl:input message="tns:ReOrderTaxonomyItemsSoapIn" />
+      <wsdl:output message="tns:ReOrderTaxonomyItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxonomyIdByPath">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">returns taxonomy id by given path</wsdl:documentation>
+      <wsdl:input message="tns:GetTaxonomyIdByPathSoapIn" />
+      <wsdl:output message="tns:GetTaxonomyIdByPathSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TaxonomyHttpGet">
+    <wsdl:operation name="ReadAllAssignedCategory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">returns all the assigned category for the content id</wsdl:documentation>
+      <wsdl:input message="tns:ReadAllAssignedCategoryHttpGetIn" />
+      <wsdl:output message="tns:ReadAllAssignedCategoryHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxonomyIdByPath">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">returns taxonomy id by given path</wsdl:documentation>
+      <wsdl:input message="tns:GetTaxonomyIdByPathHttpGetIn" />
+      <wsdl:output message="tns:GetTaxonomyIdByPathHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="TaxonomyHttpPost">
+    <wsdl:operation name="ReadAllAssignedCategory">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">returns all the assigned category for the content id</wsdl:documentation>
+      <wsdl:input message="tns:ReadAllAssignedCategoryHttpPostIn" />
+      <wsdl:output message="tns:ReadAllAssignedCategoryHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxonomyIdByPath">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">returns taxonomy id by given path</wsdl:documentation>
+      <wsdl:input message="tns:GetTaxonomyIdByPathHttpPostIn" />
+      <wsdl:output message="tns:GetTaxonomyIdByPathHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TaxonomySoap" type="tns:TaxonomySoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LoadTaxonomy">
+      <soap:operation soapAction="http://tempuri.org/LoadTaxonomy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:LoadTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:LoadTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTaxonomy">
+      <soap:operation soapAction="http://tempuri.org/CreateTaxonomy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:CreateTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:CreateTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTaxonomy">
+      <soap:operation soapAction="http://tempuri.org/UpdateTaxonomy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:UpdateTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:UpdateTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTaxonomy">
+      <soap:operation soapAction="http://tempuri.org/DeleteTaxonomy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:DeleteTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:DeleteTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadTaxonomy">
+      <soap:operation soapAction="http://tempuri.org/ReadTaxonomy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReadTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:ReadTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomyItem">
+      <soap:operation soapAction="http://tempuri.org/AddTaxonomyItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddTaxonomyItemAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddTaxonomyItemRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTaxonomyItem">
+      <soap:operation soapAction="http://tempuri.org/RemoveTaxonomyItem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RemoveTaxonomyItemAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:RemoveTaxonomyItemRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomySyncFolder">
+      <soap:operation soapAction="http://tempuri.org/AddTaxonomySyncFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:AddTaxonomySyncFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddTaxonomySyncFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTaxonomyFolder">
+      <soap:operation soapAction="http://tempuri.org/RemoveTaxonomyFolder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:RemoveTaxonomyFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:RemoveTaxonomyFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadAllAssignedCategory">
+      <soap:operation soapAction="http://tempuri.org/ReadAllAssignedCategory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReadAllAssignedCategoryAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:ReadAllAssignedCategoryRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomyItem">
+      <soap:operation soapAction="http://tempuri.org/AddTaxonomyItem ContentRequest" style="document" />
+      <wsdl:input name="AddTaxonomyItem_x0020_ContentRequest">
+        <soap:body use="literal" />
+        <soap:header message="tns:AddTaxonomyItem ContentRequestAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:AddTaxonomyItem ContentRequestRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddTaxonomyItem_x0020_ContentRequest">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReOrderTaxonomyItems">
+      <soap:operation soapAction="http://tempuri.org/ReOrderTaxonomyItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:ReOrderTaxonomyItemsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:ReOrderTaxonomyItemsRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxonomyIdByPath">
+      <soap:operation soapAction="http://tempuri.org/GetTaxonomyIdByPath" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+        <soap:header message="tns:GetTaxonomyIdByPathAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap:header message="tns:GetTaxonomyIdByPathRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TaxonomySoap12" type="tns:TaxonomySoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="LoadTaxonomy">
+      <soap12:operation soapAction="http://tempuri.org/LoadTaxonomy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:LoadTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:LoadTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateTaxonomy">
+      <soap12:operation soapAction="http://tempuri.org/CreateTaxonomy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:CreateTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:CreateTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateTaxonomy">
+      <soap12:operation soapAction="http://tempuri.org/UpdateTaxonomy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:UpdateTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:UpdateTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteTaxonomy">
+      <soap12:operation soapAction="http://tempuri.org/DeleteTaxonomy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:DeleteTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:DeleteTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadTaxonomy">
+      <soap12:operation soapAction="http://tempuri.org/ReadTaxonomy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReadTaxonomyAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:ReadTaxonomyRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomyItem">
+      <soap12:operation soapAction="http://tempuri.org/AddTaxonomyItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddTaxonomyItemAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddTaxonomyItemRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTaxonomyItem">
+      <soap12:operation soapAction="http://tempuri.org/RemoveTaxonomyItem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:RemoveTaxonomyItemAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:RemoveTaxonomyItemRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomySyncFolder">
+      <soap12:operation soapAction="http://tempuri.org/AddTaxonomySyncFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddTaxonomySyncFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddTaxonomySyncFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveTaxonomyFolder">
+      <soap12:operation soapAction="http://tempuri.org/RemoveTaxonomyFolder" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:RemoveTaxonomyFolderAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:RemoveTaxonomyFolderRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadAllAssignedCategory">
+      <soap12:operation soapAction="http://tempuri.org/ReadAllAssignedCategory" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReadAllAssignedCategoryAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:ReadAllAssignedCategoryRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddTaxonomyItem">
+      <soap12:operation soapAction="http://tempuri.org/AddTaxonomyItem ContentRequest" style="document" />
+      <wsdl:input name="AddTaxonomyItem_x0020_ContentRequest">
+        <soap12:body use="literal" />
+        <soap12:header message="tns:AddTaxonomyItem ContentRequestAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:AddTaxonomyItem ContentRequestRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output name="AddTaxonomyItem_x0020_ContentRequest">
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReOrderTaxonomyItems">
+      <soap12:operation soapAction="http://tempuri.org/ReOrderTaxonomyItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:ReOrderTaxonomyItemsAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:ReOrderTaxonomyItemsRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxonomyIdByPath">
+      <soap12:operation soapAction="http://tempuri.org/GetTaxonomyIdByPath" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+        <soap12:header message="tns:GetTaxonomyIdByPathAuthenticationHeader" part="AuthenticationHeader" use="literal" />
+        <soap12:header message="tns:GetTaxonomyIdByPathRequestInfoParameters" part="RequestInfoParameters" use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TaxonomyHttpGet" type="tns:TaxonomyHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="ReadAllAssignedCategory">
+      <http:operation location="/ReadAllAssignedCategory" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxonomyIdByPath">
+      <http:operation location="/GetTaxonomyIdByPath" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="TaxonomyHttpPost" type="tns:TaxonomyHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="ReadAllAssignedCategory">
+      <http:operation location="/ReadAllAssignedCategory" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaxonomyIdByPath">
+      <http:operation location="/GetTaxonomyIdByPath" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Taxonomy">
+    <wsdl:port name="TaxonomySoap" binding="tns:TaxonomySoap">
+      <soap:address location="http://local.ektron/workarea/webservices/WebServiceAPI/Taxonomy/taxonomy.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TaxonomySoap12" binding="tns:TaxonomySoap12">
+      <soap12:address location="http://local.ektron/workarea/webservices/WebServiceAPI/Taxonomy/taxonomy.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TaxonomyHttpGet" binding="tns:TaxonomyHttpGet">
+      <http:address location="http://local.ektron/workarea/webservices/WebServiceAPI/Taxonomy/taxonomy.asmx" />
+    </wsdl:port>
+    <wsdl:port name="TaxonomyHttpPost" binding="tns:TaxonomyHttpPost">
+      <http:address location="http://local.ektron/workarea/webservices/WebServiceAPI/Taxonomy/taxonomy.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
