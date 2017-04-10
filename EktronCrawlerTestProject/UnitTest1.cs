@@ -15,17 +15,7 @@ namespace EktronCrawlerTestProject
         [TestMethod]
         public void TestCrawler()
         {
-            var crawler = new ContentCrawler<SearchDocument>();
-
-            var configJson = JsonUtil.ReadJsonFile(ConfigurationManager.AppSettings["CrawlConfigJson"]);
-            var crawlSettings = JsonUtil.Deserialize<CrawlSettings>(configJson);
-
-            var job = crawlSettings.crawljobs.First();
-            var crawlConfig = crawlSettings.crawlconfigs.First();
-            
-            crawler.RunJob(job, crawlConfig);
-            
-            
+            CrawlJobsHandler.ProcessJobs<SearchDocument>();
         }
 
         

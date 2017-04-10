@@ -50,7 +50,14 @@ namespace EktronCrawler
 
         public void DeleteItem(long id)
         {
-            SrchClient.Delete(string.Format("contentid:{0}", id));
+            try
+            {
+                SrchClient.Delete(string.Format("contentid:{0}", id));
+            }
+            catch
+            {
+                // ignore
+            }
         }
     }
 }

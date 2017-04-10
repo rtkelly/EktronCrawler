@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -18,8 +19,8 @@ namespace EktronCrawler
 {
     public class ContentBuilder<T> where T : ISearchDocument
     {
-        EktronWeb.MetaDataApi.Metadata MetadataApi = new EktronWeb.MetaDataApi.Metadata();
-        EktronWeb.TaxonomyApi.Taxonomy TaxonomyApi = new EktronWeb.TaxonomyApi.Taxonomy();
+        MetaDataApi MetadataMgr = new MetaDataApi();
+        TaxonomyApi TaxonomyMgr = new TaxonomyApi();
 
         EktronLayer.ContentApi ContentApi = new EktronLayer.ContentApi();
         ISearchClient<T> SearchClient { get; set; }
@@ -40,7 +41,7 @@ namespace EktronCrawler
         {
             try
             {
-                var lastCrawledDate = new DateTime();
+                var lastCrawledDate = DateTime.Now;
 
                 var crawlItem = new ContentCrawlParameters();
 
@@ -81,8 +82,7 @@ namespace EktronCrawler
                 crawlItem.Content.Add(new CrawlerContent() { Name = "paths", Value = new List<string>() });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "hostname", Value = "" });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "lastcrawled", Value = lastCrawledDate });
-                lastCrawledDate
-
+                
                 if(cData.XmlConfiguration.Id > 0)
                 {
                     var smartForm = new XmlParser(cData.Html);
@@ -91,30 +91,47 @@ namespace EktronCrawler
 
                     if (configItem != null)
                     {
-                        foreach (var fieldXPath in configItem.indexfields)
+                        if (configItem.indexfields != null)
                         {
-                            var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
-                            crawlItem.Content.Add(new CrawlerContent() { Name = "content", Value = value });
+                            foreach (var fieldXPath in configItem.indexfields)
+                            {
+                                var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
+                                crawlItem.Content.Add(new CrawlerContent() { Name = "content", Value = value });
+                            }
+                        }
+                        
+                        if (configItem.storedfields != null)
+                        {
+                            foreach (var fieldXPath in configItem.storedfields)
+                            {
+                                var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
+                                var fieldName = fieldXPath.Split('/').Last().ToLower();
+                                
+                                crawlItem.Content.Add(new CrawlerContent() { Name = fieldName, Value = value });
+                            }
                         }
 
-                        foreach (var fieldXPath in configItem.secondarycontent)
+                        if (configItem.secondarycontent != null)
                         {
-                            var contentIds = smartForm.ParseToList(fieldXPath);
-
-                            foreach(var contentId in contentIds)
+                            foreach (var fieldXPath in configItem.secondarycontent)
                             {
-                                var secondaryCData = ContentApi.GetContentItem(contentId);
+                                var contentIds = smartForm.ParseToList(fieldXPath);
 
-                                if(secondaryCData != null)
+                                foreach (var contentId in contentIds)
                                 {
-                                    var extractedContent = ExtractContent(secondaryCData);
-                                    
-                                    if (extractedContent.Any())
-                                    {
-                                        crawlItem.Content.AddRange(extractedContent);
-                                    }
-                                }
+                                    var secondaryCData = ContentApi.GetContentItem(contentId);
 
+                                    if (secondaryCData != null)
+                                    {
+                                        var extractedContent = ExtractContent(secondaryCData);
+
+                                        if (extractedContent.Any())
+                                        {
+                                            crawlItem.Content.AddRange(extractedContent);
+                                        }
+                                    }
+
+                                }
                             }
                         }
                     }
@@ -149,7 +166,8 @@ namespace EktronCrawler
                         
             switch(cData.ContType)
             {
-                case 102:
+                case 101: // office
+                case 102: // pdf
                     var assetContent = ExtractAsset(cData);
                     list.Add(new CrawlerContent() { Name = "content", Value = assetContent });
                     break;
@@ -163,6 +181,7 @@ namespace EktronCrawler
             return list;
         }
 
+
         private string ExtractAsset(ContentData cData)
         {
             try
@@ -173,9 +192,13 @@ namespace EktronCrawler
                 var assetPath = string.Format("{0}\\{1}\\{2}", AssetLibraryPath, cData.AssetData.Id, cData.AssetData.Version);
 
                 var bytes = File.ReadAllBytes(assetPath);
-                var result = SearchClient.FileExtract(bytes);
+                var responseXml = SearchClient.FileExtract(bytes);
 
-                return HtmlParser.StripHTML(result);
+                var xmlParser = new XmlParser(responseXml);
+                var xhtml = xmlParser.ParseHTML("/response/str");
+                var htmlParser = new HtmlParser(WebUtility.HtmlDecode(xhtml));
+
+                return htmlParser.ParseStripInnerHtml("//body");
             }
             catch
             {
@@ -188,7 +211,7 @@ namespace EktronCrawler
             var list = new List<string>();
             var mapList = new List<string>();
 
-            var metadataList = MetadataApi.GetContentMetadataList(contentId);
+            var metadataList = MetadataMgr.GetContentMetadataList(contentId);
 
             if (metadataList != null)
             {
@@ -207,7 +230,7 @@ namespace EktronCrawler
             var list = new List<string>();
             var mapList = new List<string>();
 
-            var taxonomyList = TaxonomyApi.ReadAllAssignedCategory(contentId);
+            var taxonomyList = TaxonomyMgr.ReadAllAssignedCategory(contentId);
 
             if (taxonomyList != null)
             {

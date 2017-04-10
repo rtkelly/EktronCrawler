@@ -1,6 +1,7 @@
 ﻿using EktronCrawler.EktronWeb.FolderApi;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,8 @@ namespace EktronCrawler.EktronLayer
         public FolderApi()
         {
            FolderMgr = new Folder();
+                       
+           FolderMgr.Url = ConfigurationManager.AppSettings["EktronWeb_FolderApi_Folder"];
         }
 
         public FolderData Get(long folderId)

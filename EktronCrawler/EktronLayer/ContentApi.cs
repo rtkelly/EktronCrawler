@@ -2,6 +2,7 @@
 using MissionSearch.Util;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace EktronCrawler.EktronLayer
         /// </summary>
         public ContentApi()
         {
-            
+            ContentMgr.Url = ConfigurationManager.AppSettings["EktronWeb_ContentApi_Content"];
         }
         
         /// <summary>

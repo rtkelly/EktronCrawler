@@ -59,6 +59,8 @@ namespace EktronCrawler
 
         public string pagetype { get; set; }
 
+        public string published { get; set; }
+
         public DateTime lastcrawled { get; set; }
     }
 }

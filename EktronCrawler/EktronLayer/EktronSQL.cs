@@ -59,15 +59,15 @@ namespace EktronCrawler
             
             if(request.LastUpdated != null)
             {
-                sql += string.Format("AND last_edit_date > '{0:MM/dd/yyyy}' ", request.LastUpdated.Value);
+                sql += string.Format("AND last_edit_date > '{0:MM/dd/yyyy hh:mm:ss tt}' ", request.LastUpdated.Value);
             }
 
-            if(request.FolderIds.Any())
+            if (request.FolderIds != null && request.FolderIds.Any())
             {
                 sql += string.Format("AND folder_id in ({0})", string.Join(",", request.FolderIds));
             }
 
-            if(request.XmlConfigIds.Any())
+            if (request.XmlConfigIds != null && request.XmlConfigIds.Any())
             {
               sql += string.Format("AND xml_config_id in ({0})", string.Join(",", request.XmlConfigIds));
             }
@@ -78,16 +78,30 @@ namespace EktronCrawler
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandTimeout = 0;
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = sql;
-
-                conn.Open();
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (var cmd = conn.CreateCommand())
                 {
-                    list.Add(reader.GetInt64(0));
+                    cmd.CommandTimeout = 0;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql;
+
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        try
+                        {
+                            while (reader.Read())
+                            {
+                                list.Add(reader.GetInt64(0));
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+
+                    conn.Close();
                 }
             }
 

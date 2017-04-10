@@ -32,11 +32,15 @@ namespace EktronCrawler
 
     public class CrawlJob
     {
+        public string jobid { get; set; }
+
         public CrawlTypes crawltype { get; set; }
                 
         public CrawlIntervalTypes crawlintervaltype { get; set; }
         
         public int crawlinterval { get; set; }
+
+        public string crawltime { get; set; }
 
         public string crawlconfigid { get; set; }
                 
@@ -47,6 +51,8 @@ namespace EktronCrawler
         public string configid { get; set; }
 
         public long rootfolderid { get; set; }
+
+        public bool forceoverwrite { get; set; }
 
         public List<CrawlSchemaItem> crawlschemaitems { get; set; }
     }

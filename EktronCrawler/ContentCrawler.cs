@@ -17,8 +17,8 @@ namespace EktronCrawler
 {
     public class ContentCrawler<T> where T : ICMSSearchDocument
     {
-        EktronLayer.FolderApi FolderApi = new EktronLayer.FolderApi();
-        EktronLayer.ContentApi ContentApi = new EktronLayer.ContentApi();
+        FolderApi FolderMgr = new FolderApi();
+        ContentApi ContentMgr = new ContentApi();
        
         ISearchClient<T> SearchClient { get; set; }
         IContentIndexer<T> Indexer { get; set; }
@@ -33,14 +33,15 @@ namespace EktronCrawler
             SearchClient = new SolrClient<T>(ConfigurationManager.AppSettings["SearchConnectionString"]);
             Indexer = new DefaultContentIndexer<T>(SearchClient, 1, Logger);
 
+            SearchClient.Timeout = 10000;
         }
         
-        public IndexResults RunJob(CrawlJob crawlJob, CrawlConfig crawlConfig)
+        public IndexResults RunJob(CrawlJob crawlJob, CrawlConfig crawlConfig, DateTime lastRun)
         {
             switch (crawlJob.crawltype)
             {
                 case CrawlTypes.PartialCrawl:
-                    return RunPartialCrawl(crawlConfig);
+                    return RunPartialCrawl(crawlConfig, lastRun);
                     break;
                 case CrawlTypes.FullCrawl:
                     return RunFullCrawlFolder(crawlConfig);
@@ -51,7 +52,7 @@ namespace EktronCrawler
                  //   break;
             }
 
-            return null;
+            return new IndexResults();
         }
 
 
@@ -60,7 +61,7 @@ namespace EktronCrawler
         /// </summary>
         /// <param name="crawlConfig"></param>
         /// <returns></returns>
-        public IndexResults RunPartialCrawl(CrawlConfig crawlConfig)
+        public IndexResults RunPartialCrawl(CrawlConfig crawlConfig, DateTime lastUpdated)
         {
             var startTime = DateTime.Now;
 
@@ -68,7 +69,7 @@ namespace EktronCrawler
 
             var recentContent = EktronSQL.GetRecentContent(new ContentRequest()
             {
-                //LastUpdated = request.LastUpdated.Value,
+                LastUpdated = lastUpdated,
                 XmlConfigIds = crawlConfig.crawlschemaitems.Select(i => i.xmlconfigid),
             });
 
@@ -76,13 +77,15 @@ namespace EktronCrawler
             
             foreach(var contentId in recentContent)
             {
-                var cData = ContentApi.GetContentItem(contentId);
+                var cData = ContentMgr.GetContentItem(contentId);
 
                 if (cData == null)
                     continue;
 
                 var crawlContent = contentBuilder.BuildCrawlContentItem(cData, crawlConfig);
-                updateList.Add(crawlContent);
+                
+                if(crawlContent != null)
+                    updateList.Add(crawlContent);
             }
 
             var indexResults = Indexer.RunUpdate(updateList, null, null);
@@ -105,15 +108,15 @@ namespace EktronCrawler
         {
             var startTime = DateTime.Now;
 
-            var folder = FolderApi.Get(crawlConfig.rootfolderid);
+            var folder = FolderMgr.Get(crawlConfig.rootfolderid);
 
             var indexResults = new IndexResults();
 
             if (folder != null)
             {
-                var allSubFolders = FolderApi.GetChildFolders(crawlConfig.rootfolderid, true);
+                var allSubFolders = FolderMgr.GetChildFolders(crawlConfig.rootfolderid, true);
 
-                var folderContent = ContentApi.GetFolderContent(crawlConfig.rootfolderid);
+                var folderContent = ContentMgr.GetFolderContent(crawlConfig.rootfolderid);
 
                 indexResults = CrawlAndIndexFolder(folder, crawlConfig);
 
@@ -176,48 +179,93 @@ namespace EktronCrawler
         /// <returns></returns>
         private IndexResults CrawlAndIndexFolder(FolderData folder, CrawlConfig crawlConfig)
         {
+            var results = new IndexResults();
+
             Logger.Info(string.Format("Crawling folder {0} id:{1}", folder.Name, folder.Id));
-                    
-            var xmlConfigIds = crawlConfig.crawlschemaitems.Select(i => i.xmlconfigid).ToList();
-
-            var content = ContentApi.GetFolderContent(folder.Id);
-
-            content.ForEach(p => p.FolderId = folder.Id);
-            content.ForEach(p => p.FolderName = folder.Name);
-            content.ForEach(p => p.Path = folder.NameWithPath);
-
-            var contentBuilder = new ContentBuilder<T>(SearchClient, Logger);
-
-            var crawledItems = content
-                .Where(p => xmlConfigIds.Contains(p.XmlConfiguration.Id))
-                .Where(p => p.IsSearchable == true)
-                .Select(cData => contentBuilder.BuildCrawlContentItem(cData, crawlConfig))
-                .Where(item => item != null)
-                .ToList();
-
-            var results = Indexer.RunUpdate(crawledItems, null, null);
-
-            var indexMgr = new ManageIndex<T>(SearchClient);
-
-            // delete items from the index that have been deleted from the folder
-
-            var indexedFolderItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
-
-            if(results.TotalCnt != indexedFolderItems.Count)
+            
+            try
             {
-                if(results.TotalCnt < indexedFolderItems.Count)
+                var indexMgr = new ManageIndex<T>(SearchClient);
+
+                var indexedContentItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
+
+                var xmlConfigIds = crawlConfig.crawlschemaitems.Select(i => i.xmlconfigid).ToList();
+
+                var contentItems = ContentMgr.GetFolderContent(folder.Id);
+
+                contentItems.ForEach(p => p.FolderId = folder.Id);
+                contentItems.ForEach(p => p.FolderName = folder.Name);
+                contentItems.ForEach(p => p.Path = folder.NameWithPath);
+
+                var contentBuilder = new ContentBuilder<T>(SearchClient, Logger);
+
+                var crawledItems = new List<ContentCrawlParameters>();
+
+                foreach (var contentItem in contentItems)
                 {
-                    foreach(var item in indexedFolderItems)
+                    if (!xmlConfigIds.Contains(contentItem.XmlConfiguration.Id))
+                        continue;
+
+                    if (!contentItem.IsSearchable)
+                        continue;
+
+                    if (!crawlConfig.forceoverwrite)
                     {
-                        if(!crawledItems.Any(p => p.ContentItem._ContentID == item.id))
+                        var indexedContent = indexedContentItems.FirstOrDefault(p => p.contentid == contentItem.Id.ToString());
+
+                        if (indexedContent != null)
                         {
-                            indexMgr.DeleteItem(TypeParser.ParseLong(item.contentid));
+                            var lastEditDate = TypeParser.ParseDateTime(contentItem.DisplayLastEditDate);
+
+                            if (lastEditDate != null && indexedContent.lastcrawled > lastEditDate.Value)
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    
+                    var crawlItem = contentBuilder.BuildCrawlContentItem(contentItem, crawlConfig);
+                    crawledItems.Add(crawlItem);
+                }
+
+                /*
+                var crawledItems = contentItems
+                    .Where(p => xmlConfigIds.Contains(p.XmlConfiguration.Id))
+                    .Where(p => p.IsSearchable == true)
+                    //.Where(p => p.la)
+                    .Select(cData => contentBuilder.BuildCrawlContentItem(cData, crawlConfig))
+                    .Where(item => item != null)
+                    .ToList();
+                */
+                                
+                results = Indexer.RunUpdate(crawledItems, null, null);
+                                
+                // delete items from the index that have been deleted from the folder
+                indexedContentItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
+                
+                if (contentItems.Count() < indexedContentItems.Count)
+                {
+                    if (results.TotalCnt < indexedContentItems.Count)
+                    {
+                        foreach (var item in indexedContentItems)
+                        {
+                            if (!contentItems.Any(p => p.Id.ToString() == item.id))
+                            {
+                                indexMgr.DeleteItem(TypeParser.ParseLong(item.contentid));
+                            }
                         }
                     }
                 }
+
+                
+            }
+            catch(Exception ex)
+            {
+                Logger.Error(string.Format("{0}", ex.Message));
             }
 
             return results;
+            
         }
 
         

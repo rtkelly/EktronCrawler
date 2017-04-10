@@ -1,31 +1,37 @@
 {
 
 	"crawljobs": [{
+		"jobid":"FullCrawl",
 		"crawltype": "FullCrawl",
 		"crawlintervaltype": "Day",
 		"crawlinterval": "1",
-		"crawlconfigid": "defaultConfig"
+		"crawltime": "02:00:00",
+		"crawlconfigid": "defaultConfig",
 	}, {
+		"jobid":"PartialCrawl",
 		"crawltype": "PartialCrawl",
 		"crawlintervaltype": "Minute",
 		"crawlinterval": "2",
-		"crawlconfigid": "defaultConfig"
+		"crawltime": "",
+		"crawlconfigid": "defaultConfig",
 	}],
 	"crawlconfigs": [{
 		"configid": "defaultConfig",
 		"rootfolderid": "72",
+		"forceoverwrite": "false",
 		"crawlschemaitems": [{
 			"xmlconfigid": "0"
 		}, {
 			"xmlconfigid": "7",
 			"indexfields": [
-				"/root/PracticeGuidelines/Title",
-				"/root/PracticeGuidelines/Description"
+				"/root/abstract",
+				"/root/recommendations"
 			],
-			"secondarycontent": [
-				"/root/guidelinePdf",
-				"/root/additionalResources"
+			"storedfields": [
+				"/root/Published"
+				
 			]
+			
 
 		}]
 	}]
