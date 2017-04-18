@@ -1,38 +1,44 @@
 {
-
 	"crawljobs": [{
-		"jobid":"FullCrawl",
+		"jobid": "FullCrawl",
 		"crawltype": "FullCrawl",
 		"crawlintervaltype": "Day",
 		"crawlinterval": "1",
-		"crawltime": "02:00:00",
-		"crawlconfigid": "defaultConfig",
+		"crawltime": "14:00:00",
+		"rootfolderids": ["0"],
+		"xmlconfigids": ["7"],
+		"forceoverwrite": "true",
+		"crawlconfigid": "defaultConfig"
 	}, {
-		"jobid":"PartialCrawl",
+		"jobid": "PartialCrawl",
 		"crawltype": "PartialCrawl",
 		"crawlintervaltype": "Minute",
 		"crawlinterval": "2",
 		"crawltime": "",
-		"crawlconfigid": "defaultConfig",
+		"rootfolderids": ["0"],
+		"xmlconfigids": ["7"],
+		"crawlconfigid": "defaultConfig"
+
 	}],
 	"crawlconfigs": [{
 		"configid": "defaultConfig",
-		"rootfolderid": "72",
-		"forceoverwrite": "false",
-		"crawlschemaitems": [{
-			"xmlconfigid": "0"
-		}, {
-			"xmlconfigid": "7",
-			"indexfields": [
-				"/root/abstract",
-				"/root/recommendations"
-			],
-			"storedfields": [
-				"/root/Published"
-				
-			]
-			
 
-		}]
+		"crawlschemaitems": [
+			{
+				"defaultschema": "true",
+				"indexfields": [
+					"/metadata/Title"
+				]
+			},
+			{
+				"xmlconfigid": "7",
+				"indexfields": [
+					"/root/abstract",
+					"/root/recommendations"
+				]
+				
+			}
+
+		]
 	}]
 }

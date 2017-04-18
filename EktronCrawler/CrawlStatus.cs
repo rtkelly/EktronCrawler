@@ -22,6 +22,8 @@ namespace EktronCrawler
 
         public DateTime lastrundate { get; set; }
 
+        public TimeSpan Duration { get; set; }
+                
         public long totalcrawled { get; set; }
         
         public long totalerrors { get; set; }

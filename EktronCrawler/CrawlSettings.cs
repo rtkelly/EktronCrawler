@@ -43,22 +43,27 @@ namespace EktronCrawler
         public string crawltime { get; set; }
 
         public string crawlconfigid { get; set; }
+
+        public List<long> rootfolderids { get; set; }
+
+        public List<long> xmlconfigids { get; set; }
+
+        public bool forceoverwrite { get; set; }
+        
                 
     }
 
     public class CrawlConfig
     {
         public string configid { get; set; }
-
-        public long rootfolderid { get; set; }
-
-        public bool forceoverwrite { get; set; }
-
+                
         public List<CrawlSchemaItem> crawlschemaitems { get; set; }
     }
 
     public class CrawlSchemaItem
     {
+        public bool defaultschema { get; set; }
+                
         public long xmlconfigid { get; set; }
 
         public string[] indexfields { get; set; }

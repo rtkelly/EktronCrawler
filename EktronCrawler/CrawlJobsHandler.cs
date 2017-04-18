@@ -56,6 +56,7 @@ namespace EktronCrawler
                 crawlStatusJob.lastrundate = DateTime.Now;
                 crawlStatusJob.totalcrawled = results.TotalCnt;
                 crawlStatusJob.totalerrors = results.ErrorCnt;
+                crawlStatusJob.Duration = results.Duration;
 
                 runCnt++;
             }
@@ -73,8 +74,7 @@ namespace EktronCrawler
         /// <returns></returns>
         private static DateTime ComputeNextRunDate(DateTime lastRun, CrawlJob job)
         {
-            //var lastRun = job.nextrundate;
-
+          
             switch(job.crawlintervaltype)
             {
                 case CrawlIntervalTypes.Minute:
@@ -82,16 +82,16 @@ namespace EktronCrawler
                     break;
                                     
                 case CrawlIntervalTypes.Week:
-                    return lastRun.AddDays(7 * job.crawlinterval);
+                    return lastRun.AddDays(7 * job.crawlinterval).CustomAddTime(job.crawltime);
                     break;
 
                 case CrawlIntervalTypes.Month:
-                    return lastRun.AddMonths(job.crawlinterval);
+                    return lastRun.AddMonths(job.crawlinterval).CustomAddTime(job.crawltime);
                     break;
 
                 default:
                 case CrawlIntervalTypes.Day:
-                    return lastRun.AddDays(job.crawlinterval);
+                    return lastRun.AddDays(job.crawlinterval).CustomAddTime(job.crawltime);
                     break;
 
             }

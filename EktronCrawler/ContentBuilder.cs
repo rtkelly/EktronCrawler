@@ -29,6 +29,11 @@ namespace EktronCrawler
 
         string AssetLibraryPath;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="logger"></param>
         public ContentBuilder(ISearchClient<T> client, ILogger logger)
         {
             SearchClient = client;
@@ -37,6 +42,12 @@ namespace EktronCrawler
             AssetLibraryPath = ConfigurationManager.AppSettings["AssetLibraryFolder"];
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cData"></param>
+        /// <param name="crawlConfig"></param>
+        /// <returns></returns>
         public ContentCrawlParameters BuildCrawlContentItem(ContentData cData, CrawlConfig crawlConfig)
         {
             try
@@ -73,8 +84,7 @@ namespace EktronCrawler
                 crawlItem.Content.Add(new CrawlerContent() { Name = "contenttypeid", Value = cData.ContType });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "timestamp", Value = cData.DateCreated });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "path", Value = cData.Path });
-                crawlItem.Content.Add(new CrawlerContent() { Name = "foldername", Value = cData.FolderName });
-                crawlItem.Content.Add(new CrawlerContent() { Name = "folder", Value = "" });
+                crawlItem.Content.Add(new CrawlerContent() { Name = "folder", Value = cData.FolderName });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "language", Value = cData.LanguageId.ToString() });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "mimetype", Value = "" });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "categories", Value = new List<string>() });
@@ -85,56 +95,22 @@ namespace EktronCrawler
                 
                 if(cData.XmlConfiguration.Id > 0)
                 {
-                    var smartForm = new XmlParser(cData.Html);
-
                     var configItem = crawlConfig.crawlschemaitems.FirstOrDefault(c => c.xmlconfigid == cData.XmlConfiguration.Id);
 
                     if (configItem != null)
                     {
-                        if (configItem.indexfields != null)
+                        var crawlContent = ProcessSmartForm(cData, configItem);
+
+                        if(crawlContent.Any())
                         {
-                            foreach (var fieldXPath in configItem.indexfields)
-                            {
-                                var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
-                                crawlItem.Content.Add(new CrawlerContent() { Name = "content", Value = value });
-                            }
-                        }
-                        
-                        if (configItem.storedfields != null)
-                        {
-                            foreach (var fieldXPath in configItem.storedfields)
-                            {
-                                var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
-                                var fieldName = fieldXPath.Split('/').Last().ToLower();
-                                
-                                crawlItem.Content.Add(new CrawlerContent() { Name = fieldName, Value = value });
-                            }
-                        }
-
-                        if (configItem.secondarycontent != null)
-                        {
-                            foreach (var fieldXPath in configItem.secondarycontent)
-                            {
-                                var contentIds = smartForm.ParseToList(fieldXPath);
-
-                                foreach (var contentId in contentIds)
-                                {
-                                    var secondaryCData = ContentApi.GetContentItem(contentId);
-
-                                    if (secondaryCData != null)
-                                    {
-                                        var extractedContent = ExtractContent(secondaryCData);
-
-                                        if (extractedContent.Any())
-                                        {
-                                            crawlItem.Content.AddRange(extractedContent);
-                                        }
-                                    }
-
-                                }
-                            }
+                            crawlItem.Content.AddRange(crawlContent);
                         }
                     }
+                    else
+                    {
+                       crawlItem.Content.Add(new CrawlerContent() { Name = "content", Value = HtmlParser.StripHTML(cData.Html) });
+                    }
+
                 }
                 else
                 {
@@ -153,6 +129,65 @@ namespace EktronCrawler
                 Logger.Info(string.Format("{0}", ex.Message));
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cData"></param>
+        /// <param name="configItem"></param>
+        /// <returns></returns>
+        private List<CrawlerContent> ProcessSmartForm(ContentData cData, CrawlSchemaItem configItem)
+        {
+            var crawlItems = new List<CrawlerContent>();
+
+            var smartForm = new XmlParser(cData.Html);
+
+            if (configItem.indexfields != null)
+            {
+                foreach (var fieldXPath in configItem.indexfields.Where(p => p.StartsWith("/root/")))
+                {
+                    var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
+                    crawlItems.Add(new CrawlerContent() { Name = "content", Value = value });
+                }
+            }
+
+            if (configItem.storedfields != null)
+            {
+                foreach (var fieldXPath in configItem.storedfields.Where(p => p.StartsWith("/root/")))
+                {
+                    var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
+                    var fieldName = fieldXPath.Split('/').Last().ToLower();
+
+                    crawlItems.Add(new CrawlerContent() { Name = fieldName, Value = value });
+                }
+            }
+
+            if (configItem.secondarycontent != null)
+            {
+                foreach (var fieldXPath in configItem.secondarycontent)
+                {
+                    var contentIds = smartForm.ParseToList(fieldXPath);
+
+                    foreach (var contentId in contentIds)
+                    {
+                        var secondaryCData = ContentApi.GetContentItem(contentId);
+
+                        if (secondaryCData != null)
+                        {
+                            var extractedContent = ExtractContent(secondaryCData);
+
+                            if (extractedContent.Any())
+                            {
+                                crawlItems.AddRange(extractedContent);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            return crawlItems;
         }
 
         /// <summary>
@@ -236,7 +271,7 @@ namespace EktronCrawler
             {
                 foreach (var taxonomy in taxonomyList)
                 {
-                    mapList.Add(string.Format("{0}", taxonomy.TaxonomyPath));
+                    mapList.Add(string.Format("{0}", taxonomy.TaxonomyPath.Replace("\\", "/")));
                     list.Add(string.Format("{0}", taxonomy.TaxonomyName));
                 }
             }
