@@ -221,12 +221,22 @@ namespace EktronCrawler
         {
             try
             {
-                if (cData.AssetData == null)
-                    return string.Empty;
-
                 var assetPath = string.Format("{0}\\{1}\\{2}", AssetLibraryPath, cData.AssetData.Id, cData.AssetData.Version);
+                //var bytes = File.ReadAllBytes(assetPath);
+                var bytes = AssetTransfer.GetAsset(assetPath);
 
-                var bytes = File.ReadAllBytes(assetPath);
+                return ExtractAsset(bytes);
+            }
+            catch(Exception ex)
+            {
+                return string.Empty;
+            }
+        }
+
+        public string ExtractAsset(byte[] bytes)
+        {
+            try
+            {
                 var responseXml = SearchClient.FileExtract(bytes);
 
                 var xmlParser = new XmlParser(responseXml);
@@ -240,6 +250,7 @@ namespace EktronCrawler
                 return string.Empty;
             }
         }
+        
 
         private Tuple<List<string>, List<string>> GetMetaData(long contentId)
         {

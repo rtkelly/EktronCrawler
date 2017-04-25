@@ -1,28 +1,23 @@
 ﻿using EktronCrawler.EktronLayer;
-using EktronCrawler.EktronWeb.ContentApi;
 using EktronCrawler.EktronWeb.FolderApi;
 using MissionSearch;
 using MissionSearch.Clients;
 using MissionSearch.Indexers;
 using MissionSearch.Util;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EktronCrawler
 {
     public class ContentCrawler<T> where T : ICMSSearchDocument
     {
-        FolderApi FolderMgr = new FolderApi();
-        ContentApi ContentMgr = new ContentApi();
-       
-        ISearchClient<T> SearchClient { get; set; }
-        IContentIndexer<T> Indexer { get; set; }
-        ILogger Logger { get; set; }
+        private FolderApi FolderMgr { get; set; }
+        //private ContentApi ContentMgr { get; set; }
+        private ISearchClient<T> SearchClient { get; set; }
+        private IContentIndexer<T> Indexer { get; set; }
+        private ILogger Logger { get; set; }
         
         /// <summary>
         /// 
@@ -33,6 +28,9 @@ namespace EktronCrawler
             SearchClient = new SolrClient<T>(ConfigurationManager.AppSettings["SearchConnectionString"]);
             Indexer = new DefaultContentIndexer<T>(SearchClient, 1, Logger);
 
+            FolderMgr = new FolderApi();
+            //ContentMgr = new ContentApi();
+
             SearchClient.Timeout = 10000;
         }
         
@@ -41,12 +39,9 @@ namespace EktronCrawler
             switch (crawlJob.crawltype)
             {
                 case CrawlTypes.PartialCrawl:
-                    return RunPartialCrawl(crawlConfig, lastRun);
-                    break;
+                    return RunPartialCrawl(crawlJob, crawlConfig, lastRun);
                 case CrawlTypes.FullCrawl:
                     return RunFullCrawlFolder(crawlJob, crawlConfig);
-                    break;
-
                 //case CrawlTypes.FullCrawl:
                  //   return RunFullCrawlRoot(crawlConfig);
                  //   break;
@@ -59,27 +54,51 @@ namespace EktronCrawler
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="job"></param>
         /// <param name="crawlConfig"></param>
+        /// <param name="lastUpdated"></param>
         /// <returns></returns>
-        public IndexResults RunPartialCrawl(CrawlConfig crawlConfig, DateTime lastUpdated)
+        public IndexResults RunPartialCrawl(CrawlJob job, CrawlConfig crawlConfig, DateTime lastUpdated)
         {
             var startTime = DateTime.Now;
-
+                        
             var contentBuilder = new ContentBuilder<T>(SearchClient, Logger);
 
-            var recentContent = EktronSQL.GetRecentContent(new ContentRequest()
+            var req = new ContentRequest()
             {
                 LastUpdated = lastUpdated,
-                XmlConfigIds = crawlConfig.crawlschemaitems.Select(i => i.xmlconfigid),
-            });
+                XmlConfigIds = job.xmlconfigids,
+                ContentTypes = job.contenttypes,
+            
+            };
+
+            var recentContent = EktronSQL.GetContent(req);
+
+            var folderids = new List<long>();
+
+            if(job.rootfolderids != null)
+            {
+                foreach(var folderid in job.rootfolderids)
+                {
+                    var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
+
+                    if(allSubFolders.Any())
+                    {
+                        folderids.AddRange(allSubFolders.Select(p => p.Id));
+                    }
+                }
+            }
 
             var updateList = new List<ContentCrawlParameters>();
             
-            foreach(var contentId in recentContent)
+            foreach(var cData in recentContent)
             {
-                var cData = ContentMgr.GetContentItem(contentId);
+                //var cData = ContentMgr.GetContentItem(contentId);
 
                 if (cData == null)
+                    continue;
+
+                if (job.rootfolderids != null && !folderids.Contains(cData.FolderId))
                     continue;
 
                 var crawlContent = contentBuilder.BuildCrawlContentItem(cData, crawlConfig);
@@ -92,25 +111,27 @@ namespace EktronCrawler
 
             var duration = (DateTime.Now - startTime);
 
-            Logger.Info(string.Format("Full Crawl Completed Total Content Crawled: {0} Total Errors: {1} Total Time: {2} hours {3} minutes", indexResults.TotalCnt, indexResults.ErrorCnt, duration.Hours, duration.Minutes));
+            Logger.Info(string.Format("Partial Crawl Completed Total Content Crawled: {0} Total Errors: {1} Total Time: {2} hours {3} minutes", indexResults.TotalCnt, indexResults.ErrorCnt, duration.Hours, duration.Minutes));
 
             return indexResults;
         }
-         
 
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="crawlConfig"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="crawlConfig"></param>
+        /// <returns></returns>
         public IndexResults RunFullCrawlFolder(CrawlJob job, CrawlConfig crawlConfig)
         {
             var startTime = DateTime.Now;
 
             var indexResults = new IndexResults();
 
-            foreach (var folderid in job.rootfolderids)
+            var folderIds = job.rootfolderids ?? new List<long>() { 0 };
+
+            foreach (var folderid in folderIds)
             {
                 var folder = FolderMgr.Get(folderid);
                                 
@@ -118,7 +139,7 @@ namespace EktronCrawler
                 {
                     var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
 
-                    var folderContent = ContentMgr.GetFolderContent(folderid);
+                    //var folderContent = ContentMgr.GetFolderContent(folderid);
 
                     indexResults = CrawlAndIndexFolder(folder, crawlConfig, job);
 
@@ -136,11 +157,12 @@ namespace EktronCrawler
             return indexResults;
         }
 
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="crawlConfig"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="job"></param>
+        /// <param name="crawlConfig"></param>
+        /// <returns></returns>
         public IndexResults RunFullCrawlRoot(CrawlJob job, CrawlConfig crawlConfig)
         {
             var startTime = DateTime.Now;
@@ -160,7 +182,7 @@ namespace EktronCrawler
 
             foreach(var folderid in allFolderIds)
             {
-                if(!folders.Any(f => f.Id == folderid))
+                if(folders.All(f => f.Id != folderid))
                 {
                     // if folder is no longer is cms then 
                     // delete all content in folder from index
@@ -179,6 +201,8 @@ namespace EktronCrawler
         /// 
         /// </summary>
         /// <param name="folder"></param>
+        /// <param name="crawlConfig"></param>
+        /// <param name="job"></param>
         /// <returns></returns>
         private IndexResults CrawlAndIndexFolder(FolderData folder, CrawlConfig crawlConfig, CrawlJob job)
         {
@@ -193,10 +217,16 @@ namespace EktronCrawler
                 var indexedContentItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
 
                 //var xmlConfigIds = crawlConfig.crawlschemaitems.Select(i => i.xmlconfigid).ToList();
+                //var contentItems = ContentMgr.GetFolderContent(folder.Id);
 
-                var contentItems = ContentMgr.GetFolderContent(folder.Id);
+                var contentItems = EktronSQL.GetContent(new ContentRequest()
+                {
+                    FolderIds = new List<long>() { folder.Id },
+                    XmlConfigIds = job.xmlconfigids,
+                    ContentTypes = job.contenttypes,
+                });
 
-                contentItems.ForEach(p => p.FolderId = folder.Id);
+                //contentItems.ForEach(p => p.FolderId = folder.Id);
                 contentItems.ForEach(p => p.FolderName = folder.Name);
                 contentItems.ForEach(p => p.Path = folder.NameWithPath);
 
@@ -206,12 +236,6 @@ namespace EktronCrawler
 
                 foreach (var contentItem in contentItems)
                 {
-                    if (job.xmlconfigids != null && !job.xmlconfigids.Contains(contentItem.XmlConfiguration.Id))
-                        continue;
-
-                    if (!contentItem.IsSearchable)
-                        continue;
-
                     if (!job.forceoverwrite)
                     {
                         var indexedContent = indexedContentItems.FirstOrDefault(p => p.contentid == contentItem.Id.ToString());
@@ -231,22 +255,13 @@ namespace EktronCrawler
                     crawledItems.Add(crawlItem);
                 }
 
-                /*
-                var crawledItems = contentItems
-                    .Where(p => xmlConfigIds.Contains(p.XmlConfiguration.Id))
-                    .Where(p => p.IsSearchable == true)
-                    //.Where(p => p.la)
-                    .Select(cData => contentBuilder.BuildCrawlContentItem(cData, crawlConfig))
-                    .Where(item => item != null)
-                    .ToList();
-                */
                                 
                 results = Indexer.RunUpdate(crawledItems, null, null);
                                 
                 // delete items from the index that have been deleted from the folder
                 indexedContentItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
                 
-                if (contentItems.Count() < indexedContentItems.Count)
+                if (contentItems.Count < indexedContentItems.Count)
                 {
                     if (results.TotalCnt < indexedContentItems.Count)
                     {

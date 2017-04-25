@@ -5,18 +5,16 @@
 		"crawlintervaltype": "Day",
 		"crawlinterval": "1",
 		"crawltime": "14:00:00",
-		"rootfolderids": ["0"],
-		"xmlconfigids": ["7"],
+		"contenttypes": ["102"],
 		"forceoverwrite": "true",
 		"crawlconfigid": "defaultConfig"
 	}, {
 		"jobid": "PartialCrawl",
 		"crawltype": "PartialCrawl",
-		"crawlintervaltype": "Minute",
+		"crawlintervaltype": "Month",
 		"crawlinterval": "2",
 		"crawltime": "",
-		"rootfolderids": ["0"],
-		"xmlconfigids": ["7"],
+		"contenttypes": ["102"],
 		"crawlconfigid": "defaultConfig"
 
 	}],

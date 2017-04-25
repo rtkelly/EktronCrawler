@@ -1,4 +1,5 @@
 ﻿using EktronCrawler.EktronLayer;
+using EktronCrawler.EktronWeb.ContentApi;
 using EktronCrawler.EktronWeb.FolderApi;
 using MissionSearch.Util;
 using System;
@@ -53,9 +54,97 @@ namespace EktronCrawler
             return list;
         }
 
-        public static List<long> GetRecentContent(ContentRequest request)
+        public static FolderData GetFolder(long folderid)
         {
-            var sql = string.Format("SELECT [content_id] FROM [content] WHERE content_status = 'A' ");
+            var sql = string.Format("SELECT * FROM [content_folder_tbl] WHERE folder_id = {0}", folderid);
+
+            var connString = ConfigurationManager.ConnectionStrings["Ektron.DbConnection"].ConnectionString;
+
+           
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandTimeout = 0;
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = sql;
+
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            var id = reader.GetInt64(0);
+
+                            var cData = new FolderData()
+                            {
+                                Id = id,
+                                Name = reader.GetString(2),
+                                FolderIdWithPath = reader.GetString(30),
+                            };
+
+                            return cData;
+                        }
+
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        public static FolderData GetFolder(long folderid)
+        {
+            var sql = string.Format("SELECT * FROM [content_folder_tbl] WHERE folder_id = {0}", folderid);
+
+            var connString = ConfigurationManager.ConnectionStrings["Ektron.DbConnection"].ConnectionString;
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connString))
+                {
+                    using (var cmd = conn.CreateCommand())
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.Text;
+                        cmd.CommandText = sql;
+
+                        conn.Open();
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+
+                            while (reader.Read())
+                            {
+                                var id = reader.GetInt64(0);
+
+                                var cData = new FolderData()
+                                {
+                                    Id = id,
+                                    Name = reader.GetString(2),
+                                    FolderIdWithPath = reader.GetString(30),
+                                };
+
+                                return cData;
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return null;
+        }
+
+        public static List<ContentData> GetContent(ContentRequest request)
+        {
+            var sql = string.Format("SELECT * FROM [content] WHERE content_status = 'A' AND searchable = 1 ");
             
             if(request.LastUpdated != null)
             {
@@ -67,6 +156,11 @@ namespace EktronCrawler
                 sql += string.Format("AND folder_id in ({0})", string.Join(",", request.FolderIds));
             }
 
+            if (request.ContentTypes != null && request.ContentTypes.Any())
+            {
+                sql += string.Format("AND content_type in ({0})", string.Join(",", request.ContentTypes));
+            }
+            
             if (request.XmlConfigIds != null && request.XmlConfigIds.Any())
             {
               sql += string.Format("AND xml_config_id in ({0})", string.Join(",", request.XmlConfigIds));
@@ -74,7 +168,8 @@ namespace EktronCrawler
 
             string connString = ConfigurationManager.ConnectionStrings["Ektron.DbConnection"].ConnectionString;
 
-            var list = new List<long>();
+            //var list = new List<long>();
+            var listData = new List<ContentData>();
 
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -88,24 +183,42 @@ namespace EktronCrawler
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        try
+                       
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                list.Add(reader.GetInt64(0));
-                            }
-                        }
-                        catch
-                        {
+                            var id = reader.GetInt64(0);
 
+                            //list.Add(id);
+
+                            var cData = new ContentData()
+                            {
+                                Id = id,
+                                LanguageId = reader.GetInt32(1),
+                                Title = reader.GetString(2),
+                                Teaser = reader.GetString(17),
+                                Html = reader.GetString(3),
+                                ContType = reader.GetInt32(22),
+                                DateCreated = reader.GetDateTime(5),
+                                DateModified = reader.GetDateTime(9),
+                                FolderId = reader.GetInt64(11),
+                                XmlConfiguration = new EktronWeb.ContentApi.XmlConfigData()
+                                {
+                                    Id = reader.GetInt64(29),
+                                },
+                                AssetData = new AssetData()
+                                {
+                                    Id = reader.GetString(27),
+                                    Version = reader.GetString(28),
+                                },
+                            };
+
+                            listData.Add(cData);
                         }
                     }
-
-                    conn.Close();
                 }
             }
 
-            return list;
+            return listData;
         }
 
     }

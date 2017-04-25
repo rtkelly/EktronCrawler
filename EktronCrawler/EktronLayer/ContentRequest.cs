@@ -14,7 +14,7 @@ namespace EktronCrawler.EktronLayer
 
         public IEnumerable<long> XmlConfigIds { get; set; }
 
-        public IEnumerable<long> ContentTypes { get; set; }
+        public IEnumerable<int> ContentTypes { get; set; }
         
     }
 }

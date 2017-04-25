@@ -48,6 +48,8 @@ namespace EktronCrawler
 
         public List<long> xmlconfigids { get; set; }
 
+        public List<int> contenttypes { get; set; }
+
         public bool forceoverwrite { get; set; }
         
                 

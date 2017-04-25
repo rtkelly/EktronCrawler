@@ -1,16 +1,13 @@
 ﻿using EktronCrawler.EktronWeb.FolderApi;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EktronCrawler.EktronLayer
 {
     public class FolderApi
     {
-        Folder FolderMgr; 
+        private Folder FolderMgr; 
 
         public FolderApi()
         {
@@ -32,7 +29,7 @@ namespace EktronCrawler.EktronLayer
 
             if (fData != null)
             {
-                var childFolders = FolderMgr.GetChildFolders(fData.Id, false, EktronWeb.FolderApi.FolderOrderBy.Name);
+                var childFolders = FolderMgr.GetChildFolders(fData.Id, false, FolderOrderBy.Name);
 
                 if (childFolders != null)
                 {

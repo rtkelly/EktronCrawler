@@ -56,6 +56,7 @@
     <Compile Include="CrawlerConfig.cs" />
     <Compile Include="CrawlSettings.cs" />
     <Compile Include="CrawlStatus.cs" />
+    <Compile Include="EktronLayer\AssetTransfer.cs" />
     <Compile Include="EktronLayer\ContentApi.cs" />
     <Compile Include="EktronLayer\ContentRequest.cs" />
     <Compile Include="EktronLayer\EktronSQL.cs" />
@@ -72,6 +73,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SearchableContentItem.cs" />
+    <Compile Include="Service References\AssetTransferServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Web References\EktronWeb.ContentApi\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -115,6 +121,25 @@
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\AssetTransferServiceReference\AssetTransferServer.wsdl" />
+    <None Include="Service References\AssetTransferServiceReference\EktronCrawler.AssetTransferServiceReference.GetAssetResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AssetTransferServiceReference\EktronCrawler.AssetTransferServiceReference.PingResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\AssetTransferServiceReference\Service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AssetTransferServiceReference\Service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AssetTransferServiceReference\Service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AssetTransferServiceReference\Service3.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Web References\EktronWeb.ContentApi\ApprovalData.datasource">
       <DependentUpon>Reference.map</DependentUpon>
@@ -236,6 +261,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Web References\EktronWeb.TaxonomyApi\taxonomy.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AssetTransferServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AssetTransferServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AssetTransferServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\AssetTransferServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

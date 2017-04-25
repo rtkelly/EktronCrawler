@@ -52,6 +52,7 @@ namespace EktronCrawler.EktronLayer
         {
             var content = new List<ContentData>();
 
+            // to do: determine if this returns all content in folder. 
             var childContent = ContentMgr.GetChildContent(folderId, false, "Name");
 
             if (childContent != null)
