@@ -58,6 +58,10 @@ namespace EktronCrawler
     public class CrawlConfig
     {
         public string configid { get; set; }
+
+        public string searchconnstr { get; set; }
+
+        public string cmsconnstr { get; set; }
                 
         public List<CrawlSchemaItem> crawlschemaitems { get; set; }
     }

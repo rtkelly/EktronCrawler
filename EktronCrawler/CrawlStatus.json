@@ -1,1 +1,1 @@
-{"crawlstatusjobs":[{"jobid":"FullCrawl","lastrundate":"2017-04-10T10:38:58.2285968-04:00","Duration":"00:00:37.5082325","totalcrawled":2,"totalerrors":0},{"jobid":"PartialCrawl","lastrundate":"2017-04-17T19:23:57.5985774-04:00","Duration":"00:00:00","totalcrawled":0,"totalerrors":0}]}
+{"crawlstatusjobs":[{"jobid":"FullCrawl","lastrundate":"2017-04-26T17:58:57.3065128-04:00","Duration":"00:00:01.9118067","totalcrawled":7,"totalerrors":0},{"jobid":"PartialCrawl","lastrundate":"2017-04-17T19:23:57.5985774-04:00","Duration":"00:00:00","totalcrawled":0,"totalerrors":0}]}

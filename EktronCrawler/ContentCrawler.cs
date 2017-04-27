@@ -13,7 +13,7 @@ namespace EktronCrawler
 {
     public class ContentCrawler<T> where T : ICMSSearchDocument
     {
-        private FolderApi FolderMgr { get; set; }
+        //private FolderApi FolderMgr { get; set; }
         //private ContentApi ContentMgr { get; set; }
         private ISearchClient<T> SearchClient { get; set; }
         private IContentIndexer<T> Indexer { get; set; }
@@ -24,18 +24,19 @@ namespace EktronCrawler
         /// </summary>
         public ContentCrawler()
         {
-            Logger = new MissionLogger(ConfigurationManager.AppSettings["CrawlLogFile"], MissionLogger.LoggerLevel.Info);
-            SearchClient = new SolrClient<T>(ConfigurationManager.AppSettings["SearchConnectionString"]);
-            Indexer = new DefaultContentIndexer<T>(SearchClient, 1, Logger);
-
-            FolderMgr = new FolderApi();
-            //ContentMgr = new ContentApi();
-
-            SearchClient.Timeout = 10000;
+            
         }
         
         public IndexResults RunJob(CrawlJob crawlJob, CrawlConfig crawlConfig, DateTime lastRun)
         {
+            Logger = new MissionLogger(ConfigurationManager.AppSettings["CrawlLogFile"], MissionLogger.LoggerLevel.Info);
+            
+            SearchClient = new SolrClient<T>(crawlConfig.searchconnstr);
+            
+            Indexer = new DefaultContentIndexer<T>(SearchClient, 1, Logger);
+
+            SearchClient.Timeout = 10000;
+
             switch (crawlJob.crawltype)
             {
                 case CrawlTypes.PartialCrawl:
@@ -72,6 +73,8 @@ namespace EktronCrawler
             
             };
 
+            EktronSQL.ConnectionString = crawlConfig.cmsconnstr;
+
             var recentContent = EktronSQL.GetContent(req);
 
             var folderids = new List<long>();
@@ -80,7 +83,10 @@ namespace EktronCrawler
             {
                 foreach(var folderid in job.rootfolderids)
                 {
-                    var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
+                    var folder = EktronSQL.GetFolder(folderid);
+
+                    //var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
+                    var allSubFolders = EktronSQL.GetSubFolders(folder.FolderIdWithPath);
 
                     if(allSubFolders.Any())
                     {
@@ -131,22 +137,25 @@ namespace EktronCrawler
 
             var folderIds = job.rootfolderids ?? new List<long>() { 0 };
 
+            EktronSQL.ConnectionString = crawlConfig.cmsconnstr;
+
             foreach (var folderid in folderIds)
             {
-                var folder = FolderMgr.Get(folderid);
-                                
+                //var folder = FolderMgr.Get(folderid);
+                var folder = EktronSQL.GetFolder(folderid);
+                
                 if (folder != null)
                 {
-                    var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
-
-                    //var folderContent = ContentMgr.GetFolderContent(folderid);
-
+                                    
                     indexResults = CrawlAndIndexFolder(folder, crawlConfig, job);
 
-                    foreach (var subFolder in allSubFolders)
-                    {
-                        indexResults.Combine(CrawlAndIndexFolder(subFolder, crawlConfig, job));
-                    }
+                    //var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
+                    //var allSubFolders = EktronSQL.GetSubFolders(folder.FolderIdWithPath);
+                    
+                    //foreach (var subFolder in allSubFolders)
+                    //{
+                     //   indexResults.Combine(CrawlAndIndexFolder(subFolder, crawlConfig, job));
+                    //}
                 }
             }
 
@@ -273,6 +282,14 @@ namespace EktronCrawler
                             }
                         }
                     }
+                }
+
+                //var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
+                var allSubFolders = EktronSQL.GetSubFolders(folder.Id);
+
+                foreach (var subFolder in allSubFolders)
+                {
+                   results.Combine(CrawlAndIndexFolder(subFolder, crawlConfig, job));
                 }
 
                 

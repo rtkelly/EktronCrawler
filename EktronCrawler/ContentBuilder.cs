@@ -19,8 +19,8 @@ namespace EktronCrawler
 {
     public class ContentBuilder<T> where T : ISearchDocument
     {
-        MetaDataApi MetadataMgr = new MetaDataApi();
-        TaxonomyApi TaxonomyMgr = new TaxonomyApi();
+        //MetaDataApi MetadataMgr = new MetaDataApi();
+        //TaxonomyApi TaxonomyMgr = new TaxonomyApi();
 
         EktronLayer.ContentApi ContentApi = new EktronLayer.ContentApi();
         ISearchClient<T> SearchClient { get; set; }
@@ -257,7 +257,8 @@ namespace EktronCrawler
             var list = new List<string>();
             var mapList = new List<string>();
 
-            var metadataList = MetadataMgr.GetContentMetadataList(contentId);
+            //var metadataList = MetadataMgr.GetContentMetadataList(contentId);
+            var metadataList = EktronSQL.GetMetadata(contentId);
 
             if (metadataList != null)
             {
@@ -276,7 +277,8 @@ namespace EktronCrawler
             var list = new List<string>();
             var mapList = new List<string>();
 
-            var taxonomyList = TaxonomyMgr.ReadAllAssignedCategory(contentId);
+            //var taxonomyList = TaxonomyMgr.ReadAllAssignedCategory(contentId);
+            var taxonomyList = EktronSQL.GetTaxonomy(contentId);
 
             if (taxonomyList != null)
             {

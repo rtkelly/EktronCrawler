@@ -5,9 +5,8 @@
 		"crawlintervaltype": "Day",
 		"crawlinterval": "1",
 		"crawltime": "14:00:00",
-		"contenttypes": ["102"],
 		"forceoverwrite": "true",
-		"crawlconfigid": "defaultConfig"
+		"crawlconfigid": "EktronDemoConfig"
 	}, {
 		"jobid": "PartialCrawl",
 		"crawltype": "PartialCrawl",
@@ -15,11 +14,14 @@
 		"crawlinterval": "2",
 		"crawltime": "",
 		"contenttypes": ["102"],
-		"crawlconfigid": "defaultConfig"
+		"crawlconfigid": "EktronDemoConfig"
 
 	}],
 	"crawlconfigs": [{
-		"configid": "defaultConfig",
+		"configid": "EktronDemoConfig",
+		"searchconnstr": "http://localhost:8983/solr/EktronDemo_shard1_replica1",
+		"cmsconnstr":"server=WIN10\\SQL2012EXPRESS;database=CMS400Min87;Integrated Security=TRUE;user=;pwd=;",
+		"assettransferservice":""
 
 		"crawlschemaitems": [
 			{
