@@ -15,8 +15,31 @@ namespace EktronCrawler
 
         public static CrawlSettings LoadCrawlSettings()
         {
-            var configPath = JsonUtil.ReadJsonFile(ConfigurationManager.AppSettings["CrawlConfigFile"]);
-            return JsonUtil.Deserialize<CrawlSettings>(configPath);
+            var configPath = ConfigurationManager.AppSettings["CrawlConfigsPath"];
+                        
+            var masterSettings = new CrawlSettings();
+
+            masterSettings.crawlconfigs = new List<CrawlConfig>();
+            masterSettings.crawljobs = new List<CrawlJob>();
+
+            foreach (string file in Directory.EnumerateFiles(configPath, "*.json"))
+            {
+                string json = JsonUtil.ReadJsonFile(file);
+
+                var settings = JsonUtil.Deserialize<CrawlSettings>(json);
+
+                if(settings != null)
+                {
+                    if (settings.crawlconfigs != null && settings.crawlconfigs.Any())
+                        masterSettings.crawlconfigs.AddRange(settings.crawlconfigs);
+
+                    if (settings.crawljobs != null && settings.crawljobs.Any())
+                        masterSettings.crawljobs.AddRange(settings.crawljobs);
+                }
+            }
+
+
+            return masterSettings;
         }
 
         public static CrawlStatus LoadCrawlStatus()

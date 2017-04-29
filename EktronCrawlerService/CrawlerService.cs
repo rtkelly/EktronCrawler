@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,19 +10,23 @@ using System.Threading.Tasks;
 
 namespace EktronCrawlerService
 {
-    public partial class Service1 : ServiceBase
+    public partial class CrawlerService : ServiceBase
     {
-        public Service1()
+        private readonly PollingService _pollingService = new PollingService();
+
+        public CrawlerService()
         {
             InitializeComponent();
         }
 
         protected override void OnStart(string[] args)
         {
+            _pollingService.StartPolling();
         }
 
         protected override void OnStop()
         {
+            _pollingService.StopPolling();
         }
     }
 }

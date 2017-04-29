@@ -115,8 +115,9 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Crawl.json" />
-    <None Include="CrawlStatus.json" />
+    <None Include="crawl_ccim.json" />
+    <None Include="crawlconfig\crawl.json" />
+    <None Include="crawlstatus.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

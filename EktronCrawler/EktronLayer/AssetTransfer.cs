@@ -1,7 +1,9 @@
-﻿using System;
+﻿using EktronCrawler.AssetTransferServiceReference;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,10 +11,17 @@ namespace EktronCrawler.EktronLayer
 {
     public class AssetTransfer
     {
-        public static byte[] GetAsset(string location)
-        {
-             var client = new EktronCrawler.AssetTransferServiceReference.AssetTransferServerClient();
+        AssetTransferServerClient AssetServerClient;
 
+        public AssetTransfer(string serviceEndPoint)
+        {
+            AssetServerClient = new AssetTransferServerClient();
+            AssetServerClient.Endpoint.Address = new EndpointAddress(serviceEndPoint);
+        }
+
+        public  byte[] GetAsset(string location)
+        {
+            
             var lastWriteDate = new DateTime(2000, 1, 1);
             
             long size=0;
@@ -20,7 +29,7 @@ namespace EktronCrawler.EktronLayer
             bool success;
             Stream data = null;
 
-            client.GetAsset(lastWriteDate, location, out size, out status, out success, out data);
+            AssetServerClient.GetAsset(lastWriteDate, location, out size, out status, out success, out data);
 
             using (var stream = new MemoryStream())
             {

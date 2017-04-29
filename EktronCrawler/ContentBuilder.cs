@@ -22,13 +22,15 @@ namespace EktronCrawler
         //MetaDataApi MetadataMgr = new MetaDataApi();
         //TaxonomyApi TaxonomyMgr = new TaxonomyApi();
 
-        EktronLayer.ContentApi ContentApi = new EktronLayer.ContentApi();
+        //EktronLayer.ContentApi ContentApi = new EktronLayer.ContentApi();
         ISearchClient<T> SearchClient { get; set; }
        
         ILogger Logger;
 
         string AssetLibraryPath;
+        //string AssetTransferServerEndpoint;
 
+        AssetTransfer AssetTransferService { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -37,9 +39,10 @@ namespace EktronCrawler
         public ContentBuilder(ISearchClient<T> client, ILogger logger)
         {
             SearchClient = client;
+            
             Logger = logger;
-
-            AssetLibraryPath = ConfigurationManager.AppSettings["AssetLibraryFolder"];
+                        
+            
         }
 
         /// <summary>
@@ -52,6 +55,16 @@ namespace EktronCrawler
         {
             try
             {
+                Logger.Info(string.Format("Processing content item \"{0}\"", cData.Title));
+                
+                Logger.Debug(string.Format("contentid:{0}", cData.Id));
+                Logger.Debug(string.Format("contenttype:{0}", cData.ContType));
+                Logger.Debug(string.Format("xmlconfigid:{0}", cData.XmlConfiguration.Id));
+                Logger.Debug(string.Format("language:{0}", cData.LanguageId));
+
+                AssetLibraryPath = crawlConfig.assetlibrarypath;
+                AssetTransferService = new AssetTransfer(crawlConfig.assettransferservice);
+
                 var lastCrawledDate = DateTime.Now;
 
                 var crawlItem = new ContentCrawlParameters();
@@ -95,6 +108,7 @@ namespace EktronCrawler
                 
                 if(cData.XmlConfiguration.Id > 0)
                 {
+                    
                     var configItem = crawlConfig.crawlschemaitems.FirstOrDefault(c => c.xmlconfigid == cData.XmlConfiguration.Id);
 
                     if (configItem != null)
@@ -171,7 +185,8 @@ namespace EktronCrawler
 
                     foreach (var contentId in contentIds)
                     {
-                        var secondaryCData = ContentApi.GetContentItem(contentId);
+                        //var secondaryCData = ContentApi.GetContentItem(contentId);
+                        var secondaryCData = EktronSQL.GetContentItem(contentId);
 
                         if (secondaryCData != null)
                         {
@@ -219,36 +234,26 @@ namespace EktronCrawler
 
         private string ExtractAsset(ContentData cData)
         {
-            try
-            {
-                var assetPath = string.Format("{0}\\{1}\\{2}", AssetLibraryPath, cData.AssetData.Id, cData.AssetData.Version);
-                //var bytes = File.ReadAllBytes(assetPath);
-                var bytes = AssetTransfer.GetAsset(assetPath);
+            var assetPath = string.Format("{0}\\{1}\\{2}", AssetLibraryPath, cData.AssetData.Id, cData.AssetData.Version);
 
-                return ExtractAsset(bytes);
-            }
-            catch(Exception ex)
-            {
-                return string.Empty;
-            }
+            Logger.Debug(string.Format("Calling Asset Transfer Service: {0}", assetPath));
+
+            //var bytes = File.ReadAllBytes(assetPath);
+            var bytes = AssetTransferService.GetAsset(assetPath);
+
+            return ExtractAsset(bytes);
+            
         }
 
         public string ExtractAsset(byte[] bytes)
         {
-            try
-            {
-                var responseXml = SearchClient.FileExtract(bytes);
+            var responseXml = SearchClient.FileExtract(bytes);
 
-                var xmlParser = new XmlParser(responseXml);
-                var xhtml = xmlParser.ParseHTML("/response/str");
-                var htmlParser = new HtmlParser(WebUtility.HtmlDecode(xhtml));
+            var xmlParser = new XmlParser(responseXml);
+            var xhtml = xmlParser.ParseHTML("/response/str");
+            var htmlParser = new HtmlParser(WebUtility.HtmlDecode(xhtml));
 
-                return htmlParser.ParseStripInnerHtml("//body");
-            }
-            catch
-            {
-                return string.Empty;
-            }
+            return htmlParser.ParseStripInnerHtml("//body");
         }
         
 

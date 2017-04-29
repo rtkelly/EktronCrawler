@@ -1,6 +1,6 @@
 ﻿namespace EktronCrawlerService
 {
-    partial class Service1
+    partial class CrawlerService
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            // 
+            // CrawlerService
+            // 
             this.ServiceName = "Service1";
+
         }
 
         #endregion
+
     }
 }

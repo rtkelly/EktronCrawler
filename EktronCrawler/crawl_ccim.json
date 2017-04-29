@@ -1,0 +1,30 @@
+{
+	"crawljobs": [{
+		"jobid": "CCIMFullCrawl",
+		"crawltype": "FullCrawl",
+		"crawlintervaltype": "Day",
+		"crawlinterval": "1",
+		"crawltime": "14:00:00",
+		"forceoverwrite": "true",
+		"logginglevel": "Debug",
+		"crawlconfigid": "CCIMConfig"
+	}],
+	"crawlconfigs": [{
+		"configid": "CCIMConfig",
+		"searchconnstr": "http://192.168.120.215:8983/solr/CCIM_shard1_replica1",
+		"cmsconnstr": "server=192.168.120.27;database=CCIM;Integrated Security=false;user=brightfind;pwd=Brightfind2015!",
+		"assettransferservice": "http://192.168.120.40:8732/Ektron/Search/AssetTransferServer/100/Service.svc ",
+		"assetlibrarypath": "C:\\assetlibrary\\ccim",
+		"crawlschemaitems": [{
+				"xmlconfigid": "20",
+				"indexfields": [
+					"/root/SubTitle",
+					"/root/Introduction",
+					"/root/Article"
+				]
+
+			}
+
+		]
+	}]
+}

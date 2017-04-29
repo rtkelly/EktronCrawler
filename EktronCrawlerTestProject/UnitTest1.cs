@@ -24,9 +24,9 @@ namespace EktronCrawlerTestProject
         [TestMethod]
         public void TestAssetTransfer()
         {
-           var location = @"C:\assetlibrary\idsa\00A9DBC5-9A34-44D1-A8DC-615FAA365770\8ecaadde0951444bbd725f4bfa5df1831.pdf";
+           //var location = @"C:\assetlibrary\idsa\00A9DBC5-9A34-44D1-A8DC-615FAA365770\8ecaadde0951444bbd725f4bfa5df1831.pdf";
 
-           var data = AssetTransfer.GetAsset(location);
+           //var data = AssetTransfer.GetAsset(location);
 
         }
 

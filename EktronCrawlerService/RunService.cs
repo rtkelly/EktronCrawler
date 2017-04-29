@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EktronCrawlerService
 {
-    static class Program
+    static class RunService
     {
         /// <summary>
         /// The main entry point for the application.
@@ -17,8 +17,9 @@ namespace EktronCrawlerService
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
-                new Service1() 
+                new CrawlerService() 
             };
+
             ServiceBase.Run(ServicesToRun);
         }
     }

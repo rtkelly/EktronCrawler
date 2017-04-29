@@ -7,6 +7,7 @@ using MissionSearch.Util;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 
 namespace EktronCrawler
@@ -29,8 +30,35 @@ namespace EktronCrawler
         
         public IndexResults RunJob(CrawlJob crawlJob, CrawlConfig crawlConfig, DateTime lastRun)
         {
-            Logger = new MissionLogger(ConfigurationManager.AppSettings["CrawlLogFile"], MissionLogger.LoggerLevel.Info);
-            
+            MissionLogger.LoggerLevel logLevel;
+
+            switch(crawlJob.logginglevel)
+            {
+                case "Debug":
+                    logLevel = MissionLogger.LoggerLevel.Debug;
+                    break;
+
+                default:
+                case "Error":
+                    logLevel = MissionLogger.LoggerLevel.Error;
+                    break;
+
+                case "Info":
+                    logLevel = MissionLogger.LoggerLevel.Info;
+                    break;
+            }
+
+            var logFile = string.Format("{0}CrawlLog_{1}.log", ConfigurationManager.AppSettings["CrawlLogsPath"], crawlJob.jobid);
+
+            if (File.Exists(logFile))
+            {
+                File.Delete(logFile);
+            }
+
+            Logger = new MissionLogger(logFile, logLevel);
+
+            Logger.Info(string.Format("Starting Crawl Job {0}", crawlJob.jobid));
+
             SearchClient = new SolrClient<T>(crawlConfig.searchconnstr);
             
             Indexer = new DefaultContentIndexer<T>(SearchClient, 1, Logger);
@@ -61,6 +89,8 @@ namespace EktronCrawler
         /// <returns></returns>
         public IndexResults RunPartialCrawl(CrawlJob job, CrawlConfig crawlConfig, DateTime lastUpdated)
         {
+            Logger.Info("Starting Partial Crawl");
+
             var startTime = DateTime.Now;
                         
             var contentBuilder = new ContentBuilder<T>(SearchClient, Logger);
@@ -131,6 +161,8 @@ namespace EktronCrawler
         /// <returns></returns>
         public IndexResults RunFullCrawlFolder(CrawlJob job, CrawlConfig crawlConfig)
         {
+            Logger.Info("Starting Full Crawl");
+
             var startTime = DateTime.Now;
 
             var indexResults = new IndexResults();
@@ -146,16 +178,7 @@ namespace EktronCrawler
                 
                 if (folder != null)
                 {
-                                    
                     indexResults = CrawlAndIndexFolder(folder, crawlConfig, job);
-
-                    //var allSubFolders = FolderMgr.GetChildFolders(folderid, true);
-                    //var allSubFolders = EktronSQL.GetSubFolders(folder.FolderIdWithPath);
-                    
-                    //foreach (var subFolder in allSubFolders)
-                    //{
-                     //   indexResults.Combine(CrawlAndIndexFolder(subFolder, crawlConfig, job));
-                    //}
                 }
             }
 

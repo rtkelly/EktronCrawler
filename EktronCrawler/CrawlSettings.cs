@@ -51,7 +51,8 @@ namespace EktronCrawler
         public List<int> contenttypes { get; set; }
 
         public bool forceoverwrite { get; set; }
-        
+
+        public string logginglevel { get; set; }
                 
     }
 
@@ -62,7 +63,11 @@ namespace EktronCrawler
         public string searchconnstr { get; set; }
 
         public string cmsconnstr { get; set; }
-                
+
+        public string assettransferservice { get; set; }
+
+        public string assetlibrarypath { get; set; }
+                        
         public List<CrawlSchemaItem> crawlschemaitems { get; set; }
     }
 

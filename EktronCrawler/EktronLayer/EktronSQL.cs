@@ -47,7 +47,16 @@ namespace EktronCrawler
             return list.FirstOrDefault();
             
         }
-               
+
+        public static ContentData GetContentItem(string contentid)
+        {
+            var sql = string.Format("SELECT * FROM [content] WHERE content_id = {0}", contentid);
+
+            var list = Read<ContentData>(sql, LoadContentData);
+
+            return list.FirstOrDefault();
+
+        }
 
         /// <summary>
         /// 
@@ -56,7 +65,7 @@ namespace EktronCrawler
         /// <returns></returns>
         public static List<FolderData> GetSubFolders(long folderid)
         {
-            var sql = string.Format("SELECT * FROM [content_folder_tbl] WHERE parent_id = {0} AND folder_id <> 0", folderid);
+            var sql = string.Format("SELECT * FROM [content_folder_tbl] WHERE parent_id = {0} AND private_content = 0 AND folder_id <> 0", folderid);
 
             var list = Read<FolderData>(sql, LoadFolderData);
 
