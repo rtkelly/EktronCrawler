@@ -78,6 +78,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Util\ExtensionMethods.cs" />
     <Compile Include="Web References\EktronWeb.ContentApi\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -115,6 +116,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="crawl_soa.json" />
     <None Include="crawl_ccim.json" />
     <None Include="crawlconfig\crawl.json" />
     <None Include="crawlstatus.json" />

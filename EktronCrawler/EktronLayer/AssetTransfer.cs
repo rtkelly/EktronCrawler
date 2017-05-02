@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace EktronCrawler.EktronLayer
 {
+    public class Asset
+    {
+        public bool Success { get; set; }
+        public long Size { get; set; }
+        public string Status { get; set; }
+        public byte[] AssetData { get; set; }
+    }
+
     public class AssetTransfer
     {
         AssetTransferServerClient AssetServerClient;
@@ -19,7 +27,7 @@ namespace EktronCrawler.EktronLayer
             AssetServerClient.Endpoint.Address = new EndpointAddress(serviceEndPoint);
         }
 
-        public  byte[] GetAsset(string location)
+        public  Asset GetAsset(string location)
         {
             
             var lastWriteDate = new DateTime(2000, 1, 1);
@@ -30,7 +38,7 @@ namespace EktronCrawler.EktronLayer
             Stream data = null;
 
             AssetServerClient.GetAsset(lastWriteDate, location, out size, out status, out success, out data);
-
+            
             using (var stream = new MemoryStream())
             {
                 byte[] buffer = new byte[2048]; 
@@ -40,9 +48,16 @@ namespace EktronCrawler.EktronLayer
                 {
                     stream.Write(buffer, 0, bytesRead);
                 }
-                byte[] result = stream.ToArray();
+                
+                var asset = new Asset()
+                {
+                    AssetData = stream.ToArray(),
+                    Size = size,
+                    Status = status,
+                    Success = success,
+                };
 
-                return result;
+                return asset;
             }
                         
         }

@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CrawlerServiceSetup", "CrawlerServiceSetup\CrawlerServiceSetup.vdproj", "{5BE06AF2-0423-44A8-8453-908C834BA225}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5BE06AF2-0423-44A8-8453-908C834BA225}.Debug|Default.ActiveCfg = Debug
+		{5BE06AF2-0423-44A8-8453-908C834BA225}.Debug|Default.Build.0 = Debug
+		{5BE06AF2-0423-44A8-8453-908C834BA225}.Release|Default.ActiveCfg = Release
+		{5BE06AF2-0423-44A8-8453-908C834BA225}.Release|Default.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

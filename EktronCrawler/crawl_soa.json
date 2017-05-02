@@ -1,0 +1,37 @@
+{
+	"crawljobs": [{
+		"jobid": "SOAFullCrawl",
+		"crawltype": "FullCrawl",
+		"crawlintervaltype": "Day",
+		"crawlinterval": "1",
+		"crawltime": "02:00:00",
+		"forceoverwrite": "true",
+		"logginglevel": "Debug",
+		"crawlconfigid": "SOAConfig"
+	}],
+	"crawlconfigs": [{
+		"configid": "SOAConfig",
+		"searchconnstr": "http://192.168.120.215:8983/solr/SOA_shard1_replica1",
+		"cmsconnstr": "server=SYSCOMSQL-VM;database=CMS-Production;Integrated Security=false;user=soa1;pwd=123456;",
+		"assettransferservice": "http://192.168.120.204:8732/Ektron/Search/AssetTransferServer/100/Service.svc",
+		"assetlibrarypath": "C:\\assetlibrary\\ek9-soa.syscomservices",
+		"crawlschemaitems": [{
+			"defaultschema": "true",
+			"metadata": [
+				"Title",
+				"AuthorsSearchable"
+			],
+			"metadata_mapping": [{
+					"metadataname": "Title",
+					"searchfieldname": "title"
+				},
+				{
+					"metadataname": "AuthorsSearchable",
+					"searchfieldname": "author"
+				}
+
+			]
+		}]
+	}]
+
+}

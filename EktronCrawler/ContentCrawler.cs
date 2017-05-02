@@ -27,6 +27,7 @@ namespace EktronCrawler
         {
             
         }
+
         
         public IndexResults RunJob(CrawlJob crawlJob, CrawlConfig crawlConfig, DateTime lastRun)
         {

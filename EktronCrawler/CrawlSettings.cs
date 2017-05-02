@@ -84,5 +84,14 @@ namespace EktronCrawler
         public string[] secondarycontent { get; set; }
 
         public string[] metadata { get; set; }
+
+        public metadata_map[] metadata_mapping { get; set; }
+    }
+
+    public class metadata_map
+    {
+        public string metadataname { get; set; }
+        
+        public string searchfieldname { get; set; }
     }
 }

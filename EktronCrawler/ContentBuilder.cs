@@ -14,6 +14,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using EktronCrawler.Util;
+using EktronCrawler.EktronWeb.MetaDataApi;
 
 namespace EktronCrawler
 {
@@ -62,6 +64,8 @@ namespace EktronCrawler
                 Logger.Debug(string.Format("xmlconfigid:{0}", cData.XmlConfiguration.Id));
                 Logger.Debug(string.Format("language:{0}", cData.LanguageId));
 
+
+
                 AssetLibraryPath = crawlConfig.assetlibrarypath;
                 AssetTransferService = new AssetTransfer(crawlConfig.assettransferservice);
 
@@ -71,21 +75,7 @@ namespace EktronCrawler
 
                 crawlItem.ContentItem = new SearchableContentItem();
 
-                var metadata = GetMetaData(cData.Id);
-
-                if (metadata.Item1 != null && metadata.Item2 != null)
-                {
-                    crawlItem.Content.Add(new CrawlerContent() { Name = "metadata", Value = metadata.Item1 });
-                    crawlItem.Content.Add(new CrawlerContent() { Name = "metadata_map", Value = metadata.Item2 });
-                }
-
-                var taxonomy = GetTaxonomy(cData.Id);
-
-                if (taxonomy.Item1 != null)
-                {
-                    crawlItem.Content.Add(new CrawlerContent() { Name = "taxonomy", Value = taxonomy.Item1 });
-                    crawlItem.Content.Add(new CrawlerContent() { Name = "taxonomy_map", Value = taxonomy.Item2 });
-                }
+                var defaultSchema = crawlConfig.crawlschemaitems.FirstOrDefault(c => c.defaultschema == true);
 
                 crawlItem.ContentItem._ContentID = string.Format("{0}|{1}", cData.Id, cData.LanguageId);
                 crawlItem.Content.Add(new CrawlerContent() { Name = "contentid", Value = cData.Id.ToString() });
@@ -105,10 +95,40 @@ namespace EktronCrawler
                 crawlItem.Content.Add(new CrawlerContent() { Name = "paths", Value = new List<string>() });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "hostname", Value = "" });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "lastcrawled", Value = lastCrawledDate });
-                
+
+                var contentMetadataList = EktronSQL.GetMetadata(cData.Id);
+
+                if(defaultSchema != null && defaultSchema.metadata_mapping != null)
+                {
+                    foreach(var map in defaultSchema.metadata_mapping)
+                    {
+                        var metaData = contentMetadataList.FirstOrDefault(m => m.Name == map.metadataname);
+
+                        if (metaData != null)
+                        {
+                            crawlItem.Content.Add(new CrawlerContent() { Name = map.searchfieldname, Value = metaData.Value });
+                        }
+                    }
+                }
+
+                var metadataLists = BuildMetaDataProperties(contentMetadataList, defaultSchema);
+                                
+                if (metadataLists.Item1 != null && metadataLists.Item2 != null)
+                {
+                    crawlItem.Content.Add(new CrawlerContent() { Name = "metadata", Value = metadataLists.Item1 });
+                    crawlItem.Content.Add(new CrawlerContent() { Name = "metadata_map", Value = metadataLists.Item2 });
+                }
+
+                var taxonomyLists = GetTaxonomy(cData.Id);
+
+                if (taxonomyLists.Item1 != null)
+                {
+                    crawlItem.Content.Add(new CrawlerContent() { Name = "taxonomy", Value = taxonomyLists.Item1 });
+                    crawlItem.Content.Add(new CrawlerContent() { Name = "taxonomy_map", Value = taxonomyLists.Item2 });
+                }
+
                 if(cData.XmlConfiguration.Id > 0)
                 {
-                    
                     var configItem = crawlConfig.crawlschemaitems.FirstOrDefault(c => c.xmlconfigid == cData.XmlConfiguration.Id);
 
                     if (configItem != null)
@@ -232,19 +252,40 @@ namespace EktronCrawler
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cData"></param>
+        /// <returns></returns>
         private string ExtractAsset(ContentData cData)
         {
             var assetPath = string.Format("{0}\\{1}\\{2}", AssetLibraryPath, cData.AssetData.Id, cData.AssetData.Version);
 
-            Logger.Debug(string.Format("Calling Asset Transfer Service: {0}", assetPath));
+            Logger.Debug("Calling Asset Transfer Service");
+            Logger.Debug(string.Format("Asset Path: {0}", assetPath));
 
             //var bytes = File.ReadAllBytes(assetPath);
-            var bytes = AssetTransferService.GetAsset(assetPath);
+            var asset = AssetTransferService.GetAsset(assetPath);
+                        
+            Logger.Debug(string.Format("Asset Success: {0}", asset.Success));
+            Logger.Debug(string.Format("Asset Status: {0}", asset.Status));
+            Logger.Debug(string.Format("Asset Size: {0}", asset.Size));
 
-            return ExtractAsset(bytes);
+            if(!asset.Success)
+            {
+                Logger.Error(string.Format("Error Asset Not Found: {0}", assetPath));
+
+            }
+
+            return ExtractAsset(asset.AssetData);
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public string ExtractAsset(byte[] bytes)
         {
             var responseXml = SearchClient.FileExtract(bytes);
@@ -256,27 +297,36 @@ namespace EktronCrawler
             return htmlParser.ParseStripInnerHtml("//body");
         }
         
-
-        private Tuple<List<string>, List<string>> GetMetaData(long contentId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contentId"></param>
+        /// <returns></returns>
+        private Tuple<List<string>, List<string>> BuildMetaDataProperties(List<CustomAttribute> metadataList, CrawlSchemaItem configItem)
         {
             var list = new List<string>();
             var mapList = new List<string>();
 
-            //var metadataList = MetadataMgr.GetContentMetadataList(contentId);
-            var metadataList = EktronSQL.GetMetadata(contentId);
-
-            if (metadataList != null)
+            if (configItem.metadata != null)
             {
-                foreach (var metadata in metadataList.Where(m => !string.IsNullOrEmpty(m.Value.ToString())))
+                if (metadataList != null)
                 {
-                    list.Add(metadata.Value.ToString());
-                    mapList.Add(string.Format("{0}/{1}", metadata.Name, metadata.Value));
+                    foreach (var metadata in metadataList.Where(m => configItem.metadata.Contains(m.Name)))
+                    {
+                        list.Add(metadata.Value.ToString());
+                        mapList.Add(string.Format("{0}/{1}", metadata.Name, metadata.Value));
+                    }
                 }
             }
 
             return new Tuple<List<string>, List<string>>(list, mapList);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contentId"></param>
+        /// <returns></returns>
         private Tuple<List<string>, List<string>> GetTaxonomy(long contentId)
         {
             var list = new List<string>();

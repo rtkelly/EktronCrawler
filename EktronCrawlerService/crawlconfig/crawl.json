@@ -17,11 +17,16 @@
 		"assetlibrarypath": "C:\\assetlibrary\\localhost",
 		"crawlschemaitems": [{
 				"defaultschema": "true",
+				"metadata": [
+					"title"
+				],
+
 				"metadata_mapping": [{
-					"metadataname": "Title",
+					"metadataname": "title",
 					"searchfieldname": "title"
 				}]
 			},
+
 			{
 				"xmlconfigid": "7",
 				"indexfields": [
@@ -30,6 +35,7 @@
 				]
 
 			}
+
 
 		]
 	}]
