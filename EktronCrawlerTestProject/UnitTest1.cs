@@ -20,7 +20,7 @@ namespace EktronCrawlerTestProject
         {
             CrawlJobsHandler.ProcessJobs<SearchDocument>();
         }
-
+         
         [TestMethod]
         public void TestAssetTransfer()
         {

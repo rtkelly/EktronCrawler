@@ -84,7 +84,9 @@
     <Compile Include="SearchDocument.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="crawlconfig\crawl.json" />
   </ItemGroup>
   <ItemGroup />

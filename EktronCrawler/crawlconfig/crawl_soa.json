@@ -6,6 +6,7 @@
 		"crawlinterval": "1",
 		"crawltime": "02:00:00",
 		"forceoverwrite": "true",
+		"rootfolderids": ["391"],
 		"logginglevel": "Debug",
 		"crawlconfigid": "SOAConfig"
 	}],

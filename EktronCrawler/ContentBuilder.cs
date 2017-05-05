@@ -63,9 +63,7 @@ namespace EktronCrawler
                 Logger.Debug(string.Format("contenttype:{0}", cData.ContType));
                 Logger.Debug(string.Format("xmlconfigid:{0}", cData.XmlConfiguration.Id));
                 Logger.Debug(string.Format("language:{0}", cData.LanguageId));
-
-
-
+                
                 AssetLibraryPath = crawlConfig.assetlibrarypath;
                 AssetTransferService = new AssetTransfer(crawlConfig.assettransferservice);
 
@@ -302,22 +300,32 @@ namespace EktronCrawler
         /// </summary>
         /// <param name="contentId"></param>
         /// <returns></returns>
-        private Tuple<List<string>, List<string>> BuildMetaDataProperties(List<CustomAttribute> metadataList, CrawlSchemaItem configItem)
+        private Tuple<List<string>, List<string>> BuildMetaDataProperties(List<CustomAttribute> metadataList, CrawlSchemaItem defaultConfigItem)
         {
             var list = new List<string>();
             var mapList = new List<string>();
 
-            if (configItem.metadata != null)
+            if (defaultConfigItem != null && defaultConfigItem.metadata != null)
             {
                 if (metadataList != null)
                 {
-                    foreach (var metadata in metadataList.Where(m => configItem.metadata.Contains(m.Name)))
+                    foreach (var metadata in metadataList.Where(m => defaultConfigItem.metadata.Contains(m.Name)))
                     {
                         list.Add(metadata.Value.ToString());
                         mapList.Add(string.Format("{0}/{1}", metadata.Name, metadata.Value));
                     }
                 }
             }
+            else
+            {
+                foreach (var metadata in metadataList)
+                {
+                    list.Add(metadata.Value.ToString());
+                    mapList.Add(string.Format("{0}/{1}", metadata.Name, metadata.Value));
+                }
+            }
+
+            
 
             return new Tuple<List<string>, List<string>>(list, mapList);
         }
