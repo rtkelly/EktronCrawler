@@ -1,9 +1,9 @@
 {
 	"crawljobs": [{
-		"jobid": "EktronDemoFullCrawl",
-		"crawltype": "FullCrawl",
-		"crawlintervaltype": "Day",
-		"crawlinterval": "1",
+		"jobid": "EktronDemoPartialCrawl",
+		"crawltype": "PartialCrawl",
+		"crawlintervaltype": "Minute",
+		"crawlinterval": "2",
 		"crawltime": "14:00:00",
 		"forceoverwrite": "true",
 		"logginglevel": "Debug",

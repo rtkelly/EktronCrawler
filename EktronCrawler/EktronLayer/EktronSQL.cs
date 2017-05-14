@@ -36,6 +36,54 @@ namespace EktronCrawler
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="contentId"></param>
+        /// <returns></returns>
+        public static string  GetQuickLink(long contentId)
+        {
+            var alias = GetUrlAlias(contentId);
+
+            if (alias != null)
+                return alias;
+
+            var sql = string.Format("SELECT [filename] FROM [library] WHERE [content_id] = {0}", contentId);
+
+            var first = Read<String>(sql, delegate(IDataReader reader) {
+                
+                return reader.GetString(0);
+                
+            }).FirstOrDefault();
+                        
+            return (first == null) ? "/" : "/" + first;
+      
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="contentId"></param>
+        /// <returns></returns>
+        public static string GetUrlAlias(long contentId)
+        {
+            var sql = string.Format("SELECT [urlaliasnm] FROM [UrlAliasMapping] WHERE [TargetID] = {0} AND IsDefault = 1", contentId);
+
+            var first = Read<String>(sql, delegate(IDataReader reader)
+            {
+
+                return reader.GetString(0);
+
+            }).FirstOrDefault();
+
+            return first;
+
+        }
+
+
+
+        
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="folderid"></param>
         /// <returns></returns>
         public static FolderData GetFolder(long folderid)
@@ -93,11 +141,12 @@ namespace EktronCrawler
         /// <returns></returns>
         public static List<ContentData> GetContent(ContentRequest request)
         {
-            var sql = string.Format("SELECT * FROM [content] WHERE content_status = 'A' AND searchable = 1 ");
-            
+            //var sql = string.Format("SELECT * FROM [content] WHERE content_status = 'A' AND searchable = 1 ");
+            var sql = string.Format("SELECT * FROM [content] WHERE searchable = 1 ");
+
             if(request.LastUpdated != null)
             {
-                sql += string.Format("AND last_edit_date > '{0:MM/dd/yyyy hh:mm:ss tt}' ", request.LastUpdated.Value);
+                sql += string.Format("AND last_edit_date > CONVERT(DATE, '{0:MM/dd/yyyy hh:mm:ss tt}') ", request.LastUpdated.Value);
             }
 
             if (request.FolderIds != null && request.FolderIds.Any())

@@ -76,9 +76,14 @@ namespace EktronCrawler
                 var defaultSchema = crawlConfig.crawlschemaitems.FirstOrDefault(c => c.defaultschema == true);
 
                 crawlItem.ContentItem._ContentID = string.Format("{0}|{1}", cData.Id, cData.LanguageId);
+
+                var quickLink = EktronSQL.GetQuickLink(cData.Id);
+                crawlItem.Content.Add(new CrawlerContent() { Name = "url", Value = quickLink });
+
+                Logger.Debug(string.Format("quicklink:{0}", quickLink));
+                                
                 crawlItem.Content.Add(new CrawlerContent() { Name = "contentid", Value = cData.Id.ToString() });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "title", Value = cData.Title });
-                crawlItem.Content.Add(new CrawlerContent() { Name = "url", Value = cData.Quicklink });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "summary", Value = HtmlParser.StripHTML(cData.Teaser) });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "xmlconfigid", Value = cData.XmlConfiguration.Id });
                 crawlItem.Content.Add(new CrawlerContent() { Name = "folderid", Value = cData.FolderId });
@@ -108,7 +113,7 @@ namespace EktronCrawler
                         }
                     }
                 }
-
+                                
                 var metadataLists = BuildMetaDataProperties(contentMetadataList, defaultSchema);
                                 
                 if (metadataLists.Item1 != null && metadataLists.Item2 != null)
@@ -117,6 +122,7 @@ namespace EktronCrawler
                     crawlItem.Content.Add(new CrawlerContent() { Name = "metadata_map", Value = metadataLists.Item2 });
                 }
 
+                
                 var taxonomyLists = GetTaxonomy(cData.Id);
 
                 if (taxonomyLists.Item1 != null)
@@ -158,7 +164,11 @@ namespace EktronCrawler
             }
             catch (Exception ex)
             {
-                Logger.Info(string.Format("{0}", ex.Message));
+                if(cData != null)
+                    Logger.Error(string.Format("{0} content id: {1} title: \"{2}\"", ex.Message, cData.Id, cData.Title));
+                else
+                    Logger.Error(string.Format("{0} {1}", ex.Message, ex.StackTrace));
+
                 return null;
             }
         }
@@ -171,6 +181,8 @@ namespace EktronCrawler
         /// <returns></returns>
         private List<CrawlerContent> ProcessSmartForm(ContentData cData, CrawlSchemaItem configItem)
         {
+            Logger.Debug(string.Format("Processing Smartform Id: {0}", cData.XmlConfiguration.Id));
+                     
             var crawlItems = new List<CrawlerContent>();
 
             var smartForm = new XmlParser(cData.Html);
@@ -302,6 +314,8 @@ namespace EktronCrawler
         /// <returns></returns>
         private Tuple<List<string>, List<string>> BuildMetaDataProperties(List<CustomAttribute> metadataList, CrawlSchemaItem defaultConfigItem)
         {
+            Logger.Debug("Building Metadata");
+
             var list = new List<string>();
             var mapList = new List<string>();
 
@@ -337,6 +351,8 @@ namespace EktronCrawler
         /// <returns></returns>
         private Tuple<List<string>, List<string>> GetTaxonomy(long contentId)
         {
+            Logger.Debug("Building taxonomy");
+
             var list = new List<string>();
             var mapList = new List<string>();
 
