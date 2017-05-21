@@ -94,6 +94,8 @@ namespace EktronCrawler
         {
             Logger.Info("Starting Partial Crawl");
 
+            Logger.Info(string.Format("Last Updated Date: {0:MM/dd/yyyy hh:mm tt}", lastUpdated));
+
             if(lastUpdated == DateTime.MinValue)
             {
                 return RunFullCrawl(job, crawlConfig);
@@ -149,7 +151,7 @@ namespace EktronCrawler
             }
 
             var indexResults = Indexer.RunUpdate(updateList, null, null);
-
+            
             var duration = (DateTime.Now - startTime);
 
             Logger.Info(string.Format("Partial Crawl Completed Total Content Crawled: {0} Total Errors: {1} Total Time: {2} hours {3} minutes", indexResults.TotalCnt, indexResults.ErrorCnt, duration.Hours, duration.Minutes));
@@ -166,7 +168,7 @@ namespace EktronCrawler
         /// <returns></returns>
         public IndexResults RunFullCrawl(CrawlJob job, CrawlConfig crawlConfig)
         {
-            Logger.Error("Starting Full Crawl");
+            Logger.Info("Starting Full Crawl");
 
             var startTime = DateTime.Now;
 
@@ -190,7 +192,7 @@ namespace EktronCrawler
 
             //RunFolderGarbageCollector();
 
-            Logger.Error(string.Format("Full Crawl Completed Total Content Crawled: {0} Total Errors: {1} Total Time: {2} hours {3} minutes", indexResults.TotalCnt, indexResults.ErrorCnt, indexResults.Duration.Hours, indexResults.Duration.Minutes));
+            Logger.Info(string.Format("Full Crawl Completed Total Content Crawled: {0} Total Errors: {1} Total Time: {2} hours {3} minutes", indexResults.TotalCnt, indexResults.ErrorCnt, indexResults.Duration.Hours, indexResults.Duration.Minutes));
             
             return indexResults;
         }
@@ -278,7 +280,11 @@ namespace EktronCrawler
                     }
                     
                     var crawlItem = contentBuilder.BuildCrawlContentItem(contentItem, crawlConfig);
-                    crawledItems.Add(crawlItem);
+
+                    if (crawlItem != null)
+                        crawledItems.Add(crawlItem);
+                    else
+                        results.ErrorCnt++;
                 }
 
                                 
@@ -312,6 +318,7 @@ namespace EktronCrawler
             }
             catch(Exception ex)
             {
+                results.ErrorCnt++;
                 Logger.Error(string.Format("{0} {1}", ex.Message, ex.StackTrace));
             }
 

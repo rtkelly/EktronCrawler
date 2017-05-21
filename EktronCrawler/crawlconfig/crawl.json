@@ -3,7 +3,7 @@
 		"jobid": "EktronDemoPartialCrawl",
 		"crawltype": "PartialCrawl",
 		"crawlintervaltype": "Minute",
-		"crawlinterval": "2",
+		"crawlinterval": "1",
 		"crawltime": "14:00:00",
 		"forceoverwrite": "true",
 		"logginglevel": "Debug",

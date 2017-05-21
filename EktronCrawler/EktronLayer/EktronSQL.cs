@@ -146,7 +146,7 @@ namespace EktronCrawler
 
             if(request.LastUpdated != null)
             {
-                sql += string.Format("AND last_edit_date > CONVERT(DATE, '{0:MM/dd/yyyy hh:mm:ss tt}') ", request.LastUpdated.Value);
+                sql += string.Format("AND last_edit_date > CONVERT(DATETIME, '{0:MM/dd/yyyy hh:mm:ss tt}') ", request.LastUpdated.Value);
             }
 
             if (request.FolderIds != null && request.FolderIds.Any())
@@ -161,7 +161,7 @@ namespace EktronCrawler
             
             if (request.XmlConfigIds != null && request.XmlConfigIds.Any())
             {
-              sql += string.Format("AND xml_config_id in ({0})", string.Join(",", request.XmlConfigIds));
+              sql += string.Format("AND xml_config_id in ({0})", string.Join( ",", request.XmlConfigIds));
             }
 
             var list = Read<ContentData>(sql, LoadContentData)

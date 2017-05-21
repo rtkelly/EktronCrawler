@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using EktronCrawler.Util;
 using EktronCrawler.EktronWeb.MetaDataApi;
+using System.Text.RegularExpressions;
 
 namespace EktronCrawler
 {
@@ -200,10 +201,43 @@ namespace EktronCrawler
             {
                 foreach (var fieldXPath in configItem.storedfields.Where(p => p.StartsWith("/root/")))
                 {
-                    var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
-                    var fieldName = fieldXPath.Split('/').Last().ToLower();
+                    
+                    if (fieldXPath.Contains('~'))
+                    {
+                        var split = fieldXPath.Split('~');
+                                                
+                        var ftype = split[1];
+                        var xpath = split[0];
 
-                    crawlItems.Add(new CrawlerContent() { Name = fieldName, Value = value });
+                        var strValue = HtmlParser.StripHTML(smartForm.ParseString(xpath));
+                        var fieldName = xpath.Split('/').Last().ToLower();
+
+                        switch(ftype)
+                        {
+                            case "int":
+                                                                
+                                if(Regex.IsMatch(strValue, @"^\d*$"))
+                                {
+                                    var value = TypeParser.ParseInt(strValue);
+                                    crawlItems.Add(new CrawlerContent() { Name = fieldName, Value = value });
+                                }
+                                
+                                break;
+
+                            default:
+                                crawlItems.Add(new CrawlerContent() { Name = fieldName, Value = strValue });
+                                break;
+                        }
+                        
+                    }
+                    else
+                    {
+
+                        var value = HtmlParser.StripHTML(smartForm.ParseString(fieldXPath));
+                        var fieldName = fieldXPath.Split('/').Last().ToLower();
+
+                        crawlItems.Add(new CrawlerContent() { Name = fieldName, Value = value });
+                    }
                 }
             }
 
