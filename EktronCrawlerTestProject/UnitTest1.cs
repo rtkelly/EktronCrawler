@@ -28,6 +28,14 @@ namespace EktronCrawlerTestProject
 
            //var data = AssetTransfer.GetAsset(location);
 
+            var dict = new Dictionary<string, object>();
+            var list = new List<string>() { "str1", "str2" };
+            
+            dict.Add("list", list);
+            dict.Add("string", "some string");
+
+            string json = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
+
         }
 
         [TestMethod]

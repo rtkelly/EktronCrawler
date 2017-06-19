@@ -21,6 +21,7 @@ namespace EktronCrawler
 
             masterSettings.crawlconfigs = new List<CrawlConfig>();
             masterSettings.crawljobs = new List<CrawlJob>();
+            masterSettings.crawlschemas = new List<CrawlSchema>();
 
             foreach (string file in Directory.EnumerateFiles(configPath, "*.json"))
             {
@@ -30,11 +31,14 @@ namespace EktronCrawler
 
                 if(settings != null)
                 {
+                    if (settings.crawljobs != null && settings.crawljobs.Any())
+                        masterSettings.crawljobs.AddRange(settings.crawljobs);
+
                     if (settings.crawlconfigs != null && settings.crawlconfigs.Any())
                         masterSettings.crawlconfigs.AddRange(settings.crawlconfigs);
 
-                    if (settings.crawljobs != null && settings.crawljobs.Any())
-                        masterSettings.crawljobs.AddRange(settings.crawljobs);
+                    if (settings.crawlschemas != null && settings.crawlschemas.Any())
+                        masterSettings.crawlschemas.AddRange(settings.crawlschemas);
                 }
             }
 

@@ -28,6 +28,8 @@ namespace EktronCrawler
         public List<CrawlJob> crawljobs { get; set; }
         
         public List<CrawlConfig> crawlconfigs { get; set; }
+
+        public List<CrawlSchema> crawlschemas { get; set; }
     }
 
     public class CrawlJob
@@ -44,6 +46,8 @@ namespace EktronCrawler
 
         public string crawlconfigid { get; set; }
 
+        public string crawlschemaid { get; set; }
+
         public List<long> rootfolderids { get; set; }
 
         public List<long> xmlconfigids { get; set; }
@@ -54,6 +58,13 @@ namespace EktronCrawler
 
         public string logginglevel { get; set; }
                 
+    }
+
+    public class CrawlSchema
+    {
+        public string crawlschemaid { get; set; }
+
+        public List<CrawlSchemaItem> crawlschemaitems { get; set; }
     }
 
     public class CrawlConfig

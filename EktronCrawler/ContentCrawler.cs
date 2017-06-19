@@ -17,14 +17,8 @@ namespace EktronCrawler
         private ISearchClient<T> SearchClient { get; set; }
         private IContentIndexer<T> Indexer { get; set; }
         private ILogger Logger { get; set; }
-        
-        /// <summary>
-        /// 
-        /// </summary>
-        public ContentCrawler()
-        {
-            
-        }
+       
+       
 
         /// <summary>
         /// 
@@ -44,8 +38,7 @@ namespace EktronCrawler
                     break;
 
                 default:
-                case "Error":
-                    logLevel = MissionLogger.LoggerLevel.Error;
+                  logLevel = MissionLogger.LoggerLevel.Error;
                     break;
 
                 case "Info":
@@ -103,7 +96,7 @@ namespace EktronCrawler
 
             var startTime = DateTime.Now;
                         
-            var contentBuilder = new ContentBuilder<T>(SearchClient, Logger);
+            var contentBuilder = new ContentBuilder<T>(SearchClient, Logger, crawlConfig);
 
             var req = new ContentRequest()
             {
@@ -144,7 +137,7 @@ namespace EktronCrawler
                 if (job.rootfolderids != null && !folderids.Contains(cData.FolderId))
                     continue;
 
-                var crawlContent = contentBuilder.BuildCrawlContentItem(cData, crawlConfig);
+                var crawlContent = contentBuilder.BuildCrawlContentItem(cData);
                 
                 if(crawlContent != null)
                     updateList.Add(crawlContent);
@@ -190,7 +183,7 @@ namespace EktronCrawler
 
             indexResults.Duration = (DateTime.Now - startTime);
 
-            //RunFolderGarbageCollector();
+            //RunFolderGarbageCollector(indexResults.CrawledFoldersIds);
 
             Logger.Info(string.Format("Full Crawl Completed Total Content Crawled: {0} Total Errors: {1} Total Time: {2} hours {3} minutes", indexResults.TotalCnt, indexResults.ErrorCnt, indexResults.Duration.Hours, indexResults.Duration.Minutes));
             
@@ -200,21 +193,18 @@ namespace EktronCrawler
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="job"></param>
-        /// <param name="crawlConfig"></param>
-        /// <returns></returns>
-        public void RunFolderGarbageCollector()
+        /// <param name="foldersInCms"></param>
+        public void RunFolderGarbageCollector(List<long> foldersInCms)
         {
             Logger.Info("Running Folder Garbage Collection");
 
             var indexMgr = new ManageIndex<T>(SearchClient);
 
-            var foldersInCms = EktronSQL.GetFolders();
             var foldersInIndex = indexMgr.GetFolderIdsFromIndex();
 
             foreach (var folderid in foldersInIndex)
             {
-                if (foldersInCms.All(f => f.Id != folderid))
+                if (foldersInCms.All(cmsfolderid => cmsfolderid != folderid))
                 {
                     // if folder is no longer in cms then 
                     // delete all content in folder from index
@@ -239,6 +229,8 @@ namespace EktronCrawler
         {
             var results = new IndexResults();
 
+            results.CrawledFoldersIds.Add((folder.Id));
+
             Logger.Debug(string.Format("Crawling folder {0} id:{1}", folder.Name, folder.Id));
             
             try
@@ -257,7 +249,7 @@ namespace EktronCrawler
                 contentItems.ForEach(p => p.FolderName = folder.Name);
                 contentItems.ForEach(p => p.Path = folder.NameWithPath);
 
-                var contentBuilder = new ContentBuilder<T>(SearchClient, Logger);
+                var contentBuilder = new ContentBuilder<T>(SearchClient, Logger, crawlConfig);
 
                 var crawledItems = new List<ContentCrawlParameters>();
 
@@ -279,7 +271,7 @@ namespace EktronCrawler
                         }
                     }
                     
-                    var crawlItem = contentBuilder.BuildCrawlContentItem(contentItem, crawlConfig);
+                    var crawlItem = contentBuilder.BuildCrawlContentItem(contentItem);
 
                     if (crawlItem != null)
                         crawledItems.Add(crawlItem);
@@ -290,7 +282,7 @@ namespace EktronCrawler
                                 
                 results = Indexer.RunUpdate(crawledItems, null, null);
                                 
-                // delete items from the index that have been deleted from the folder
+                // delete items from the index that have been deleted from the ektron folder
                 indexedContentItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
                 
                 if (contentItems.Count < indexedContentItems.Count)
@@ -299,7 +291,7 @@ namespace EktronCrawler
                     {
                         foreach (var item in indexedContentItems)
                         {
-                            if (!contentItems.Any(p => p.Id.ToString() == item.id))
+                            if (contentItems.All(p => p.Id.ToString() != item.id))
                             {
                                 indexMgr.DeleteItem(TypeParser.ParseLong(item.contentid));
                             }
@@ -307,20 +299,21 @@ namespace EktronCrawler
                     }
                 }
 
-                var allSubFolders = EktronSQL.GetSubFolders(folder.Id);
-
-                foreach (var subFolder in allSubFolders)
-                {
-                   results.Combine(CrawlAndIndexFolder(subFolder, crawlConfig, job));
-                }
-
-                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 results.ErrorCnt++;
-                Logger.Error(string.Format("{0} {1}", ex.Message, ex.StackTrace));
+                Logger.Error(ex.Message);
+                Logger.Debug(ex.StackTrace);
             }
+
+            var allSubFolders = EktronSQL.GetSubFolders(folder.Id);
+
+            foreach (var subFolder in allSubFolders)
+            {
+                results.Combine(CrawlAndIndexFolder(subFolder, crawlConfig, job));
+            }
+
 
             return results;
             

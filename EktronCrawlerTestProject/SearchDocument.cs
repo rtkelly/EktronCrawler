@@ -62,10 +62,11 @@ namespace EktronCrawler
         public string published { get; set; }
 
         public DateTime lastcrawled { get; set; }
-
-
+        
         public DateTime publisheddate { get; set; }
 
         public string author { get; set; }
+
+        public string contenttitle { get; set; }
     }
 }

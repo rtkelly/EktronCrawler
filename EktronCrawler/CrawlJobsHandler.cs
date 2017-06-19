@@ -37,11 +37,18 @@ namespace EktronCrawler
 
                     crawlStatus.crawlstatusjobs.Add(crawlStatusJob);
                 }
-                
-                var crawlSchema = crawlSettings.crawlconfigs.FirstOrDefault(c => c.configid == job.crawlconfigid);
 
-                if(crawlSchema == null)
+                var crawlConfig = crawlSettings.crawlconfigs.FirstOrDefault(c => c.configid == job.crawlconfigid);
+
+                if(crawlConfig == null)
                     continue;
+
+                var crawlSchema =  crawlSettings.crawlschemas.FirstOrDefault(c => c.crawlschemaid == job.crawlschemaid);
+
+                if (crawlSchema == null)
+                    continue;
+
+                crawlConfig.crawlschemaitems = crawlSchema.crawlschemaitems;
 
                 var lastrun = crawlStatusJob.lastrundate;
                 var nextrun = ComputeNextRunDate(lastrun,job);
@@ -51,7 +58,7 @@ namespace EktronCrawler
                     continue;
                 }
 
-                var results = crawler.RunJob(job, crawlSchema, lastrun);
+                var results = crawler.RunJob(job, crawlConfig, lastrun);
                                 
                 crawlStatusJob.lastrundate = DateTime.Now;
                 crawlStatusJob.totalcrawled = results.TotalCnt;

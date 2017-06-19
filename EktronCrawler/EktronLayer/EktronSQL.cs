@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,19 +43,14 @@ namespace EktronCrawler
         {
             var alias = GetUrlAlias(contentId);
 
-            if (alias != null)
-                return alias;
+            if (alias == null)
+            { 
+                var sql = string.Format("SELECT [filename] FROM [library] WHERE [content_id] = {0}", contentId);
 
-            var sql = string.Format("SELECT [filename] FROM [library] WHERE [content_id] = {0}", contentId);
-
-            var first = Read<String>(sql, delegate(IDataReader reader) {
-                
-                return reader.GetString(0);
-                
-            }).FirstOrDefault();
-                        
-            return (first == null) ? "/" : "/" + first;
-      
+                alias = Read<string>(sql, reader => reader.GetString(0)).FirstOrDefault();
+            }          
+            
+            return (alias == null) ? "/" : "/" + alias;
         }
 
         /// <summary>
@@ -64,11 +60,10 @@ namespace EktronCrawler
         /// <returns></returns>
         public static string GetUrlAlias(long contentId)
         {
-            var sql = string.Format("SELECT [urlaliasnm] FROM [UrlAliasMapping] WHERE [TargetID] = {0} AND IsDefault = 1", contentId);
+            var sql = string.Format("SELECT [urlaliasnm] FROM [UrlAliasMapping] WHERE [TargetID] = {0}", contentId);
 
             var first = Read<String>(sql, delegate(IDataReader reader)
             {
-
                 return reader.GetString(0);
 
             }).FirstOrDefault();
@@ -142,7 +137,7 @@ namespace EktronCrawler
         public static List<ContentData> GetContent(ContentRequest request)
         {
             //var sql = string.Format("SELECT * FROM [content] WHERE content_status = 'A' AND searchable = 1 ");
-            var sql = string.Format("SELECT * FROM [content] WHERE searchable = 1 ");
+            var sql = "SELECT * FROM [content] WHERE searchable = 1 ";
 
             if(request.LastUpdated != null)
             {
@@ -171,11 +166,11 @@ namespace EktronCrawler
             return list;
         }
 
-        public static List<CustomAttribute> GetMetadata(long contentId)
+        public static List<CustomAttribute> GetMetadata(long contentId, int langId)
         {
-            var sql = string.Format("SELECT c.[meta_type_id],[content_id],[content_language],[meta_value],[meta_name],[active] FROM [content_meta_tbl] as c join [metadata_type] as m on m.meta_type_id = c.meta_type_id WHERE active = 1 AND content_id = {0}", contentId);
+            var sql = string.Format("SELECT c.[meta_type_id],[content_id],[content_language],[meta_value],[meta_name],[meta_name_title],[active] FROM [content_meta_tbl] as c join [metadata_type] as m on m.meta_type_id = c.meta_type_id WHERE active = 1 AND content_id = {0} AND content_language = {1}", contentId, langId);
 
-            var list = Read<CustomAttribute>(sql, LoadCustomAttribute);
+            var list = Read<CustomAttribute>(sql, LoadMetadataAttribute);
 
             return list.ToList();
         }
@@ -228,8 +223,6 @@ namespace EktronCrawler
         /// <returns></returns>
         private static TaxonomyBaseData LoadTaxonomyBaseData(IDataReader reader)
         {
-            var id = reader.GetInt64(0);
-
             // t.[taxonomy_id],t.[taxonomy_language_id],[taxonomy_item_id],[taxonomy_item_language],[taxonomy_name], [taxonomy_path] 
 
             var cData = new TaxonomyBaseData()
@@ -247,17 +240,26 @@ namespace EktronCrawler
         /// </summary>
         /// <param name="reader"></param>
         /// <returns></returns>
-        private static CustomAttribute LoadCustomAttribute(IDataReader reader)
+        private static CustomAttribute LoadMetadataAttribute(IDataReader reader)
         {
-            var id = reader.GetInt64(0);
-
             var cData = new CustomAttribute()
             {
                 Id = reader.GetInt64(0),
                 Value = reader.GetString(3),
                 Name = reader.GetString(4),
+                //ValueType = CustomAttributeValueTypes.Date,
             };
 
+            switch (reader.GetString(5))
+            {
+                case "date":
+                    cData.ValueType = CustomAttributeValueTypes.Date;
+                    break;
+                default:
+                    cData.ValueType = CustomAttributeValueTypes.String;
+                    break;
+
+            }
             return cData;
         }
 

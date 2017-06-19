@@ -1,36 +1,57 @@
 {
 	"crawljobs": [{
-		"jobid": "EktronDemoPartialCrawl",
-		"crawltype": "PartialCrawl",
-		"crawlintervaltype": "Minute",
+		"jobid": "EktronDemoFullCrawl",
+		"crawltype": "FullCrawl",
+		"crawlintervaltype": "Day",
 		"crawlinterval": "1",
 		"crawltime": "14:00:00",
 		"forceoverwrite": "true",
 		"logginglevel": "Debug",
-		"crawlconfigid": "EktronDemoConfig"
+		"crawlconfigid": "demo_config",
+		"crawlschemaid": "schema1"
 	}],
 	"crawlconfigs": [{
-		"configid": "EktronDemoConfig",
+		"configid": "demo_config",
 		"searchconnstr": "http://localhost:8983/solr/EktronDemo_shard1_replica1",
 		"cmsconnstr": "server=WIN10\\SQL2012EXPRESS;database=CMS400Min87;Integrated Security=TRUE;user=;pwd=;",
 		"assettransferservice": "http://localhost:8732/Ektron/Search/AssetTransferServer/100/Service.svc ",
-		"assetlibrarypath": "C:\\assetlibrary\\localhost",
-		"crawlschemaitems": [{
+		"assetlibrarypath": "C:\\assetlibrary\\localhost"
+	},
+	{
+		"configid": "demo_config2",
+		"searchconnstr": "http://localhost:8983/solr/EktronDemo_shard1_replica1",
+		"cmsconnstr": "server=WIN10\\SQL2012EXPRESS;database=CMS400Min87;Integrated Security=TRUE;user=;pwd=;",
+		"assettransferservice": "http://localhost:8732/Ektron/Search/AssetTransferServer/100/Service.svc ",
+		"assetlibrarypath": "C:\\assetlibrary\\localhost"
+	}
+	
+	],
+	"crawlschemas" :  [
+		{
+			"crawlschemaid" :  "schema1",
+			"crawlschemaitems": [{
 				"defaultschema": "true",
+				"metadata": [ "content title", "description" ],
 				"metadata_mapping": [{
-					"metadataname": "Title",
-					"searchfieldname": "title"
+					"metadataname": "content title",
+					"searchfieldname": "contenttitle"
+				},
+				{
+					"metadataname": "description",
+					"searchfieldname": "description"
 				}]
-			},
-			{
-				"xmlconfigid": "7",
-				"indexfields": [
-					"/root/abstract",
-					"/root/recommendations"
-				]
+				},
+				{
+					"xmlconfigid": "7",
+					"indexfields": [
+						"/root/abstract",
+						"/root/recommendations"
+					]
 
-			}
+				}
 
-		]
-	}]
+			]
+		}
+	]
+	
 }
