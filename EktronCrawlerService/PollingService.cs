@@ -1,10 +1,5 @@
 ﻿using EktronCrawler;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace EktronCrawlerService
 {
@@ -25,7 +20,7 @@ namespace EktronCrawlerService
         {
             while (!_finished.WaitOne(_timeout))
             {
-                CrawlJobsHandler.ProcessJobs<SearchDocument>();
+                CrawlJobsHandler.ProcessJobs();
             }
         }
 

@@ -1,11 +1,5 @@
-﻿using MissionSearch;
-using MissionSearch.Util;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EktronCrawler
 {
@@ -14,10 +8,9 @@ namespace EktronCrawler
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        public static void ProcessJobs<T>() where T : ICMSSearchDocument
+        public static void ProcessJobs()
         {
-            var crawler = new ContentCrawler<T>();
+            var crawler = new ContentCrawler();
 
             var crawlSettings = CrawlerConfig.LoadCrawlSettings();
             var crawlStatus = CrawlerConfig.LoadCrawlStatus();
@@ -77,6 +70,7 @@ namespace EktronCrawler
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="lastRun"></param>
         /// <param name="job"></param>
         /// <returns></returns>
         private static DateTime ComputeNextRunDate(DateTime lastRun, CrawlJob job)
@@ -86,20 +80,17 @@ namespace EktronCrawler
             {
                 case CrawlIntervalTypes.Minute:
                     return lastRun.AddMinutes(job.crawlinterval);
-                    break;
-                                    
+                case CrawlIntervalTypes.Hour:
+                    return lastRun.AddHours(job.crawlinterval);
+                
                 case CrawlIntervalTypes.Week:
                     return lastRun.AddDays(7 * job.crawlinterval).CustomAddTime(job.crawltime);
-                    break;
 
                 case CrawlIntervalTypes.Month:
                     return lastRun.AddMonths(job.crawlinterval).CustomAddTime(job.crawltime);
-                    break;
 
                 default:
-                case CrawlIntervalTypes.Day:
                     return lastRun.AddDays(job.crawlinterval).CustomAddTime(job.crawltime);
-                    break;
 
             }
         }

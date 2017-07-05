@@ -1,24 +1,28 @@
 ﻿using MissionSearch;
 using MissionSearch.Clients;
 using MissionSearch.Util;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EktronCrawler
 {
-    public class ManageIndex<T> where T : ISearchDocument
+    public class ManageIndex
     {
-        ISearchClient<T> SrchClient { get; set; }
+        ISearchClient SrchClient { get; set; }
 
-        public ManageIndex(ISearchClient<T> client)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        public ManageIndex(ISearchClient client)
         {
             SrchClient = client;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<long> GetFolderIdsFromIndex()
         {
             var response = SrchClient.GetTerms("folderid", null);
@@ -33,12 +37,16 @@ namespace EktronCrawler
         }
 
        
-
-        public List<T> GetFolderItemsFromIndex(long folderid)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="folderid"></param>
+        /// <returns></returns>
+        public List<dynamic> GetFolderItemsFromIndex(long folderid)
         {
             // to do: handle pagination
 
-            var response = SrchClient.Search(new MissionSearch.SearchRequest()
+            var response = SrchClient.Search(new SearchRequest()
             {
                 QueryOptions = new List<MissionSearch.Search.Query.IQueryOption>()
                 {
@@ -51,6 +59,10 @@ namespace EktronCrawler
             return response.Results;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteItem(long id)
         {
             try

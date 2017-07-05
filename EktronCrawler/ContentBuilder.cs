@@ -13,9 +13,9 @@ using System.Text.RegularExpressions;
 
 namespace EktronCrawler
 {
-    public class ContentBuilder<T> where T : ISearchDocument
+    public class ContentBuilder
     {
-        private ISearchClient<T> SearchClient;
+        private ISearchClient SearchClient;
 
         private ILogger Logger;
 
@@ -31,7 +31,7 @@ namespace EktronCrawler
         /// <param name="client"></param>
         /// <param name="logger"></param>
         /// <param name="crawlConfig"></param>
-        public ContentBuilder(ISearchClient<T> client, ILogger logger, CrawlConfig crawlConfig)
+        public ContentBuilder(ISearchClient client, ILogger logger, CrawlConfig crawlConfig)
         {
             SearchClient = client;
             
@@ -69,7 +69,9 @@ namespace EktronCrawler
             };
                 
             crawlItem.ContentItem._ContentID = string.Format("{0}|{1}", cData.Id, cData.LanguageId);
-                                
+
+            var language = new List<string>() {cData.LanguageId.ToString()};
+
             crawlItem.Content.Add(new CrawlerContent() { Name = "contentid", Value = cData.Id.ToString() });
             crawlItem.Content.Add(new CrawlerContent() { Name = "url", Value = quickLink });
             crawlItem.Content.Add(new CrawlerContent() { Name = "title", Value = cData.Title });
@@ -79,13 +81,13 @@ namespace EktronCrawler
             crawlItem.Content.Add(new CrawlerContent() { Name = "contenttypeid", Value = cData.ContType });
             crawlItem.Content.Add(new CrawlerContent() { Name = "timestamp", Value = cData.DateCreated });
             crawlItem.Content.Add(new CrawlerContent() { Name = "publisheddate", Value = cData.DateModified });
-            crawlItem.Content.Add(new CrawlerContent() { Name = "path", Value = cData.Path });
+            //crawlItem.Content.Add(new CrawlerContent() { Name = "path", Value = cData.Path ?? "" });
             crawlItem.Content.Add(new CrawlerContent() { Name = "folder", Value = cData.FolderName });
-            crawlItem.Content.Add(new CrawlerContent() { Name = "language", Value = cData.LanguageId.ToString() });
+            crawlItem.Content.Add(new CrawlerContent() { Name = "language", Value = language });
             crawlItem.Content.Add(new CrawlerContent() { Name = "mimetype", Value = "" });
-            crawlItem.Content.Add(new CrawlerContent() { Name = "categories", Value = new List<string>() });
+            //crawlItem.Content.Add(new CrawlerContent() { Name = "categories", Value = new List<string>() });
             crawlItem.Content.Add(new CrawlerContent() { Name = "pagetype", Value = "" });
-            crawlItem.Content.Add(new CrawlerContent() { Name = "paths", Value = new List<string>() });
+            //crawlItem.Content.Add(new CrawlerContent() { Name = "paths", Value = new List<string>() });
             crawlItem.Content.Add(new CrawlerContent() { Name = "hostname", Value = "" });
             crawlItem.Content.Add(new CrawlerContent() { Name = "lastcrawled", Value = lastCrawledDate });
 
@@ -278,6 +280,12 @@ namespace EktronCrawler
             return htmlParser.ParseStripInnerHtml("//body");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cData"></param>
+        /// <param name="defaultSchema"></param>
+        /// <param name="crawlItem"></param>
         private void ProcessMetadata(ContentData cData, CrawlSchemaItem defaultSchema, ContentCrawlParameters crawlItem)
         {
             var contentMetadataList = EktronSQL.GetMetadata(cData.Id, cData.LanguageId);
@@ -342,22 +350,15 @@ namespace EktronCrawler
                     }
                 }
             }
-                /*
-            else
-            {
-                foreach (var metadata in metadataList)
-                {
-                    list.Add(metadata.Value.ToString());
-                    mapList.Add(string.Format("{0}/{1}", metadata.Name, metadata.Value));
-                }
-            }
-            */
-            
 
             return new Tuple<List<string>, List<string>>(list, mapList);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cData"></param>
+        /// <param name="crawlItem"></param>
         private void ProcessTaxonomy(ContentData cData, ContentCrawlParameters crawlItem)
         {
             var taxonomyLists = GetTaxonomy(cData.Id);

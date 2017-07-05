@@ -7,7 +7,8 @@ using System.Linq;
 using EktronCrawler.EktronLayer;
 using System.Collections.Generic;
 using System.IO;
-
+using MissionSearch.Clients;
+using MissionSearch.Indexers;
 
 
 namespace EktronCrawlerTestProject
@@ -18,23 +19,46 @@ namespace EktronCrawlerTestProject
         [TestMethod]
         public void TestCrawler()
         {
-            CrawlJobsHandler.ProcessJobs<SearchDocument>();
+            CrawlJobsHandler.ProcessJobs();
         }
          
         [TestMethod]
         public void TestAssetTransfer()
         {
            //var location = @"C:\assetlibrary\idsa\00A9DBC5-9A34-44D1-A8DC-615FAA365770\8ecaadde0951444bbd725f4bfa5df1831.pdf";
-
            //var data = AssetTransfer.GetAsset(location);
+        }
 
-            var dict = new Dictionary<string, object>();
-            var list = new List<string>() { "str1", "str2" };
+        [TestMethod]
+        public void TestCreateSearchJsonDoc()
+        {
+            var indexer = new ContentIndexer("http://localhost:8983/solr/EktronDemo_shard1_replica1", 1, null);
             
-            dict.Add("list", list);
-            dict.Add("string", "some string");
+            var prop1 = new CrawlerContent()
+            {
+                Value = new List<string>() {"en", "sv"},
+                Name = "Language",
+            };
 
-            string json = Newtonsoft.Json.JsonConvert.SerializeObject(dict);
+            var prop2 = new CrawlerContent()
+            {
+                Value = "Test Content",
+                Name = "Content",
+            };
+
+            var prop3 = new CrawlerContent()
+            {
+                Value = "Test Content",
+                Name = "Content",
+            };
+
+            var contentItem = new ContentCrawlParameters();
+            
+            contentItem.Content.Add(prop1);
+            contentItem.Content.Add(prop2);
+            contentItem.Content.Add(prop3);
+                        
+            var result = indexer.CreateSearchJsonDoc("1", contentItem);
 
         }
 

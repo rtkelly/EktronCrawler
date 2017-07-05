@@ -12,10 +12,10 @@ using System.Linq;
 
 namespace EktronCrawler
 {
-    public class ContentCrawler<T> where T : ICMSSearchDocument
+    public class ContentCrawler
     {
-        private ISearchClient<T> SearchClient { get; set; }
-        private IContentIndexer<T> Indexer { get; set; }
+        private ISearchClient SearchClient { get; set; }
+        private IContentIndexer Indexer { get; set; }
         private ILogger Logger { get; set; }
        
        
@@ -57,10 +57,11 @@ namespace EktronCrawler
 
             Logger.Info(string.Format("Starting Crawl Job {0}", crawlJob.jobid));
 
-            SearchClient = new SolrClient<T>(crawlConfig.searchconnstr);
-            
-            Indexer = new DefaultContentIndexer<T>(SearchClient, 1, Logger);
+            SearchClient = new SolrClient(crawlConfig.searchconnstr);
+            //Indexer = new DefaultContentIndexer<T>(SearchClient, 1, Logger);
 
+            Indexer = new ContentIndexer(crawlConfig.searchconnstr, 1, Logger);
+            
             SearchClient.Timeout = 10000;
 
             switch (crawlJob.crawltype)
@@ -96,7 +97,7 @@ namespace EktronCrawler
 
             var startTime = DateTime.Now;
                         
-            var contentBuilder = new ContentBuilder<T>(SearchClient, Logger, crawlConfig);
+            var contentBuilder = new ContentBuilder(SearchClient, Logger, crawlConfig);
 
             var req = new ContentRequest()
             {
@@ -143,7 +144,7 @@ namespace EktronCrawler
                     updateList.Add(crawlContent);
             }
 
-            var indexResults = Indexer.RunUpdate(updateList, null, null);
+            var indexResults = Indexer.RunUpdate(updateList);
             
             var duration = (DateTime.Now - startTime);
 
@@ -198,7 +199,7 @@ namespace EktronCrawler
         {
             Logger.Info("Running Folder Garbage Collection");
 
-            var indexMgr = new ManageIndex<T>(SearchClient);
+            var indexMgr = new ManageIndex(SearchClient);
 
             var foldersInIndex = indexMgr.GetFolderIdsFromIndex();
 
@@ -235,7 +236,7 @@ namespace EktronCrawler
             
             try
             {
-                var indexMgr = new ManageIndex<T>(SearchClient);
+                var indexMgr = new ManageIndex(SearchClient);
 
                 var indexedContentItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
                                 
@@ -249,7 +250,7 @@ namespace EktronCrawler
                 contentItems.ForEach(p => p.FolderName = folder.Name);
                 contentItems.ForEach(p => p.Path = folder.NameWithPath);
 
-                var contentBuilder = new ContentBuilder<T>(SearchClient, Logger, crawlConfig);
+                var contentBuilder = new ContentBuilder(SearchClient, Logger, crawlConfig);
 
                 var crawledItems = new List<ContentCrawlParameters>();
 
@@ -280,7 +281,7 @@ namespace EktronCrawler
                 }
 
                                 
-                results = Indexer.RunUpdate(crawledItems, null, null);
+                results = Indexer.RunUpdate(crawledItems);
                                 
                 // delete items from the index that have been deleted from the ektron folder
                 indexedContentItems = indexMgr.GetFolderItemsFromIndex(folder.Id);
