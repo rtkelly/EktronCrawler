@@ -52,7 +52,7 @@ namespace EktronCrawlerTestProject
                 Name = "Content",
             };
 
-            var contentItem = new ContentCrawlParameters();
+            var contentItem = new ContentCrawlProxy();
             
             contentItem.Content.Add(prop1);
             contentItem.Content.Add(prop2);

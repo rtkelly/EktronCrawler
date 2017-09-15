@@ -128,7 +128,7 @@ namespace EktronCrawler
                 }
             }
 
-            var updateList = new List<ContentCrawlParameters>();
+            var updateList = new List<ContentCrawlProxy>();
             
             foreach(var cData in recentContent)
             {
@@ -252,7 +252,7 @@ namespace EktronCrawler
 
                 var contentBuilder = new ContentBuilder(SearchClient, Logger, crawlConfig);
 
-                var crawledItems = new List<ContentCrawlParameters>();
+                var crawledItems = new List<ContentCrawlProxy>();
 
                 foreach (var contentItem in contentItems)
                 {

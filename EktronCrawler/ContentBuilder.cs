@@ -50,7 +50,7 @@ namespace EktronCrawler
         /// </summary>
         /// <param name="cData"></param>
         /// <returns></returns>
-        public ContentCrawlParameters BuildCrawlContentItem(ContentData cData)
+        public ContentCrawlProxy BuildCrawlContentItem(ContentData cData)
         {
             var quickLink = EktronSQL.GetQuickLink(cData.Id);
             var lastCrawledDate = DateTime.Now;
@@ -63,7 +63,7 @@ namespace EktronCrawler
             Logger.Debug(string.Format("language:{0}", cData.LanguageId));
             Logger.Debug(string.Format("quicklink:{0}", quickLink));
 
-            var crawlItem = new ContentCrawlParameters
+            var crawlItem = new ContentCrawlProxy
             {
                 ContentItem = new SearchableContentItem()
             };
@@ -81,7 +81,7 @@ namespace EktronCrawler
             crawlItem.Content.Add(new CrawlerContent() { Name = "contenttypeid", Value = cData.ContType });
             crawlItem.Content.Add(new CrawlerContent() { Name = "timestamp", Value = cData.DateCreated });
             crawlItem.Content.Add(new CrawlerContent() { Name = "publisheddate", Value = cData.DateModified });
-            //crawlItem.Content.Add(new CrawlerContent() { Name = "path", Value = cData.Path ?? "" });
+            crawlItem.Content.Add(new CrawlerContent() { Name = "path", Value = cData.Path ?? "" });
             crawlItem.Content.Add(new CrawlerContent() { Name = "folder", Value = cData.FolderName });
             crawlItem.Content.Add(new CrawlerContent() { Name = "language", Value = language });
             crawlItem.Content.Add(new CrawlerContent() { Name = "mimetype", Value = "" });
@@ -112,7 +112,7 @@ namespace EktronCrawler
         /// <param name="cData"></param>
         /// <param name="crawlItem"></param>
         /// <returns></returns>
-        private void ProcessSmartForm(ContentData cData, ContentCrawlParameters crawlItem)
+        private void ProcessSmartForm(ContentData cData, ContentCrawlProxy crawlItem)
         {
             Logger.Debug(string.Format("Processing Smartform Id: {0}", cData.XmlConfiguration.Id));
 
@@ -218,7 +218,7 @@ namespace EktronCrawler
         /// <param name="cData"></param>
         /// <param name="crawlItem"></param>
         /// <returns></returns>
-        private void ProcessMainContent(ContentData cData, ContentCrawlParameters crawlItem)
+        private void ProcessMainContent(ContentData cData, ContentCrawlProxy crawlItem)
         {
             switch(cData.ContType)
             {
@@ -286,7 +286,7 @@ namespace EktronCrawler
         /// <param name="cData"></param>
         /// <param name="defaultSchema"></param>
         /// <param name="crawlItem"></param>
-        private void ProcessMetadata(ContentData cData, CrawlSchemaItem defaultSchema, ContentCrawlParameters crawlItem)
+        private void ProcessMetadata(ContentData cData, CrawlSchemaItem defaultSchema, ContentCrawlProxy crawlItem)
         {
             var contentMetadataList = EktronSQL.GetMetadata(cData.Id, cData.LanguageId);
 
@@ -359,7 +359,7 @@ namespace EktronCrawler
         /// </summary>
         /// <param name="cData"></param>
         /// <param name="crawlItem"></param>
-        private void ProcessTaxonomy(ContentData cData, ContentCrawlParameters crawlItem)
+        private void ProcessTaxonomy(ContentData cData, ContentCrawlProxy crawlItem)
         {
             var taxonomyLists = GetTaxonomy(cData.Id);
 

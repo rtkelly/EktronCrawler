@@ -1,6 +1,6 @@
 {
 	"crawljobs": [{
-		"jobid": "EktronDemoFullCrawl",
+		"jobid": "KollMorganDemoFullCrawl",
 		"crawltype": "FullCrawl",
 		"crawlintervaltype": "Day",
 		"crawlinterval": "1",
@@ -12,15 +12,8 @@
 	}],
 	"crawlconfigs": [{
 		"configid": "demo_config",
-		"searchconnstr": "http://localhost:8983/solr/EktronDemo_shard1_replica1",
-		"cmsconnstr": "server=WIN10\\SQL2012EXPRESS;database=CMS400Min87;Integrated Security=TRUE;user=;pwd=;",
-		"assettransferservice": "http://localhost:8732/Ektron/Search/AssetTransferServer/100/Service.svc ",
-		"assetlibrarypath": "C:\\assetlibrary\\localhost"
-	},
-	{
-		"configid": "demo_config2",
-		"searchconnstr": "http://localhost:8983/solr/EktronDemo_shard1_replica1",
-		"cmsconnstr": "server=WIN10\\SQL2012EXPRESS;database=CMS400Min87;Integrated Security=TRUE;user=;pwd=;",
+		"searchconnstr": "http://localhost:8983/solr/Kollmorgen_shard1_replica1",
+		"cmsconnstr": "server=WIN10\\SQL2012EXPRESS;database=KollmorgenUS;Integrated Security=TRUE;user=;pwd=;",
 		"assettransferservice": "http://localhost:8732/Ektron/Search/AssetTransferServer/100/Service.svc ",
 		"assetlibrarypath": "C:\\assetlibrary\\localhost"
 	}

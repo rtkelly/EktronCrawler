@@ -277,6 +277,7 @@ namespace EktronCrawler
                 Id = id,
                 Name = reader.GetString(2),
                 FolderIdWithPath = reader.GetString(30),
+                NameWithPath = reader.GetString(29),
             };
 
             return cData;
@@ -316,6 +317,7 @@ namespace EktronCrawler
                         Version = reader.GetString(28),
                     },
                 };
+                                
 
                 return cData;
             }
